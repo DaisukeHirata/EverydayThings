@@ -7,43 +7,81 @@
 //
 
 #import "BuyNowTableViewController.h"
+#import "ItemFormViewController.h"
+#import "ItemForm.h"
+#import "EverydayThingsDatabaseAvailability.h"
+#import "AppDelegate.h"
+#import "Item+Helper.h"
 
 @interface BuyNowTableViewController ()
-
+@property (nonatomic, strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @end
 
 @implementation BuyNowTableViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+#pragma mark - View Controller Lifecycle
+
+- (void)awakeFromNib
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    // tune in a managed object context notification radio station at very first.
+    // when database context is ready, then fetch conversion units data from a server,
+    // after fetching finished , set property.
+    [[NSNotificationCenter defaultCenter]
+        addObserverForName:EverydayThingsDatabaseAvailabilityNotification
+                    object:nil
+                     queue:nil
+                usingBlock:^(NSNotification *note) {
+                    NSLog(@"Database Ready");
+                    self.managedObjectContext = note.userInfo[EverydayThingsDatabaseAvailabilityContext];
+                }];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = nil; // all of Item.
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
+                                                              ascending:YES
+                                                               selector:@selector(localizedStandardCompare:)]];
+    request.fetchLimit = 100;
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:[AppDelegate sharedContext]
+                                                                          sectionNameKeyPath:@"whichItemCategory.name"
+                                                                                   cacheName:nil];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Table view data source delegate
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    static NSString *CellIdentifier = @"Item Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.textLabel.text = item.name;
+    
+    return cell;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-*/
+
+// hide section index
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return nil;
+}
+
+
+- (IBAction)addButtonPressed:(UIBarButtonItem *)sender {
+    ItemFormViewController *controller = [[ItemFormViewController alloc] init];
+    controller.formController.form = [[ItemForm alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 @end
