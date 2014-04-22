@@ -3,10 +3,12 @@
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
-//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
 #import "AllItemsViewController.h"
+#import "AppDelegate.h"
+#import "Item+Helper.h"
 
 @interface AllItemsViewController ()
 
@@ -14,48 +16,37 @@
 
 @implementation AllItemsViewController
 
+#pragma mark - View Controller Lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = nil; // all of Item.
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
+                                                              ascending:YES
+                                                               selector:@selector(localizedStandardCompare:)]];
+    request.fetchLimit = 100;
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                        managedObjectContext:[AppDelegate sharedContext]
+                                                                          sectionNameKeyPath:@"whichItemCategory.name"
+                                                                                   cacheName:nil];
+}
 
 #pragma mark - Table view data source delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ConversionMeasure Cell";
+    static NSString *CellIdentifier = @"All Items Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
- 
-    /*
-    ConversionMeasure *measure = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textLabel.text = measure.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d units", [measure.units count]];
-    cell.imageView.image = [UIImage createPlaceHolderImageWithDiagonalText:measure.name
-                                                                    inRect:CGRectMake(0, 0, 60, 60)
-                                                                 withColor:[ConversionClass colors][measure.whichClass.name]];
-    */
+    Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.textLabel.text = item.name;
     
     return cell;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-}
-
-// hide section index
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
-    return nil;
-}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

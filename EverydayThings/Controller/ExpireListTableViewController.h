@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 
-#import "CoreDataTableViewController.h"
+#import "ItemListTableViewController.h"
 
-@interface ExpireListTableViewController : CoreDataTableViewController
+@interface ExpireListTableViewController : ItemListTableViewController
 
 @end
