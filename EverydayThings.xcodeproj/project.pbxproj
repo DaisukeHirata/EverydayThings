@@ -1,0 +1,521 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E3B92EC41905F13B000346CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EC31905F13B000346CA /* Foundation.framework */; };
+		E3B92EC61905F13B000346CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EC51905F13B000346CA /* CoreGraphics.framework */; };
+		E3B92EC81905F13B000346CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EC71905F13B000346CA /* UIKit.framework */; };
+		E3B92ECE1905F13B000346CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3B92ECC1905F13B000346CA /* InfoPlist.strings */; };
+		E3B92ED01905F13B000346CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92ECF1905F13B000346CA /* main.m */; };
+		E3B92ED41905F13B000346CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92ED31905F13B000346CA /* AppDelegate.m */; };
+		E3B92EDC1905F13B000346CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3B92EDB1905F13B000346CA /* Images.xcassets */; };
+		E3B92EE31905F13B000346CA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EE21905F13B000346CA /* XCTest.framework */; };
+		E3B92EE41905F13B000346CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EC31905F13B000346CA /* Foundation.framework */; };
+		E3B92EE51905F13B000346CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92EC71905F13B000346CA /* UIKit.framework */; };
+		E3B92EED1905F13B000346CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3B92EEB1905F13B000346CA /* InfoPlist.strings */; };
+		E3B92EEF1905F13B000346CA /* EverydayThingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92EEE1905F13B000346CA /* EverydayThingsTests.m */; };
+		E3B92F011905F373000346CA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92EFE1905F373000346CA /* CoreDataTableViewController.m */; };
+		E3B92F071905F40E000346CA /* BuyNowTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F061905F40E000346CA /* BuyNowTableViewController.m */; };
+		E3B92F0A1905F454000346CA /* AllItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F091905F454000346CA /* AllItemsViewController.m */; };
+		E3B92F0D1905F663000346CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3B92F0B1905F663000346CA /* Main.storyboard */; };
+		E3B92F101905F806000346CA /* ExpireListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F0F1905F806000346CA /* ExpireListTableViewController.m */; };
+		E3B92F131905F894000346CA /* PlayListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F121905F894000346CA /* PlayListTableViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3B92EE61905F13B000346CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3B92EB81905F13B000346CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3B92EBF1905F13B000346CA;
+			remoteInfo = EverydayThings;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E3B92EC01905F13B000346CA /* EverydayThings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EverydayThings.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3B92EC31905F13B000346CA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E3B92EC51905F13B000346CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E3B92EC71905F13B000346CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E3B92ECB1905F13B000346CA /* EverydayThings-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EverydayThings-Info.plist"; sourceTree = "<group>"; };
+		E3B92ECD1905F13B000346CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E3B92ECF1905F13B000346CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3B92ED11905F13B000346CA /* EverydayThings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EverydayThings-Prefix.pch"; sourceTree = "<group>"; };
+		E3B92ED21905F13B000346CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E3B92ED31905F13B000346CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E3B92EDB1905F13B000346CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E3B92EE11905F13B000346CA /* EverydayThingsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EverydayThingsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3B92EE21905F13B000346CA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		E3B92EEA1905F13B000346CA /* EverydayThingsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EverydayThingsTests-Info.plist"; sourceTree = "<group>"; };
+		E3B92EEC1905F13B000346CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E3B92EEE1905F13B000346CA /* EverydayThingsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EverydayThingsTests.m; sourceTree = "<group>"; };
+		E3B92EFD1905F373000346CA /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		E3B92EFE1905F373000346CA /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		E3B92F051905F40E000346CA /* BuyNowTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyNowTableViewController.h; sourceTree = "<group>"; };
+		E3B92F061905F40E000346CA /* BuyNowTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyNowTableViewController.m; sourceTree = "<group>"; };
+		E3B92F081905F454000346CA /* AllItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllItemsViewController.h; sourceTree = "<group>"; };
+		E3B92F091905F454000346CA /* AllItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllItemsViewController.m; sourceTree = "<group>"; };
+		E3B92F0C1905F663000346CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E3B92F0E1905F806000346CA /* ExpireListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpireListTableViewController.h; sourceTree = "<group>"; };
+		E3B92F0F1905F806000346CA /* ExpireListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpireListTableViewController.m; sourceTree = "<group>"; };
+		E3B92F111905F894000346CA /* PlayListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListTableViewController.h; sourceTree = "<group>"; };
+		E3B92F121905F894000346CA /* PlayListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListTableViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3B92EBD1905F13B000346CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92EC61905F13B000346CA /* CoreGraphics.framework in Frameworks */,
+				E3B92EC81905F13B000346CA /* UIKit.framework in Frameworks */,
+				E3B92EC41905F13B000346CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3B92EDE1905F13B000346CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92EE31905F13B000346CA /* XCTest.framework in Frameworks */,
+				E3B92EE51905F13B000346CA /* UIKit.framework in Frameworks */,
+				E3B92EE41905F13B000346CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E3B92EB71905F13B000346CA = {
+			isa = PBXGroup;
+			children = (
+				E3B92EC91905F13B000346CA /* EverydayThings */,
+				E3B92EE81905F13B000346CA /* EverydayThingsTests */,
+				E3B92EC21905F13B000346CA /* Frameworks */,
+				E3B92EC11905F13B000346CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E3B92EC11905F13B000346CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92EC01905F13B000346CA /* EverydayThings.app */,
+				E3B92EE11905F13B000346CA /* EverydayThingsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3B92EC21905F13B000346CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92EC31905F13B000346CA /* Foundation.framework */,
+				E3B92EC51905F13B000346CA /* CoreGraphics.framework */,
+				E3B92EC71905F13B000346CA /* UIKit.framework */,
+				E3B92EE21905F13B000346CA /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3B92EC91905F13B000346CA /* EverydayThings */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92ED21905F13B000346CA /* AppDelegate.h */,
+				E3B92ED31905F13B000346CA /* AppDelegate.m */,
+				E3B92EDB1905F13B000346CA /* Images.xcassets */,
+				E3B92F0B1905F663000346CA /* Main.storyboard */,
+				E3B92F031905F37D000346CA /* Model */,
+				E3B92F041905F37D000346CA /* View */,
+				E3B92EFC1905F373000346CA /* Controller */,
+				E3B92ECA1905F13B000346CA /* Supporting Files */,
+			);
+			path = EverydayThings;
+			sourceTree = "<group>";
+		};
+		E3B92ECA1905F13B000346CA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92ECB1905F13B000346CA /* EverydayThings-Info.plist */,
+				E3B92ECC1905F13B000346CA /* InfoPlist.strings */,
+				E3B92ECF1905F13B000346CA /* main.m */,
+				E3B92ED11905F13B000346CA /* EverydayThings-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3B92EE81905F13B000346CA /* EverydayThingsTests */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92EEE1905F13B000346CA /* EverydayThingsTests.m */,
+				E3B92EE91905F13B000346CA /* Supporting Files */,
+			);
+			path = EverydayThingsTests;
+			sourceTree = "<group>";
+		};
+		E3B92EE91905F13B000346CA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92EEA1905F13B000346CA /* EverydayThingsTests-Info.plist */,
+				E3B92EEB1905F13B000346CA /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3B92EFC1905F373000346CA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92F051905F40E000346CA /* BuyNowTableViewController.h */,
+				E3B92F061905F40E000346CA /* BuyNowTableViewController.m */,
+				E3B92F081905F454000346CA /* AllItemsViewController.h */,
+				E3B92F091905F454000346CA /* AllItemsViewController.m */,
+				E3B92F0E1905F806000346CA /* ExpireListTableViewController.h */,
+				E3B92F0F1905F806000346CA /* ExpireListTableViewController.m */,
+				E3B92F111905F894000346CA /* PlayListTableViewController.h */,
+				E3B92F121905F894000346CA /* PlayListTableViewController.m */,
+				E3B92EFD1905F373000346CA /* CoreDataTableViewController.h */,
+				E3B92EFE1905F373000346CA /* CoreDataTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E3B92F031905F37D000346CA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = Controller/Model;
+			sourceTree = "<group>";
+		};
+		E3B92F041905F37D000346CA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			path = Controller/View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3B92EBF1905F13B000346CA /* EverydayThings */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3B92EF21905F13B000346CA /* Build configuration list for PBXNativeTarget "EverydayThings" */;
+			buildPhases = (
+				E3B92EBC1905F13B000346CA /* Sources */,
+				E3B92EBD1905F13B000346CA /* Frameworks */,
+				E3B92EBE1905F13B000346CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EverydayThings;
+			productName = EverydayThings;
+			productReference = E3B92EC01905F13B000346CA /* EverydayThings.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E3B92EE01905F13B000346CA /* EverydayThingsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3B92EF51905F13B000346CA /* Build configuration list for PBXNativeTarget "EverydayThingsTests" */;
+			buildPhases = (
+				E3B92EDD1905F13B000346CA /* Sources */,
+				E3B92EDE1905F13B000346CA /* Frameworks */,
+				E3B92EDF1905F13B000346CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3B92EE71905F13B000346CA /* PBXTargetDependency */,
+			);
+			name = EverydayThingsTests;
+			productName = EverydayThingsTests;
+			productReference = E3B92EE11905F13B000346CA /* EverydayThingsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3B92EB81905F13B000346CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Daisuke Hirata";
+				TargetAttributes = {
+					E3B92EE01905F13B000346CA = {
+						TestTargetID = E3B92EBF1905F13B000346CA;
+					};
+				};
+			};
+			buildConfigurationList = E3B92EBB1905F13B000346CA /* Build configuration list for PBXProject "EverydayThings" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E3B92EB71905F13B000346CA;
+			productRefGroup = E3B92EC11905F13B000346CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3B92EBF1905F13B000346CA /* EverydayThings */,
+				E3B92EE01905F13B000346CA /* EverydayThingsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3B92EBE1905F13B000346CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92F0D1905F663000346CA /* Main.storyboard in Resources */,
+				E3B92EDC1905F13B000346CA /* Images.xcassets in Resources */,
+				E3B92ECE1905F13B000346CA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3B92EDF1905F13B000346CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92EED1905F13B000346CA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3B92EBC1905F13B000346CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92F0A1905F454000346CA /* AllItemsViewController.m in Sources */,
+				E3B92F071905F40E000346CA /* BuyNowTableViewController.m in Sources */,
+				E3B92F101905F806000346CA /* ExpireListTableViewController.m in Sources */,
+				E3B92ED41905F13B000346CA /* AppDelegate.m in Sources */,
+				E3B92F131905F894000346CA /* PlayListTableViewController.m in Sources */,
+				E3B92ED01905F13B000346CA /* main.m in Sources */,
+				E3B92F011905F373000346CA /* CoreDataTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3B92EDD1905F13B000346CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3B92EEF1905F13B000346CA /* EverydayThingsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3B92EE71905F13B000346CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3B92EBF1905F13B000346CA /* EverydayThings */;
+			targetProxy = E3B92EE61905F13B000346CA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E3B92ECC1905F13B000346CA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3B92ECD1905F13B000346CA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E3B92EEB1905F13B000346CA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3B92EEC1905F13B000346CA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E3B92F0B1905F663000346CA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3B92F0C1905F663000346CA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3B92EF01905F13B000346CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E3B92EF11905F13B000346CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3B92EF31905F13B000346CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EverydayThings/EverydayThings-Prefix.pch";
+				INFOPLIST_FILE = "EverydayThings/EverydayThings-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E3B92EF41905F13B000346CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EverydayThings/EverydayThings-Prefix.pch";
+				INFOPLIST_FILE = "EverydayThings/EverydayThings-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E3B92EF61905F13B000346CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EverydayThings.app/EverydayThings";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EverydayThings/EverydayThings-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "EverydayThingsTests/EverydayThingsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		E3B92EF71905F13B000346CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/EverydayThings.app/EverydayThings";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EverydayThings/EverydayThings-Prefix.pch";
+				INFOPLIST_FILE = "EverydayThingsTests/EverydayThingsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3B92EBB1905F13B000346CA /* Build configuration list for PBXProject "EverydayThings" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3B92EF01905F13B000346CA /* Debug */,
+				E3B92EF11905F13B000346CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3B92EF21905F13B000346CA /* Build configuration list for PBXNativeTarget "EverydayThings" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3B92EF31905F13B000346CA /* Debug */,
+				E3B92EF41905F13B000346CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E3B92EF51905F13B000346CA /* Build configuration list for PBXNativeTarget "EverydayThingsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3B92EF61905F13B000346CA /* Debug */,
+				E3B92EF71905F13B000346CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3B92EB81905F13B000346CA /* Project object */;
+}
