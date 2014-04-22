@@ -44,6 +44,8 @@
         item.whereToBuy             = form.whereToBuy;
         item.favoriteProductName    = form.favoriteProductName;
         item.whereToStock           = form.whereToStock;
+        item.cycle                  = [NSDecimalNumber decimalNumberWithString:form.cycle];
+        item.timeSpan               = form.timeSpan;
         item.whichItemCategory      = [ItemCategory itemCategoryWithName:form.category ? form.category : @"None"];
         
         NSError *error = nil;

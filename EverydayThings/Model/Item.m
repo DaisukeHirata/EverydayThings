@@ -7,18 +7,21 @@
 //
 
 #import "Item.h"
+#import "ItemCategory.h"
 
 
 @implementation Item
 
-@dynamic name;
+@dynamic expireDate;
+@dynamic favoriteProductName;
 @dynamic isBuyNow;
 @dynamic isStock;
 @dynamic lastPurchaseDate;
-@dynamic expireDate;
+@dynamic name;
 @dynamic whereToBuy;
-@dynamic favoriteProductName;
 @dynamic whereToStock;
+@dynamic cycle;
+@dynamic timeSpan;
 @dynamic whichItemCategory;
 
 @end

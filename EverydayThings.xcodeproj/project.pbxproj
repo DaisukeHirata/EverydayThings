@@ -25,6 +25,17 @@
 		E3B92F0D1905F663000346CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3B92F0B1905F663000346CA /* Main.storyboard */; };
 		E3B92F101905F806000346CA /* ExpireListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F0F1905F806000346CA /* ExpireListTableViewController.m */; };
 		E3B92F131905F894000346CA /* PlayListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F121905F894000346CA /* PlayListTableViewController.m */; };
+		E3B92F3C1905FE0E000346CA /* EverydayThingsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F361905FE0E000346CA /* EverydayThingsModel.xcdatamodeld */; };
+		E3B92F431906047B000346CA /* FXForms.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F421906047B000346CA /* FXForms.m */; };
+		E3B92F46190605A0000346CA /* ItemFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F45190605A0000346CA /* ItemFormViewController.m */; };
+		E3B92F4F1906070C000346CA /* ItemForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F4C1906070C000346CA /* ItemForm.m */; };
+		E3B92F5219060797000346CA /* ISO3166CountryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5119060797000346CA /* ISO3166CountryValueTransformer.m */; };
+		E3B92F5719061FC5000346CA /* Item+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5619061FC5000346CA /* Item+Helper.m */; };
+		E3B92F5A19063E89000346CA /* ItemCategory+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5919063E89000346CA /* ItemCategory+Helper.m */; };
+		E3B92F5D1906422D000346CA /* AppDelegate+MOC.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */; };
+		E3B92F601906448D000346CA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92F5F1906448D000346CA /* CoreData.framework */; };
+		E3B92F6319065D1B000346CA /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F6219065D1B000346CA /* ItemCategory.m */; };
+		E3B92F6619065D1C000346CA /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F6519065D1C000346CA /* Item.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +76,27 @@
 		E3B92F0F1905F806000346CA /* ExpireListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpireListTableViewController.m; sourceTree = "<group>"; };
 		E3B92F111905F894000346CA /* PlayListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListTableViewController.h; sourceTree = "<group>"; };
 		E3B92F121905F894000346CA /* PlayListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListTableViewController.m; sourceTree = "<group>"; };
+		E3B92F371905FE0E000346CA /* EverydayThingsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EverydayThingsModel.xcdatamodel; sourceTree = "<group>"; };
+		E3B92F411906047B000346CA /* FXForms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXForms.h; sourceTree = "<group>"; };
+		E3B92F421906047B000346CA /* FXForms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXForms.m; sourceTree = "<group>"; };
+		E3B92F44190605A0000346CA /* ItemFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemFormViewController.h; sourceTree = "<group>"; };
+		E3B92F45190605A0000346CA /* ItemFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemFormViewController.m; sourceTree = "<group>"; };
+		E3B92F4B1906070C000346CA /* ItemForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemForm.h; sourceTree = "<group>"; };
+		E3B92F4C1906070C000346CA /* ItemForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemForm.m; sourceTree = "<group>"; };
+		E3B92F5019060797000346CA /* ISO3166CountryValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO3166CountryValueTransformer.h; sourceTree = "<group>"; };
+		E3B92F5119060797000346CA /* ISO3166CountryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO3166CountryValueTransformer.m; sourceTree = "<group>"; };
+		E3B92F5519061FC5000346CA /* Item+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Item+Helper.h"; sourceTree = "<group>"; };
+		E3B92F5619061FC5000346CA /* Item+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Item+Helper.m"; sourceTree = "<group>"; };
+		E3B92F5819063E89000346CA /* ItemCategory+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ItemCategory+Helper.h"; sourceTree = "<group>"; };
+		E3B92F5919063E89000346CA /* ItemCategory+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ItemCategory+Helper.m"; sourceTree = "<group>"; };
+		E3B92F5B1906422D000346CA /* AppDelegate+MOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+MOC.h"; sourceTree = "<group>"; };
+		E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MOC.m"; sourceTree = "<group>"; };
+		E3B92F5E19064325000346CA /* EverydayThingsDatabaseAvailability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EverydayThingsDatabaseAvailability.h; sourceTree = "<group>"; };
+		E3B92F5F1906448D000346CA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E3B92F6119065D1B000346CA /* ItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCategory.h; sourceTree = "<group>"; };
+		E3B92F6219065D1B000346CA /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCategory.m; sourceTree = "<group>"; };
+		E3B92F6419065D1C000346CA /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		E3B92F6519065D1C000346CA /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3B92F601906448D000346CA /* CoreData.framework in Frameworks */,
 				E3B92EC61905F13B000346CA /* CoreGraphics.framework in Frameworks */,
 				E3B92EC81905F13B000346CA /* UIKit.framework in Frameworks */,
 				E3B92EC41905F13B000346CA /* Foundation.framework in Frameworks */,
@@ -113,6 +146,7 @@
 		E3B92EC21905F13B000346CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E3B92F5F1906448D000346CA /* CoreData.framework */,
 				E3B92EC31905F13B000346CA /* Foundation.framework */,
 				E3B92EC51905F13B000346CA /* CoreGraphics.framework */,
 				E3B92EC71905F13B000346CA /* UIKit.framework */,
@@ -126,11 +160,14 @@
 			children = (
 				E3B92ED21905F13B000346CA /* AppDelegate.h */,
 				E3B92ED31905F13B000346CA /* AppDelegate.m */,
+				E3B92F5B1906422D000346CA /* AppDelegate+MOC.h */,
+				E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */,
+				E3B92F5E19064325000346CA /* EverydayThingsDatabaseAvailability.h */,
 				E3B92EDB1905F13B000346CA /* Images.xcassets */,
 				E3B92F0B1905F663000346CA /* Main.storyboard */,
-				E3B92F031905F37D000346CA /* Model */,
-				E3B92F041905F37D000346CA /* View */,
 				E3B92EFC1905F373000346CA /* Controller */,
+				E3B92F351905FE0E000346CA /* Model */,
+				E3B92F3F1905FE18000346CA /* View */,
 				E3B92ECA1905F13B000346CA /* Supporting Files */,
 			);
 			path = EverydayThings;
@@ -178,24 +215,55 @@
 				E3B92F121905F894000346CA /* PlayListTableViewController.m */,
 				E3B92EFD1905F373000346CA /* CoreDataTableViewController.h */,
 				E3B92EFE1905F373000346CA /* CoreDataTableViewController.m */,
+				E3B92F44190605A0000346CA /* ItemFormViewController.h */,
+				E3B92F45190605A0000346CA /* ItemFormViewController.m */,
+				E3B92F54190611DF000346CA /* FXForms */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		E3B92F031905F37D000346CA /* Model */ = {
+		E3B92F351905FE0E000346CA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E3B92F5319060E71000346CA /* Coredata */,
+				E3B92F4B1906070C000346CA /* ItemForm.h */,
+				E3B92F4C1906070C000346CA /* ItemForm.m */,
+				E3B92F5019060797000346CA /* ISO3166CountryValueTransformer.h */,
+				E3B92F5119060797000346CA /* ISO3166CountryValueTransformer.m */,
 			);
-			name = Model;
-			path = Controller/Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		E3B92F041905F37D000346CA /* View */ = {
+		E3B92F3F1905FE18000346CA /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = View;
-			path = Controller/View;
+			path = View;
+			sourceTree = "<group>";
+		};
+		E3B92F5319060E71000346CA /* Coredata */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92F361905FE0E000346CA /* EverydayThingsModel.xcdatamodeld */,
+				E3B92F6419065D1C000346CA /* Item.h */,
+				E3B92F6519065D1C000346CA /* Item.m */,
+				E3B92F6119065D1B000346CA /* ItemCategory.h */,
+				E3B92F6219065D1B000346CA /* ItemCategory.m */,
+				E3B92F5519061FC5000346CA /* Item+Helper.h */,
+				E3B92F5619061FC5000346CA /* Item+Helper.m */,
+				E3B92F5819063E89000346CA /* ItemCategory+Helper.h */,
+				E3B92F5919063E89000346CA /* ItemCategory+Helper.m */,
+			);
+			name = Coredata;
+			sourceTree = "<group>";
+		};
+		E3B92F54190611DF000346CA /* FXForms */ = {
+			isa = PBXGroup;
+			children = (
+				E3B92F411906047B000346CA /* FXForms.h */,
+				E3B92F421906047B000346CA /* FXForms.m */,
+			);
+			name = FXForms;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,12 +363,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3B92F46190605A0000346CA /* ItemFormViewController.m in Sources */,
+				E3B92F5719061FC5000346CA /* Item+Helper.m in Sources */,
 				E3B92F0A1905F454000346CA /* AllItemsViewController.m in Sources */,
+				E3B92F5219060797000346CA /* ISO3166CountryValueTransformer.m in Sources */,
+				E3B92F431906047B000346CA /* FXForms.m in Sources */,
+				E3B92F5D1906422D000346CA /* AppDelegate+MOC.m in Sources */,
 				E3B92F071905F40E000346CA /* BuyNowTableViewController.m in Sources */,
+				E3B92F5A19063E89000346CA /* ItemCategory+Helper.m in Sources */,
 				E3B92F101905F806000346CA /* ExpireListTableViewController.m in Sources */,
 				E3B92ED41905F13B000346CA /* AppDelegate.m in Sources */,
+				E3B92F6319065D1B000346CA /* ItemCategory.m in Sources */,
 				E3B92F131905F894000346CA /* PlayListTableViewController.m in Sources */,
+				E3B92F6619065D1C000346CA /* Item.m in Sources */,
 				E3B92ED01905F13B000346CA /* main.m in Sources */,
+				E3B92F3C1905FE0E000346CA /* EverydayThingsModel.xcdatamodeld in Sources */,
+				E3B92F4F1906070C000346CA /* ItemForm.m in Sources */,
 				E3B92F011905F373000346CA /* CoreDataTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,6 +584,7 @@
 				E3B92EF41905F13B000346CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E3B92EF51905F13B000346CA /* Build configuration list for PBXNativeTarget "EverydayThingsTests" */ = {
 			isa = XCConfigurationList;
@@ -514,8 +593,22 @@
 				E3B92EF71905F13B000346CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E3B92F361905FE0E000346CA /* EverydayThingsModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E3B92F371905FE0E000346CA /* EverydayThingsModel.xcdatamodel */,
+			);
+			currentVersion = E3B92F371905FE0E000346CA /* EverydayThingsModel.xcdatamodel */;
+			path = EverydayThingsModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E3B92EB81905F13B000346CA /* Project object */;
 }

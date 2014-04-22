@@ -22,6 +22,37 @@
 {
     [super viewDidLoad];
     self.formController.form = [[ItemForm alloc] init];
+    
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Save"
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(saveItem:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+    if (self.item) {
+        ItemForm *form = self.formController.form;
+        form.name                = self.item.name;
+        form.category            = self.item.whichItemCategory.name;
+        form.buyNow              = [self.item.isBuyNow boolValue];
+        form.stock               = [self.item.isStock boolValue];
+        form.lastPurchaseDate    = self.item.lastPurchaseDate;
+        form.expireDate          = self.item.expireDate;
+        form.whereToBuy          = self.item.whereToBuy;
+        form.favoriteProductName = self.item.favoriteProductName;
+        form.whereToStock        = self.item.whereToStock;
+        form.cycle               = [self.item.cycle stringValue];
+        form.timeSpan            = self.item.timeSpan;
+    }
+}
+
+- (void)saveItem:(UIBarButtonItem *)sender
+{
+    // save
+    [Item saveItem:self.formController.form];
+    
+    // return to table view
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

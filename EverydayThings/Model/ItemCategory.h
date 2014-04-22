@@ -3,7 +3,7 @@
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
-//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,8 +13,8 @@
 
 @interface ItemCategory : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * color;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *items;
 @end
 

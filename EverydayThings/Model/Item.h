@@ -9,17 +9,20 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class ItemCategory;
 
 @interface Item : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSDate * expireDate;
+@property (nonatomic, retain) NSString * favoriteProductName;
 @property (nonatomic, retain) NSNumber * isBuyNow;
 @property (nonatomic, retain) NSNumber * isStock;
 @property (nonatomic, retain) NSDate * lastPurchaseDate;
-@property (nonatomic, retain) NSDate * expireDate;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * whereToBuy;
-@property (nonatomic, retain) NSString * favoriteProductName;
 @property (nonatomic, retain) NSString * whereToStock;
-@property (nonatomic, retain) NSManagedObject *whichItemCategory;
+@property (nonatomic, retain) NSDecimalNumber * cycle;
+@property (nonatomic, retain) NSString * timeSpan;
+@property (nonatomic, retain) ItemCategory *whichItemCategory;
 
 @end

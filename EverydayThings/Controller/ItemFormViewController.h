@@ -8,6 +8,11 @@
 
 #import "FXForms.h"
 
+@class Item;
+
 @interface ItemFormViewController : FXFormViewController
+
+// in
+@property (nonatomic, strong) Item *item;
 
 @end

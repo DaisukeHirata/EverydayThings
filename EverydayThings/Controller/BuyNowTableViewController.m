@@ -69,6 +69,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    ItemFormViewController *controller = [[ItemFormViewController alloc] init];
+    controller.formController.form = [[ItemForm alloc] init];
+    controller.item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 // hide section index
