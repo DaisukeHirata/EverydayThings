@@ -2,7 +2,7 @@
 //  ItemCategory.m
 //  EverydayThings
 //
-//  Created by Daisuke Hirata on 2014/04/22.
+//  Created by Daisuke Hirata on 2014/04/23.
 //  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 

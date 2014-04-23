@@ -47,7 +47,8 @@
         item.cycle                  = [NSDecimalNumber decimalNumberWithString:form.cycle];
         item.timeSpan               = form.timeSpan;
         item.whichItemCategory      = [ItemCategory itemCategoryWithName:form.category ? form.category : @"None"];
-        
+        item.elapsed                = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
+                
         NSError *error = nil;
         [context save:&error];
         if(error) {
@@ -61,10 +62,43 @@
 - (NSInteger)expiredWeeks
 {
 	// now - expire date
-	NSTimeInterval since = [[NSDate date] timeIntervalSinceDate:self.expireDate];
+	NSTimeInterval since = 0;
+    
+    if (self.expireDate) {
+        since = [[NSDate date] timeIntervalSinceDate:self.expireDate];
+    }
     
     // convert second into week
     return (NSInteger)since/(7*24*60*60);
+}
+
+- (NSInteger)elapsedDaysAfterLastPurchaseDate
+{
+	// now - last purchase date
+	NSTimeInterval since = 0;
+    
+    if (self.lastPurchaseDate) {
+        since = [[NSDate date] timeIntervalSinceDate:self.lastPurchaseDate];
+    }
+    
+    // convert second into day
+    return (NSInteger)since/(24*60*60);
+}
+
+- (NSInteger)cycleInDays
+{
+    NSInteger cycle = 0;
+    
+    if (![self.cycle isEqualToNumber:[NSDecimalNumber notANumber]]) {
+        cycle = [self.cycle longValue];
+        if ([self.timeSpan isEqualToString:@"Month"]) {
+            cycle = [self.cycle longValue] * 30;
+        } else if ([self.timeSpan isEqualToString:@"Year"]) {
+            cycle = [self.cycle longValue] * 365;
+        }
+    }
+    
+    return cycle;
 }
 
 @end

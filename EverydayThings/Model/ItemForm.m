@@ -58,8 +58,8 @@
                FXFormFieldType: FXFormFieldTypeNumber,
                FXFormFieldHeader: @"Cycle to resupply"},
              @{FXFormFieldKey: @"timeSpan",
-               FXFormFieldPlaceholder: @"Days",
-               FXFormFieldOptions: @[@"Months", @"Years"]},
+               FXFormFieldPlaceholder: @"Day",
+               FXFormFieldOptions: @[@"Month", @"Year"]},
 
              
              @{FXFormFieldTitle: @"whereToBuy", FXFormFieldHeader: @"Detail"},

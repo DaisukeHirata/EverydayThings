@@ -12,5 +12,7 @@
 @interface Item (Helper)
 
 + (Item *)saveItem:(ItemForm *)form;
+- (NSInteger)cycleInDays;
+- (NSInteger)elapsedDaysAfterLastPurchaseDate;
 
 @end

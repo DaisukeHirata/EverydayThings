@@ -9,6 +9,7 @@
 #import "BuyNowTableViewController.h"
 #import "AppDelegate.h"
 #import "Item+Helper.h"
+#import "TDBadgedCell.h"
 
 @interface BuyNowTableViewController ()
 @end
@@ -22,7 +23,7 @@
     [super viewDidLoad];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"isBuyNow = YES"];
+    request.predicate = [NSPredicate predicateWithFormat:@"isBuyNow = YES || elapsed = YES"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];
@@ -39,12 +40,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Buy Now Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = item.name;
-    
+    if ([item cycleInDays]) {
+        cell.badgeString = [NSString stringWithFormat:@"%ld/%ld",
+                            (long)[item elapsedDaysAfterLastPurchaseDate],
+                            (long)[item cycleInDays]];
+        if ([item.elapsed isEqualToNumber:@1]) {
+            cell.badgeColor = [UIColor redColor];
+        } else {
+            cell.badgeColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+        }
+    }
+
     return cell;
 }
 

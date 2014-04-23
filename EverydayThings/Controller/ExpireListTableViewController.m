@@ -66,15 +66,15 @@
     NSString *weekName = nil;
     
     if (weekNumber > 1) {
-        weekName = [NSString stringWithFormat:@"%li weeks ago", weekNumber];
+        weekName = [NSString stringWithFormat:@"%li weeks ago", (long)weekNumber];
     } else if (weekNumber == 1) {
         weekName = [NSString stringWithFormat:@"Last Week"];
     } else if (weekNumber == 0) {
-        weekName = [NSString stringWithFormat:@"This Week"];
+        weekName = [NSString stringWithFormat:@"Within a Week"];
     } else if (weekNumber == -1) {
-        weekName = [NSString stringWithFormat:@"Next Week"];
+        weekName = [NSString stringWithFormat:@"Within two Weeks"];
     } else {
-        weekName = [NSString stringWithFormat:@"This Month"];
+        weekName = [NSString stringWithFormat:@"Within a Month"];
     }
     
     return weekName;

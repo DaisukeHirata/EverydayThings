@@ -2,7 +2,7 @@
 //  Item.m
 //  EverydayThings
 //
-//  Created by Daisuke Hirata on 2014/04/22.
+//  Created by Daisuke Hirata on 2014/04/23.
 //  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 
@@ -12,16 +12,17 @@
 
 @implementation Item
 
+@dynamic cycle;
 @dynamic expireDate;
 @dynamic favoriteProductName;
 @dynamic isBuyNow;
 @dynamic isStock;
 @dynamic lastPurchaseDate;
 @dynamic name;
+@dynamic timeSpan;
 @dynamic whereToBuy;
 @dynamic whereToStock;
-@dynamic cycle;
-@dynamic timeSpan;
+@dynamic elapsed;
 @dynamic whichItemCategory;
 
 @end
