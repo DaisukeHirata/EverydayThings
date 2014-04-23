@@ -1685,6 +1685,8 @@ static BOOL *FXFormSetValueForKey(id<FXForm> form, id value, NSString *key)
         {
             self.accessoryType = UITableViewCellAccessoryNone;
             self.textLabel.textAlignment = NSTextAlignmentCenter;
+            self.backgroundColor = [UIColor purpleColor];
+            self.textLabel.textColor = [UIColor whiteColor];
         }
         else
         {

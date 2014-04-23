@@ -41,6 +41,15 @@
              @{FXFormFieldKey: @"stock",
                FXFormFieldCell: [FXFormSwitchCell class]},
 
+             @"expireDate",
+             
+             //this field doesn't correspond to any property of the form
+             //it's just an action button. the action will be called on first
+             //object in the responder chain that implements the submitForm
+             //method, which in this case would be the AppDelegate
+             @{FXFormFieldTitle: @"Purchased this !!", FXFormFieldHeader: @"Purchase", FXFormFieldAction: @"purchase:"},
+             @"lastPurchaseDate",
+
              
              //
              // Cycle to resupply
@@ -53,25 +62,9 @@
                FXFormFieldOptions: @[@"Months", @"Years"]},
 
              
-             //
-             // we want to add another group header here
-             //
-             @{FXFormFieldKey: @"lastPurchaseDate", FXFormFieldHeader: @""},
-             //we don't need to modify these fields at all, so we'll
-             //just refer to them by name to use the default settings
-             @"expireDate",
-             @"whereToBuy",
+             @{FXFormFieldTitle: @"whereToBuy", FXFormFieldHeader: @"Detail"},
              @"favoriteProductName",
              @"whereToStock",
-             
-             
-             
-             //this field doesn't correspond to any property of the form
-             //it's just an action button. the action will be called on first
-             //object in the responder chain that implements the submitForm
-             //method, which in this case would be the AppDelegate
-             
-             @{FXFormFieldTitle: @"Add", FXFormFieldHeader: @"", FXFormFieldAction: @"addItem:"},
              
              ];
 }

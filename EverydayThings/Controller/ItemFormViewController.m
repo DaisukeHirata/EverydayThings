@@ -67,18 +67,20 @@
     self.tabBarController.tabBar.hidden = NO;
 }
 
-- (void)addItem:(UITableViewCell<FXFormFieldCell> *)cell
+- (void)purchase:(UITableViewCell<FXFormFieldCell> *)cell
 {
     // lookup the form from the cell
     ItemForm *form = cell.field.form;
+    
+    NSLog(@"Purchased %@", form.name);
+    
+    form.lastPurchaseDate = [NSDate date];
     
     // save
     [Item saveItem:form];
     
     // return to table view
     [self.navigationController popViewControllerAnimated:YES];
-
-    
 /*
     //we can then perform validation, etc
     if (form.agreedToTerms)

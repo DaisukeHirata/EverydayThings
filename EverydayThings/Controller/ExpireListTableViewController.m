@@ -24,21 +24,20 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
 
-    // 1 week later
+    // 1 month later
     NSDate *today = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setWeek:1];
+    [comps setMonth:1];
     NSDate *nearFutureDate = [cal dateByAddingComponents:comps toDate:today options:0];
     request.predicate = [NSPredicate predicateWithFormat:@"expireDate < %@", nearFutureDate];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
-                                                              ascending:YES
-                                                               selector:@selector(localizedStandardCompare:)]];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"expireDate"
+                                                              ascending:YES]];
     request.fetchLimit = 100;
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]
-                                                                          sectionNameKeyPath:@"whichItemCategory.name"
+                                                                          sectionNameKeyPath:@"expiredWeeks"
                                                                                    cacheName:nil];
 }
 
@@ -54,6 +53,31 @@
     cell.textLabel.text = item.name;
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSInteger sectionWeek = [[[[self.fetchedResultsController sections] objectAtIndex:section] name] intValue];
+    return [self weekName:sectionWeek];
+}
+
+- (NSString *)weekName:(NSInteger) weekNumber
+{
+    NSString *weekName = nil;
+    
+    if (weekNumber > 1) {
+        weekName = [NSString stringWithFormat:@"%li weeks ago", weekNumber];
+    } else if (weekNumber == 1) {
+        weekName = [NSString stringWithFormat:@"Last Week"];
+    } else if (weekNumber == 0) {
+        weekName = [NSString stringWithFormat:@"This Week"];
+    } else if (weekNumber == -1) {
+        weekName = [NSString stringWithFormat:@"Next Week"];
+    } else {
+        weekName = [NSString stringWithFormat:@"This Month"];
+    }
+    
+    return weekName;
 }
 
 

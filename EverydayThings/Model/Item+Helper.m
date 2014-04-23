@@ -58,4 +58,13 @@
     return item;
 }
 
+- (NSInteger)expiredWeeks
+{
+	// now - expire date
+	NSTimeInterval since = [[NSDate date] timeIntervalSinceDate:self.expireDate];
+    
+    // convert second into week
+    return (NSInteger)since/(7*24*60*60);
+}
+
 @end

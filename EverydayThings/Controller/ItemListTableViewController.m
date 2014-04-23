@@ -9,6 +9,7 @@
 #import "ItemListTableViewController.h"
 #import "ItemFormViewController.h"
 #import "ItemForm.h"
+#import "AppDelegate.h"
 
 @interface ItemListTableViewController ()
 
@@ -35,6 +36,23 @@
     ItemFormViewController *controller = [[ItemFormViewController alloc] init];
     controller.formController.form = [[ItemForm alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+
+// delete row delegate
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return YES - we will be able to delete all rows
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [[AppDelegate sharedContext] deleteObject:managedObject];
+        [[AppDelegate sharedContext] save:nil];
+    }
 }
 
 @end
