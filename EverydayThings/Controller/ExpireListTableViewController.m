@@ -9,6 +9,7 @@
 #import "ExpireListTableViewController.h"
 #import "AppDelegate.h"
 #import "Item+Helper.h"
+#import "ItemCategory+Helper.h"
 
 @interface ExpireListTableViewController ()
 
@@ -49,8 +50,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd"];
     
     cell.textLabel.text = item.name;
+    cell.detailTextLabel.text = [formatter stringFromDate:item.expireDate];
+    cell.detailTextLabel.textColor = ([[NSDate date] compare:item.expireDate] == NSOrderedDescending) ?
+                                            [self hexToUIColor:@"ff6347" alpha:1.0] : [UIColor grayColor];
+    cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     
     return cell;
 }

@@ -13,5 +13,6 @@
 + (ItemCategory *)itemCategoryWithName:(NSString *)name;
 + (NSArray *)categories;
 + (NSDictionary *)colors;
++ (UIImage *)iconWithCategoryName:(NSString *)name;
 
 @end

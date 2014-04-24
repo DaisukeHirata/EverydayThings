@@ -17,6 +17,24 @@
 
 @implementation ItemListTableViewController
 
+/*
+ *  System Versioning Preprocessor Macros
+ */
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) //should check version to prevent force closed
+    {
+        self.tableView.separatorInset = UIEdgeInsetsMake(0, 14, 0, 0);;
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -61,6 +79,17 @@
         [[AppDelegate sharedContext] deleteObject:managedObject];
         [[AppDelegate sharedContext] save:nil];
     }
+}
+
+- (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
+{
+	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
+	unsigned int color;
+	[colorScanner scanHexInt:&color];
+	CGFloat r = ((color & 0xFF0000) >> 16)/255.0f;
+	CGFloat g = ((color & 0x00FF00) >> 8) /255.0f;
+	CGFloat b =  (color & 0x0000FF) /255.0f;
+	return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 @end

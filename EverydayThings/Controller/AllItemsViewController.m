@@ -46,6 +46,7 @@
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = item.name;
+    cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     
     return cell;
 }

@@ -62,7 +62,9 @@
                FXFormFieldOptions: @[@"Month", @"Year"]},
 
              
-             @{FXFormFieldTitle: @"whereToBuy", FXFormFieldHeader: @"Detail"},
+             @{FXFormFieldTitle: @"whereToBuy",
+               FXFormFieldType: FXFormFieldTypeText,
+               FXFormFieldHeader: @"Detail"},
              @"favoriteProductName",
              @"whereToStock",
              

@@ -10,4 +10,6 @@
 
 @interface ItemListTableViewController : CoreDataTableViewController
 
+- (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a;
+
 @end

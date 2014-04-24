@@ -11,6 +11,7 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
+#import "FAKFontAwesome.h"
 
 @interface BuyNowTableViewController ()
 @end
@@ -50,14 +51,16 @@
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = item.name;
+    cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     if ([item cycleInDays]) {
         cell.badgeString = [NSString stringWithFormat:@"%ld/%ld",
                             (long)[item elapsedDaysAfterLastPurchaseDate],
                             (long)[item cycleInDays]];
         if ([item.elapsed isEqualToNumber:@1]) {
-            cell.badgeColor = [UIColor redColor];
+            // elpased
+            cell.badgeColor = [self hexToUIColor:@"dc143c" alpha:1.0];
         } else {
-            cell.badgeColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1.0];
+            cell.badgeColor = [UIColor lightGrayColor];
         }
     }
 

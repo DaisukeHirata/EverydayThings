@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ItemCategory+Helper.h"
+#import "FAKFontAwesome.h"
 
 @implementation ItemCategory (Helper)
 
@@ -56,7 +57,17 @@
              @"Drug"            : [self hexToUIColor:@"3775CB" alpha:1.0]};
 }
 
-+ (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a{
++ (NSDictionary *)icons
+{
+    return @{@"Grocery"         : [FAKFontAwesome homeIconWithSize:20],
+             @"Food"            : [FAKFontAwesome cutleryIconWithSize:20],
+             @"Emergency Goods" : [FAKFontAwesome suitcaseIconWithSize:20],
+             @"Drug"            : [FAKFontAwesome ambulanceIconWithSize:20],
+             @"None"            : [FAKFontAwesome circleIconWithSize:10]};
+}
+
++ (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
+{
 	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
 	unsigned int color;
 	[colorScanner scanHexInt:&color];
@@ -64,6 +75,14 @@
 	CGFloat g = ((color & 0x00FF00) >> 8) /255.0f;
 	CGFloat b =  (color & 0x0000FF) /255.0f;
 	return [UIColor colorWithRed:r green:g blue:b alpha:a];
+}
+
++ (UIImage *)iconWithCategoryName:(NSString *)name
+{
+    UIImage *image;
+    image = [UIImage imageWithStackedIcons:@[[self icons][name]]
+                                                imageSize:CGSizeMake(20, 20)];
+    return image;
 }
 
 @end
