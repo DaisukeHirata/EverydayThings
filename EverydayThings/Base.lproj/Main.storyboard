@@ -111,10 +111,10 @@
             </objects>
             <point key="canvasLocation" x="1334" y="839"/>
         </scene>
-        <!--My Table View Controller - MapSearch-->
+        <!--Search Address View Controller - Search Address-->
         <scene sceneID="Qj4-bj-Qou">
             <objects>
-                <tableViewController storyboardIdentifier="SearchAddressViewController" id="kj7-ei-tGu" customClass="MyTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchAddressViewController" id="kj7-ei-tGu" customClass="SearchAddressViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="LIZ-CR-Y44">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,7 +158,7 @@
                             <outlet property="delegate" destination="kj7-ei-tGu" id="Eha-kS-4Pg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="MapSearch" id="HmC-zd-FdG"/>
+                    <navigationItem key="navigationItem" title="Search Address" id="HmC-zd-FdG"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CSq-1O-VsI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -197,7 +197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VhL-DD-PyR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2239" y="827"/>
+            <point key="canvasLocation" x="2198" y="839"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="vgi-ts-syi">
