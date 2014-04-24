@@ -16,6 +16,8 @@
              
              // switch
              @{FXFormFieldKey: @"useBadge", FXFormFieldCell: [FXFormSwitchCell class]},
+
+             @{FXFormFieldTitle: @"test map !!", FXFormFieldHeader: @"GeoFence", FXFormFieldAction: @"searchMap:"},
              
              ];
 }

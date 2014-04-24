@@ -8,6 +8,7 @@
 
 #import "SettingFormViewController.h"
 #import "SettingForm.h"
+#import "MyTableViewController.h"
 
 @interface SettingFormViewController ()
 
@@ -22,5 +23,13 @@
     // necessary to show form
     [self.tableView reloadData];
 }
+
+- (void)searchMap:(UITableViewCell<FXFormFieldCell> *)cell
+{
+    MyTableViewController *searchAddressViewController =
+        [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
+    [self.navigationController pushViewController:searchAddressViewController animated:YES];
+}
+
 
 @end
