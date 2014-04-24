@@ -21,7 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.formController.form = [[ItemForm alloc] init];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Save"

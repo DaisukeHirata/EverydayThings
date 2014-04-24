@@ -43,6 +43,19 @@
     return category;
 }
 
++ (NSArray *)categories
+{
+    return @[@"Grocery", @"Food", @"Emergency Goods", @"Drug"];
+}
+
++ (NSDictionary *)colors
+{
+    return @{@"Grocery"         : [self hexToUIColor:@"FFD119" alpha:1.0],
+             @"Food"            : [self hexToUIColor:@"38AD26" alpha:1.0],
+             @"Emergency Goods" : [self hexToUIColor:@"987D45" alpha:1.0],
+             @"Drug"            : [self hexToUIColor:@"3775CB" alpha:1.0]};
+}
+
 + (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a{
 	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
 	unsigned int color;

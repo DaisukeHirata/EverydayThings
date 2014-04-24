@@ -17,6 +17,14 @@
 
 @implementation ItemListTableViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // needs to upload section header color
+    [self.tableView reloadData];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -38,7 +46,6 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-
 // delete row delegate
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -48,6 +55,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // delete
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[AppDelegate sharedContext] deleteObject:managedObject];

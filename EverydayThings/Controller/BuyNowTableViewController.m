@@ -9,6 +9,7 @@
 #import "BuyNowTableViewController.h"
 #import "AppDelegate.h"
 #import "Item+Helper.h"
+#import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
 
 @interface BuyNowTableViewController ()
@@ -33,7 +34,11 @@
                                                                         managedObjectContext:[AppDelegate sharedContext]
                                                                           sectionNameKeyPath:@"whichItemCategory.name"
                                                                                    cacheName:nil];
+
 }
+
+
+
 
 #pragma mark - Table view data source delegate
 
@@ -57,6 +62,21 @@
     }
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Section name
+    NSString *sectionName = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    
+    if ([[ItemCategory colors] objectForKey:sectionName]) {
+        // Background color
+        view.tintColor = [ItemCategory colors][sectionName];
+
+        // Text Color
+        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+        [header.textLabel setTextColor:[UIColor whiteColor]];
+    }
 }
 
 @end

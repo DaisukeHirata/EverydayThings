@@ -8,7 +8,7 @@
 
 #import "ItemForm.h"
 #import "ISO3166CountryValueTransformer.h"
-
+#import "ItemCategory+Helper.h"
 
 @implementation ItemForm
 
@@ -24,14 +24,14 @@
              // we want to add a group header for the field set of fields
              // we do that by adding the header key to the first field in the group
              // , and modify the auto-capitalization
-             @{FXFormFieldKey: @"name", FXFormFieldHeader: @"Details",
+             @{FXFormFieldKey: @"name", FXFormFieldHeader: @"ITEM",
                @"textField.autocapitalizationType": @(UITextAutocapitalizationTypeWords)},
 
              //this is a multiple choice field, so we'll need to provide some options
              //because this is an enum property, the indexes of the options should match enum values
              @{FXFormFieldKey: @"category",
                FXFormFieldPlaceholder: @"None",
-               FXFormFieldOptions: @[@"Grocery", @"Food", @"Emergency Goods", @"Drug"]},
+               FXFormFieldOptions: [ItemCategory categories]},
 
              // switch
              @{FXFormFieldKey: @"buyNow",
@@ -68,5 +68,6 @@
              
              ];
 }
+
 
 @end
