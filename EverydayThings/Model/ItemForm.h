@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 #import "FXForms.h"
 
 typedef NS_OPTIONS(NSInteger, Interests)
@@ -31,6 +32,8 @@ typedef NS_OPTIONS(NSInteger, Interests)
 @property (nonatomic, copy) NSString *whereToBuy;
 @property (nonatomic, copy) NSString *favoriteProductName;
 @property (nonatomic, copy) NSString *whereToStock;
+
+@property (nonatomic, strong) CLLocation *location;
 
 @property (nonatomic, assign) NSUInteger age;
 @property (nonatomic, strong) UIImage *profilePhoto;

@@ -16,12 +16,34 @@
 
 @implementation SettingFormViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if ((self = [super initWithCoder:aDecoder])) {
+        QRootElement *_root = [[QRootElement alloc] init];
+        _root.grouped = YES;
+        _root.title = @"Setting";
+        self.root = _root;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.formController.form = [[SettingForm alloc] init];
-    // necessary to show form
-    [self.tableView reloadData];
+    
+    QSection *section = [[QSection alloc] initWithTitle:@"Something"];
+    QLabelElement *label = [[QLabelElement alloc] initWithTitle:@"Hello" Value:@"world!"];
+    QButtonElement *button = [[QButtonElement alloc] initWithTitle:@"Location"];
+    button.onSelected =  ^{
+        NSLog(@"pushed");
+        SearchAddressViewController *searchAddressViewController =
+        [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
+        [self.navigationController pushViewController:searchAddressViewController animated:YES];
+	};
+
+    [self.root addSection:section];
+    [section addElement:label];
+    [section addElement:button];
 }
 
 - (void)searchMap:(UITableViewCell<FXFormFieldCell> *)cell

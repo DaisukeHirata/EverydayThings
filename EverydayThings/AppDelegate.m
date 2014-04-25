@@ -43,6 +43,7 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     NSLog(@"LocalNotification recieved.");
+    [[UIApplication sharedApplication] cancelLocalNotification:notification];
 }
 
 - (void) setupTabBar

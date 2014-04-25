@@ -12,5 +12,6 @@
 @interface SettingForm : NSObject <FXForm>
 
 @property (nonatomic, assign) BOOL useBadge;
+@property (nonatomic, assign) BOOL useGeoFence;
 
 @end

@@ -17,6 +17,12 @@
 //which lets us dictate exactly which fields appear
 //and in what order they appear
 
+- (NSDictionary *)locationField
+{
+    return @{FXFormFieldTitle: @"Location",
+             FXFormFieldHeader: @"Location", FXFormFieldAction: @"setLocation:"};
+}
+
 - (NSArray *)fields
 {
     return @[
@@ -67,6 +73,7 @@
                FXFormFieldHeader: @"Detail"},
              @"favoriteProductName",
              @"whereToStock",
+             @"location",
              
              ];
 }

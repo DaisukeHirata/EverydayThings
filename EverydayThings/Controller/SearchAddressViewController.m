@@ -124,6 +124,16 @@ static NSString *kCellIdentifier = @"cellIdentifier";
 {
     
     NSLog(@"user current position %f %f", self.userLocation.latitude, self.userLocation.longitude);
+    CGFloat epsilon = 0.000001;
+    if (self.userLocation.latitude < epsilon && self.userLocation.longitude < epsilon) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find places"
+                                                        message:@"Could not retrieve location from your device"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:self.userLocation.latitude
@@ -143,7 +153,7 @@ static NSString *kCellIdentifier = @"cellIdentifier";
         }
         else
         {
-            // 経度、緯度から逆ジオコーディングを行った結果（場所）の数
+            // the result from reverse geocoding
             NSLog(@"found : %lu", (unsigned long)[placemarks count]);
             
             NSMutableArray *mapItems = [NSMutableArray array];
@@ -162,7 +172,6 @@ static NSString *kCellIdentifier = @"cellIdentifier";
             [self.tableView reloadData];
             
             for (CLPlacemark *placemark in placemarks) {
-                // それぞれの結果（場所）の情報
                 NSLog(@"addressDictionary : %@", [placemark.addressDictionary description]);
                 
                 NSLog(@"name : %@", placemark.name);
