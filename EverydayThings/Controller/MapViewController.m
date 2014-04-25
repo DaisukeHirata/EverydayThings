@@ -29,6 +29,7 @@
         annotation.title = mapItem.name;
         annotation.url = mapItem.url;
         [self.mapView addAnnotation:annotation];
+        NSLog(@"%f %f", annotation.coordinate.latitude, annotation.coordinate.longitude);
         
         // we have only one annotation, select it's callout
         [self.mapView selectAnnotation:[self.mapView.annotations objectAtIndex:0] animated:YES];

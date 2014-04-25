@@ -120,6 +120,75 @@ static NSString *kCellIdentifier = @"cellIdentifier";
     [self.showAllSegue perform];
 }
 
+- (IBAction)searchHere:(id)sender
+{
+    
+    NSLog(@"user current position %f %f", self.userLocation.latitude, self.userLocation.longitude);
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:self.userLocation.latitude
+                                                      longitude:self.userLocation.longitude];
+    
+    CLGeocodeCompletionHandler completionHandler = ^(NSArray* placemarks, NSError* error)
+    {
+        if (error != nil)
+        {
+            NSString *errorStr = [[error userInfo] valueForKey:NSLocalizedDescriptionKey];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find places"
+                                                            message:errorStr
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else
+        {
+            // 経度、緯度から逆ジオコーディングを行った結果（場所）の数
+            NSLog(@"found : %lu", (unsigned long)[placemarks count]);
+            
+            NSMutableArray *mapItems = [NSMutableArray array];
+            for (CLPlacemark *clPlacemark in placemarks) {
+                MKPlacemark *mkPlacemark = [[MKPlacemark alloc] initWithPlacemark:clPlacemark];
+                MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:mkPlacemark];
+                mapItem.name = clPlacemark.name;
+                [mapItems addObject:mapItem];
+            }
+            
+            self.places = mapItems;
+            
+            // used for later when setting the map's region in "prepareForSegue"
+            //                       self.boundingRegion = response.boundingRegion;
+            
+            [self.tableView reloadData];
+            
+            for (CLPlacemark *placemark in placemarks) {
+                // それぞれの結果（場所）の情報
+                NSLog(@"addressDictionary : %@", [placemark.addressDictionary description]);
+                
+                NSLog(@"name : %@", placemark.name);
+                NSLog(@"thoroughfare : %@", placemark.thoroughfare);
+                NSLog(@"subThoroughfare : %@", placemark.subThoroughfare);
+                NSLog(@"locality : %@", placemark.locality);
+                NSLog(@"subLocality : %@", placemark.subLocality);
+                NSLog(@"administrativeArea : %@", placemark.administrativeArea);
+                NSLog(@"subAdministrativeArea : %@", placemark.subAdministrativeArea);
+                NSLog(@"postalCode : %@", placemark.postalCode);
+                NSLog(@"ISOcountryCode : %@", placemark.ISOcountryCode);
+                NSLog(@"country : %@", placemark.country);
+                NSLog(@"inlandWater : %@", placemark.inlandWater);
+                NSLog(@"ocean : %@", placemark.ocean);
+                NSLog(@"areasOfInterest : %@", placemark.areasOfInterest);
+            }
+
+        }
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    };
+    
+    [geocoder reverseGeocodeLocation:location completionHandler:completionHandler];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // pass the new bounding region to the map destination view controller
@@ -255,6 +324,7 @@ static NSString *kCellIdentifier = @"cellIdentifier";
 {
     // remember for later the user's current location
     self.userLocation = newLocation.coordinate;
+    NSLog(@"current position %f %f", self.userLocation.latitude, self.userLocation.longitude);
     
 	[manager stopUpdatingLocation]; // we only want one update
     

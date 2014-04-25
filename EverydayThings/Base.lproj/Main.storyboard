@@ -158,7 +158,13 @@
                             <outlet property="delegate" destination="kj7-ei-tGu" id="Eha-kS-4Pg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Search Address" id="HmC-zd-FdG"/>
+                    <navigationItem key="navigationItem" title="Search Address" id="HmC-zd-FdG">
+                        <barButtonItem key="rightBarButtonItem" title="Here" id="M2T-pg-x6x">
+                            <connections>
+                                <action selector="searchHere:" destination="kj7-ei-tGu" id="mDF-Wm-gbJ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CSq-1O-VsI" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -4,33 +4,33 @@
 <array>
 	<dict>
 		<key>title</key>
-		<string>Willis Tower</string>
+		<string>Daiba</string>
 		<key>latitude</key>
-		<real>41.878844</real>
+		<real>35.633013</real>
 		<key>longitude</key>
-		<real>-87.635942</real>
-		<key>radius</key>
-		<integer>100</integer>
-	</dict>
-	<dict>
-		<key>title</key>
-		<string>Lincoln Park Zoo</string>
-		<key>latitude</key>
-		<real>41.92007</real>
-		<key>longitude</key>
-		<real>-87.63251</real>
+		<real>139.779459</real>
 		<key>radius</key>
 		<integer>500</integer>
 	</dict>
 	<dict>
 		<key>title</key>
-		<string>Chicago Theater</string>
+		<string>Daizawa</string>
 		<key>latitude</key>
-		<real>35.66471</real>
+		<real>35.653587</real>
 		<key>longitude</key>
-		<real>139.69948</real>
+		<real>139.666319</real>
 		<key>radius</key>
-		<integer>200</integer>
+		<integer>500</integer>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>Shibuya</string>
+		<key>latitude</key>
+		<real>35.664717</real>
+		<key>longitude</key>
+		<real>139.699488</real>
+		<key>radius</key>
+		<integer>500</integer>
 	</dict>
 </array>
 </plist>
