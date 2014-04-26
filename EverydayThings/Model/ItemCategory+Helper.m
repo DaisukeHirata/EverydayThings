@@ -46,7 +46,7 @@
 
 + (NSArray *)categories
 {
-    return @[@"Grocery", @"Food", @"Emergency Goods", @"Drug"];
+    return @[@"Grocery", @"Food", @"Emergency Goods", @"Drug", @"None"];
 }
 
 + (NSDictionary *)colors

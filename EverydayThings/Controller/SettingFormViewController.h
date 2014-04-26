@@ -6,9 +6,6 @@
 //  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 
-//#import "FXForms.h"
-
-//@interface SettingFormViewController : FXFormViewController
 @interface SettingFormViewController : QuickDialogController
 
 @end

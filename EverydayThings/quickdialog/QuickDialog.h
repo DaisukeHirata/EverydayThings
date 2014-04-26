@@ -38,6 +38,7 @@
 #import "QBadgeElement.h"
 #import "QBooleanElement.h"
 #import "QButtonElement.h"
+#import "QButtonWithLabelElement.h"
 #import "QuickDialogEntryElementDelegate.h"
 #import "QEntryElement.h"
 #import "QEntryTableViewCell.h"

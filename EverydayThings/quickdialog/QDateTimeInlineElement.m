@@ -65,11 +65,14 @@
 
 - (NSDate *)dateValue
 {
-    if (self.mode == UIDatePickerModeDate)   {
-        NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *dateComponents = [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:_dateValue];
-        _dateValue = [gregorian dateFromComponents:dateComponents];
+    if (_dateValue) {
+        if (self.mode == UIDatePickerModeDate)   {
+            NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *dateComponents = [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:_dateValue];
+            _dateValue = [gregorian dateFromComponents:dateComponents];
+        }
     }
+    
     return _dateValue;
 }
 

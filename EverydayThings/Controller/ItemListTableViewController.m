@@ -8,6 +8,7 @@
 
 #import "ItemListTableViewController.h"
 #import "ItemFormViewController.h"
+#import "ItemDialogViewController.h"
 #import "ItemForm.h"
 #import "AppDelegate.h"
 
@@ -59,9 +60,14 @@
 }
 
 - (IBAction)addButtonPressed:(UIBarButtonItem *)sender {
+    /*
     ItemFormViewController *controller = [[ItemFormViewController alloc] init];
     controller.formController.form = [[ItemForm alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
+    */
+    ItemDialogViewController *itemDialogViewController =
+    [[self storyboard] instantiateViewControllerWithIdentifier:@"ItemDialogViewController"];
+    [self.navigationController pushViewController:itemDialogViewController animated:YES];
 }
 
 // delete row delegate

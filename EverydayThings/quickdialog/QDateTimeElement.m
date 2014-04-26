@@ -109,7 +109,6 @@
 		case UIDatePickerModeCountDownTimer:
 			break;
     }
-
     cell.detailTextLabel.text = [dateFormatter stringFromDate:_dateValue];
 
     return cell;
