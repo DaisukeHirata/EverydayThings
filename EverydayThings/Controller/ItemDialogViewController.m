@@ -8,9 +8,10 @@
 
 #import "ItemDialogViewController.h"
 #import "ItemCategory+Helper.h"
+#import "SearchAddressViewController.h"
 
 @interface ItemDialogViewController ()
-
+@property (nonatomic, strong) NSMutableDictionary *values;
 @end
 
 @implementation ItemDialogViewController
@@ -60,7 +61,7 @@
     self.tabBarController.tabBar.hidden = YES;
 
     // very bad practice to fit size
-    self.quickDialogTableView.contentInset=UIEdgeInsetsMake(0.0, 0.0, [self getMaxHeight] + 150, 0);
+    self.quickDialogTableView.contentInset=UIEdgeInsetsMake(0.0, 0.0, [self getMaxHeight] + 250, 0);
     self.quickDialogTableView.scrollIndicatorInsets = self.quickDialogTableView.contentInset;
 }
 
@@ -92,20 +93,26 @@
     [section addElement:buyNow];
     [section addElement:stock];
     [section addElement:expireDate];
+    name.key = @"name";
+    category.key = @"category";
+    buyNow.key = @"buyNow";
+    stock.key = @"stock";
+    expireDate.key = @"expireDate";
     
     
     //
     // purchase section
     //
-    QSection *sectionPurchase = [[QSection alloc] initWithTitle:@"Purchase"];
     QDateTimeInlineElement *lastPurchaseDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date" date:nil andMode:UIDatePickerModeDate];
     QButtonWithLabelElement *button = [[QButtonWithLabelElement alloc] initWithTitle:@"I bought this."];
     button.onSelected =  ^{
         NSLog(@"pushed");
 	};
+    QSection *sectionPurchase = [[QSection alloc] initWithTitle:@"Purchase"];
     [self.root addSection:sectionPurchase];
-    [sectionPurchase addElement:lastPurchaseDate];
     [sectionPurchase addElement:button];
+    [sectionPurchase addElement:lastPurchaseDate];
+    lastPurchaseDate.key = @"lastPurchaseDate";
     
     
     //
@@ -118,6 +125,8 @@
     [self.root addSection:sectionCycleToResuplly];
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
+    cycle.key = @"cycle";
+    timeSpan.key = @"timeSpan";
     
     
     //
@@ -131,6 +140,28 @@
     [sectionDetail addElement:whereToBuy];
     [sectionDetail addElement:favoriteProductName];
     [sectionDetail addElement:whereToStock];
+    whereToBuy.key = @"whereToBuy";
+    favoriteProductName.key = @"favoriteProductName";
+    whereToStock.key = @"whereToStock";
+
+    
+    //
+    // Geofence
+    //
+    QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
+    QBooleanElement *useGeofence = [[QBooleanElement alloc] initWithTitle:@"Use Geofence" BoolValue:NO];
+    QButtonWithLabelElement *locationButton = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
+    locationButton.onSelected =  ^{
+        NSLog(@"expireDate %@", self.values[@"expireDate"]);
+        SearchAddressViewController *searchAddressViewController =
+        [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
+        [self.navigationController pushViewController:searchAddressViewController animated:YES];
+	};
+    [self.root addSection:sectionGeofence];
+    [sectionGeofence addElement:useGeofence];
+    [sectionGeofence addElement:locationButton];
+    useGeofence.key = @"useGeofence";
+
 }
 
 #pragma mark - helper methods
@@ -146,4 +177,18 @@
     
     return h;
 }
+
+#pragma mark - getter
+
+- (NSMutableDictionary *)values
+{
+    if (self.root) {
+        if (!_values) _values = [[NSMutableDictionary alloc] init];
+        [self.root fetchValueIntoObject:_values];
+        return _values;
+    } else {
+        return nil;
+    }
+}
+
 @end

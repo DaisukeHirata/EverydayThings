@@ -70,11 +70,13 @@ static NSString *kCellIdentifier = @"cellIdentifier";
                                                         source:self
                                                    destination:self.mapViewController];
      */
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.tabBarController.tabBar.hidden = YES;
     [super viewWillAppear:animated];
 }
 
