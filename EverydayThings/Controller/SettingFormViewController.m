@@ -7,7 +7,6 @@
 //
 
 #import "SettingFormViewController.h"
-#import "SettingForm.h"
 #import "SearchAddressViewController.h"
 
 @interface SettingFormViewController ()
@@ -45,13 +44,5 @@
     [section addElement:label];
     [section addElement:button];
 }
-
-- (void)searchMap:(UITableViewCell<FXFormFieldCell> *)cell
-{
-    SearchAddressViewController *searchAddressViewController =
-        [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
-    [self.navigationController pushViewController:searchAddressViewController animated:YES];
-}
-
 
 @end

@@ -7,12 +7,12 @@
 //
 
 #import "Item.h"
-#import "ItemForm.h"
 
 @interface Item (Helper)
 
-+ (Item *)saveItem:(ItemForm *)form;
++ (Item *)saveItem:(NSDictionary *)values;
 - (NSInteger)cycleInDays;
 - (NSInteger)elapsedDaysAfterLastPurchaseDate;
++ (NSArray *)timeSpans;
 
 @end

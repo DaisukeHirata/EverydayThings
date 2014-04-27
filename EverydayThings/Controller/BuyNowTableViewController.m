@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"isBuyNow = YES || elapsed = YES"];
+    request.predicate = [NSPredicate predicateWithFormat:@"buyNow = YES || elapsed = YES"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];

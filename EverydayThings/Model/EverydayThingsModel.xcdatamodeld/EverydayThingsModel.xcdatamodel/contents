@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C1021" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Item" representedClassName="Item" syncable="YES">
+        <attribute name="buyNow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="cycle" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="elapsed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="expireDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="favoriteProductName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isBuyNow" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isStock" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="geofence" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastPurchaseDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stock" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="timeSpan" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="whereToBuy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="whereToStock" optional="YES" attributeType="String" syncable="YES"/>
@@ -20,7 +24,7 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="whichItemCategory" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="142" positionY="-27" width="128" height="223"/>
+        <element name="Item" positionX="142" positionY="-27" width="128" height="283"/>
         <element name="ItemCategory" positionX="-36" positionY="-27" width="128" height="88"/>
     </elements>
 </model>

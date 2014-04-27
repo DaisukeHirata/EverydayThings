@@ -7,6 +7,7 @@
 //
 
 #import "ItemDialogViewController.h"
+#import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "SearchAddressViewController.h"
 
@@ -23,7 +24,7 @@
     if ((self = [super initWithCoder:aDecoder])) {
         QRootElement *_root = [[QRootElement alloc] init];
         _root.grouped = YES;
-        _root.title = @"New Item";
+        _root.title = @"Item";
         self.root = _root;
         self.resizeWhenKeyboardPresented =YES;
     }
@@ -34,31 +35,20 @@
 {
     [super viewDidLoad];
 
-    [self createQuickDialogElements];
-
-    if (self.item) {
-        NSLog(@"for update");
-/*
-        ItemForm *form = self.formController.form;
-        form.name                = self.item.name;
-        form.category            = self.item.whichItemCategory.name;
-        form.buyNow              = [self.item.isBuyNow boolValue];
-        form.stock               = [self.item.isStock boolValue];
-        form.lastPurchaseDate    = self.item.lastPurchaseDate;
-        form.expireDate          = self.item.expireDate;
-        form.whereToBuy          = self.item.whereToBuy;
-        form.favoriteProductName = self.item.favoriteProductName;
-        form.whereToStock        = self.item.whereToStock;
-        form.cycle               = [self.item.cycle stringValue];
-        form.timeSpan            = self.item.timeSpan;
-*/
-    }
+    [self createQuickDialogElementsWithItem:self.item];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     self.tabBarController.tabBar.hidden = YES;
+    
+    if (self.item && self.item.location) {
+        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[[self root] elementWithKey:@"location"];
+        location.value = self.item.location;
+        [self.quickDialogTableView reloadCellForElements:location, nil];
+    }
 
     // very bad practice to fit size
     self.quickDialogTableView.contentInset=UIEdgeInsetsMake(0.0, 0.0, [self getMaxHeight] + 250, 0);
@@ -68,7 +58,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-        NSLog(@"Save !!");
+        if ([self.values[@"name"] length]) {
+            [Item saveItem:self.values];
+        }
     }
     [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
@@ -76,17 +68,27 @@
 
 #pragma mark - create dialog elements
 
-- (void)createQuickDialogElements
+
+- (void)createQuickDialogElementsWithItem:(Item *)item
 {
     //
     // General section
     //
     QSection *section = [[QSection alloc] init];
-    QEntryElement *name = [[QEntryElement alloc] initWithTitle:@"Name" Value:@"" Placeholder:@"Enter name"];
-    QRadioElement *category = [[QRadioElement alloc] initWithItems:[ItemCategory categories] selected:0 title:@"Category"];
-    QBooleanElement *buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now" BoolValue:NO];
-    QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock" BoolValue:NO];
-    QDateTimeInlineElement *expireDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Expire Date" date:nil andMode:UIDatePickerModeDate];
+    QEntryElement *name = [[QEntryElement alloc] initWithTitle:@"Name"
+                                                         Value:item ? item.name : @""
+                                                   Placeholder:@"Enter name"];
+    name.appearance.entryAlignment = NSTextAlignmentRight;
+    QRadioElement *category = [[QRadioElement alloc] initWithItems:[ItemCategory categories]
+                                                          selected:item ? [[ItemCategory categories] indexOfObject:item.whichItemCategory.name] : 0
+                                                             title:@"Category"];
+    QBooleanElement *buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
+                                                           BoolValue:item ? [item.buyNow boolValue] : NO];
+    QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
+                                                          BoolValue:item ? [item.stock boolValue ] : NO];
+    QDateTimeInlineElement *expireDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Expire Date"
+                                                                                  date:item ? item.expireDate : nil
+                                                                               andMode:UIDatePickerModeDate];
     [self.root addSection:section];
     [section addElement:name];
     [section addElement:category];
@@ -103,7 +105,10 @@
     //
     // purchase section
     //
-    QDateTimeInlineElement *lastPurchaseDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date" date:nil andMode:UIDatePickerModeDate];
+    QDateTimeInlineElement *lastPurchaseDate =
+    [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
+                                             date:item ? item.lastPurchaseDate : nil
+                                          andMode:UIDatePickerModeDate];
     QButtonWithLabelElement *button = [[QButtonWithLabelElement alloc] initWithTitle:@"I bought this."];
     button.onSelected =  ^{
         NSLog(@"pushed");
@@ -119,9 +124,14 @@
     // Cycle to resupply section
     //
     QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to resupply"];
-    QEntryElement *cycle = [[QEntryElement alloc] initWithTitle:@"Cycle" Value:@"" Placeholder:@""];
+    QEntryElement *cycle = [[QEntryElement alloc] initWithTitle:@"Cycle"
+                                                          Value:item ? [item.cycle stringValue]: @""
+                                                    Placeholder:@""];
+    cycle.appearance.entryAlignment = NSTextAlignmentRight;
     cycle.keyboardType = UIKeyboardTypeNumberPad;
-    QRadioElement *timeSpan = [[QRadioElement alloc] initWithItems:@[@"Day", @"Month", @"YEAR"] selected:0 title:@"Time Span"];
+    QRadioElement *timeSpan = [[QRadioElement alloc] initWithItems:[Item timeSpans]
+                                                          selected:item ? [[Item timeSpans] indexOfObject:item.timeSpan] : 0
+                                                             title:@"Time Span"];
     [self.root addSection:sectionCycleToResuplly];
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
@@ -133,9 +143,15 @@
     // Cycle to resupply section
     //
     QSection *sectionDetail = [[QSection alloc] initWithTitle:@"Detail"];
-    QEntryElement *whereToBuy = [[QEntryElement alloc] initWithTitle:@"Where to buy" Value:@"" Placeholder:@"Enter"];
-    QEntryElement *favoriteProductName = [[QEntryElement alloc] initWithTitle:@"Favorite Product Name" Value:@"" Placeholder:@"Enter"];
-    QEntryElement *whereToStock = [[QEntryElement alloc] initWithTitle:@"Where to stock" Value:@"" Placeholder:@"Enter"];
+    QEntryElement *whereToBuy = [[QEntryElement alloc] initWithTitle:@"Where to buy"
+                                                               Value:@""
+                                                         Placeholder:@"Enter"];
+    QEntryElement *favoriteProductName = [[QEntryElement alloc] initWithTitle:@"Favorite Product Name"
+                                                                        Value:@""
+                                                                  Placeholder:@"Enter"];
+    QEntryElement *whereToStock = [[QEntryElement alloc] initWithTitle:@"Where to stock"
+                                                                 Value:@""
+                                                           Placeholder:@"Enter"];
     [self.root addSection:sectionDetail];
     [sectionDetail addElement:whereToBuy];
     [sectionDetail addElement:favoriteProductName];
@@ -143,26 +159,39 @@
     whereToBuy.key = @"whereToBuy";
     favoriteProductName.key = @"favoriteProductName";
     whereToStock.key = @"whereToStock";
-
+    
     
     //
     // Geofence
     //
     QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
-    QBooleanElement *useGeofence = [[QBooleanElement alloc] initWithTitle:@"Use Geofence" BoolValue:NO];
+    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use Geofence"
+                                                             BoolValue:item ? [item.geofence boolValue] : NO];
+    geofence.onSelected = ^{
+        NSLog(@"selected");
+        QBooleanElement *geofence = (QBooleanElement *)[[self root] elementWithKey:@"geofence"];
+        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[[self root] elementWithKey:@"location"];
+        location.enabled = geofence.boolValue ? YES : NO;
+        NSLog(@"%@", geofence.value);
+        [self.quickDialogTableView reloadCellForElements:location, nil];
+    };
     QButtonWithLabelElement *locationButton = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
     locationButton.onSelected =  ^{
         NSLog(@"expireDate %@", self.values[@"expireDate"]);
         SearchAddressViewController *searchAddressViewController =
         [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
+        searchAddressViewController.item = self.item;
         [self.navigationController pushViewController:searchAddressViewController animated:YES];
 	};
+    locationButton.enabled = item ? [item.geofence boolValue] ? YES : NO : NO;
+    locationButton.value = item ? item.location : @"";
     [self.root addSection:sectionGeofence];
-    [sectionGeofence addElement:useGeofence];
+    [sectionGeofence addElement:geofence];
     [sectionGeofence addElement:locationButton];
-    useGeofence.key = @"useGeofence";
-
+    geofence.key = @"geofence";
+    locationButton.key = @"location";
 }
+
 
 #pragma mark - helper methods
 

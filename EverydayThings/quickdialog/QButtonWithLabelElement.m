@@ -42,6 +42,12 @@
     return self;
 }
 
+- (void)fetchValueIntoObject:(id)obj {
+	if (_key==nil)
+		return;
+	
+	[obj setValue:_value forKey:_key];
+}
 
 - (UITableViewCell *)getCellForTableView:(QuickDialogTableView *)tableView controller:(QuickDialogController *)controller {
     QTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"QuickformButtonWithLabelElement"];

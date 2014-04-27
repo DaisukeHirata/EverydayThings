@@ -7,9 +7,7 @@
 //
 
 #import "ItemListTableViewController.h"
-#import "ItemFormViewController.h"
 #import "ItemDialogViewController.h"
-#import "ItemForm.h"
 #import "AppDelegate.h"
 
 @interface ItemListTableViewController ()
@@ -47,10 +45,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ItemFormViewController *controller = [[ItemFormViewController alloc] init];
-    controller.formController.form = [[ItemForm alloc] init];
-    controller.item = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self.navigationController pushViewController:controller animated:YES];
+    ItemDialogViewController *itemDialogViewController =
+    [[self storyboard] instantiateViewControllerWithIdentifier:@"ItemDialogViewController"];
+    itemDialogViewController.item = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.navigationController pushViewController:itemDialogViewController animated:YES];
 }
 
 // hide section index
@@ -60,11 +58,6 @@
 }
 
 - (IBAction)addButtonPressed:(UIBarButtonItem *)sender {
-    /*
-    ItemFormViewController *controller = [[ItemFormViewController alloc] init];
-    controller.formController.form = [[ItemForm alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    */
     ItemDialogViewController *itemDialogViewController =
     [[self storyboard] instantiateViewControllerWithIdentifier:@"ItemDialogViewController"];
     [self.navigationController pushViewController:itemDialogViewController animated:YES];

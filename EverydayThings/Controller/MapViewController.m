@@ -1,5 +1,6 @@
 #import "MapViewController.h"
 #import "PlaceAnnotation.h"
+#import "Item.h"
 
 @interface MapViewController ()
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -11,8 +12,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     
     // adjust the map to zoom/center to the annotations we want to show
     [self.mapView setRegion:self.boundingRegion];
@@ -84,6 +83,17 @@
 		}
 	}
 	return annotationView;
+}
+
+- (IBAction)done:(UIBarButtonItem *)sender
+{
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    for (MKMapItem *item in self.mapItemList) {
+        self.item.location  = item.name;
+        self.item.latitude  = [[NSNumber alloc] initWithDouble:item.placemark.location.coordinate.latitude];
+        self.item.longitude = [[NSNumber alloc] initWithDouble:item.placemark.location.coordinate.longitude];
+    }
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 @end

@@ -44,6 +44,37 @@
     return category;
 }
 
++ (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index
+{
+    ItemCategory *category = nil;
+    NSManagedObjectContext *context = [AppDelegate sharedContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", [ItemCategory categories][index]];
+        
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+        
+    if (!matches || error || ([matches count] > 1)) {
+        // handle error
+    } else if (![matches count]) {
+        category       = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
+                                                        inManagedObjectContext:context];
+        category.name  = [ItemCategory categories][index];
+        category.color = @"FFD119";
+        NSError *error = nil;
+        [context save:&error];
+        if(error){
+            NSLog(@"could not save data : %@", error);
+        }
+    } else {
+        category = [matches lastObject];
+    }
+    
+    return category;
+}
+
+
 + (NSArray *)categories
 {
     return @[@"Grocery", @"Food", @"Emergency Goods", @"Drug", @"None"];

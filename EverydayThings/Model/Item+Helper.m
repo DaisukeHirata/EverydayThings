@@ -12,13 +12,14 @@
 
 @implementation Item (Helper)
 
-+ (Item *)saveItem:(ItemForm *)form
+
++ (Item *)saveItem:(NSDictionary *)values
 {
     Item *item = nil;
     NSManagedObjectContext *context = [AppDelegate sharedContext];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", form.name];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", values[@"name"]];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -36,19 +37,22 @@
     }
     
     if (item) {
-        item.name                   = form.name;
-        item.isBuyNow               = [[NSNumber alloc] initWithBool:form.buyNow];
-        item.isStock                = [[NSNumber alloc] initWithBool:form.stock];
-        item.lastPurchaseDate       = form.lastPurchaseDate;
-        item.expireDate             = form.expireDate;
-        item.whereToBuy             = form.whereToBuy;
-        item.favoriteProductName    = form.favoriteProductName;
-        item.whereToStock           = form.whereToStock;
-        item.cycle                  = [NSDecimalNumber decimalNumberWithString:form.cycle];
-        item.timeSpan               = form.timeSpan;
-        item.whichItemCategory      = [ItemCategory itemCategoryWithName:form.category ? form.category : @"None"];
-        item.elapsed                = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
-                
+        item.name                = values[@"name"];
+        item.buyNow              = values[@"buyNow"];
+        item.stock               = values[@"stock"];
+        item.lastPurchaseDate    = values[@"lastPurchaseDate"];
+        item.expireDate          = values[@"expireDate"];
+        item.whereToBuy          = values[@"whereToBuy"];
+        item.favoriteProductName = values[@"favoriteProductName"];
+        item.whereToStock        = values[@"whereToStock"];
+        item.cycle               = [values[@"cycle"] length] != 0 ?
+                                        [NSDecimalNumber decimalNumberWithString:values[@"cycle"]] : nil;
+        item.timeSpan            = [Item timeSpans][[values[@"timeSpan"] intValue]];
+        item.whichItemCategory   = [ItemCategory itemCategoryWithIndex:[values[@"category"] intValue]];
+        item.elapsed             = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
+        item.location            = values[@"location"];
+        item.geofence            = values[@"geofence"];
+        
         NSError *error = nil;
         [context save:&error];
         if(error) {
@@ -58,6 +62,7 @@
     
     return item;
 }
+
 
 - (NSInteger)expiredWeeks
 {
@@ -99,6 +104,11 @@
     }
     
     return cycle;
+}
+
++ (NSArray *)timeSpans
+{
+    return @[@"Day", @"Month", @"Year"];
 }
 
 @end

@@ -11,6 +11,7 @@
 @interface ItemCategory (Helper)
 
 + (ItemCategory *)itemCategoryWithName:(NSString *)name;
++ (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index;
 + (NSArray *)categories;
 + (NSDictionary *)colors;
 + (UIImage *)iconWithCategoryName:(NSString *)name;
