@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
+#import "GeoFenceMonitoringLocationChangedNotification.h"
 
 @implementation Item (Helper)
 
@@ -50,13 +51,27 @@
         item.timeSpan            = [Item timeSpans][[values[@"timeSpan"] intValue]];
         item.whichItemCategory   = [ItemCategory itemCategoryWithIndex:[values[@"category"] intValue]];
         item.elapsed             = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
+
+        BOOL locationChanged = NO;
+        if (![item.location isEqualToString:values[@"location"]]) {
+            locationChanged = YES;
+        }
         item.location            = values[@"location"];
         item.geofence            = values[@"geofence"];
+        item.latitude            = values[@"latitude"];
+        item.longitude           = values[@"longitude"];
         
         NSError *error = nil;
         [context save:&error];
         if(error) {
             NSLog(@"could not save data : %@", error);
+        } else {
+            if (locationChanged) {
+                // geofence region changed.
+                [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationChangedNotification
+                                                                    object:self
+                                                                  userInfo:nil];
+            }
         }
     }
     

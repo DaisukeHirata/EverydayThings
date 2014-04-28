@@ -10,6 +10,8 @@
 #import "AppDelegate+MOC.h"
 #import "FontAwesomeKit.h"
 #import <CoreLocation/CoreLocation.h>
+#import "Item.h"
+#import "GeoFenceMonitoringLocationChangedNotification.h"
 
 @interface AppDelegate()<CLLocationManagerDelegate>
 @end
@@ -36,6 +38,9 @@
         [self initializeRegionMonitoring:[self buildGeofenceData]];
         [self initializeLocationUpdates];
     }
+    
+    // tune in geofence region change notification
+    [self updateGeoFenceLocation];
     
     return YES;
 }
@@ -90,6 +95,25 @@ static NSManagedObjectContext *_sharedContext = nil;
         _sharedContext = [AppDelegate createMainQueueManagedObjectContext];
     }
     return _sharedContext;
+}
+
+#pragma mark - Geofence monitoring Location changed
+
+- (void) updateGeoFenceLocation
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceMonitoringLocationChangedNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      NSLog(@"location changed");
+                                                      // Location Manager setup
+                                                      if ([self isLocationManagerAvaiable]) {
+                                                          [self stopLocationUpdates];
+                                                          [self initializeLocationManager];
+                                                          [self initializeRegionMonitoring:[self buildGeofenceData]];
+                                                          [self initializeLocationUpdates];
+                                                      }
+                                                  }];
 }
 
 #pragma mark - Location utility
@@ -148,30 +172,41 @@ NSArray *_regionArray;
     
 }
 
-- (NSArray*) buildGeofenceData {
-    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"regions" ofType:@"plist"];
-    _regionArray = [NSArray arrayWithContentsOfFile:plistPath];
-    
+- (NSArray *)buildGeofenceData
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = [NSPredicate predicateWithFormat:@"geofence = YES"];
+    request.fetchLimit = 30;
+    NSError *error;
+    NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
     NSMutableArray *geofences = [NSMutableArray array];
-    for(NSDictionary *regionDict in _regionArray) {
-        CLRegion *region = [self mapDictionaryToRegion:regionDict];
-        region.notifyOnEntry = YES;
-        region.notifyOnExit = NO;
-        [geofences addObject:region];
+    
+    if (!matches || error) {
+        // error
+        NSLog(@"can not read geofence location data from item managed object");
+    } else if  ([matches count]) {
+        // found
+        for (Item *item in matches) {
+            NSLog(@"%@", item.location);
+            CLRegion *region = [self mapItemToRegion:item];
+            region.notifyOnEntry = YES;
+            region.notifyOnExit = NO;
+            [geofences addObject:region];
+        }
     }
     
-    return [NSArray arrayWithArray:geofences];
+    return geofences;
 }
 
-- (CLRegion*)mapDictionaryToRegion:(NSDictionary*)dictionary
+- (CLRegion*)mapItemToRegion:(Item *)item
 {
-    NSString *title = [dictionary valueForKey:@"title"];
+    NSString *title = item.location;
     
-    CLLocationDegrees latitude = [[dictionary valueForKey:@"latitude"] doubleValue];
-    CLLocationDegrees longitude =[[dictionary valueForKey:@"longitude"] doubleValue];
+    CLLocationDegrees latitude = [item.latitude doubleValue];
+    CLLocationDegrees longitude =[item.longitude doubleValue];
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
     
-    CLLocationDistance regionRadius = [[dictionary valueForKey:@"radius"] doubleValue];
+    CLLocationDistance regionRadius = 500;
     
     CLRegion * region =nil;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -187,13 +222,18 @@ NSArray *_regionArray;
                                                      identifier:title];
 #pragma GCC diagnostic pop
     }
-
+    
     return region;
 }
 
 - (void)initializeLocationUpdates
 {
     [_locationManager startUpdatingLocation];
+}
+
+- (void)stopLocationUpdates
+{
+    [_locationManager stopUpdatingLocation];
 }
 
 
@@ -214,19 +254,17 @@ NSArray *_regionArray;
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
     NSLog(@"Exited Region - %@", region.identifier);
-//    [self showRegionAlert:@"Exiting Region" forRegion:region.identifier];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
-    NSLog(@"Started monitoring %@ region", region.identifier);
+    NSLog(@"Started monitoring %@ region %f %f", region.identifier, region.center.latitude, region.center.longitude);
 }
 
 #pragma mark - Location Manager - Standard Task Methods
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-//    self.coordinateLabel.text = [NSString stringWithFormat:@"%f,%f",newLocation.coordinate.latitude, newLocation.coordinate.longitude];
     NSLog(@"%@", [NSString stringWithFormat:@"%f,%f",newLocation.coordinate.latitude, newLocation.coordinate.longitude]);
 }
 

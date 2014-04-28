@@ -1,6 +1,7 @@
 #import "MapViewController.h"
 #import "PlaceAnnotation.h"
 #import "Item.h"
+#import "GeoFenceLocationSaveNotification.h"
 
 @interface MapViewController ()
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
@@ -89,9 +90,14 @@
 {
     [self.mapView removeAnnotations:self.mapView.annotations];
     for (MKMapItem *item in self.mapItemList) {
-        self.item.location  = item.name;
-        self.item.latitude  = [[NSNumber alloc] initWithDouble:item.placemark.location.coordinate.latitude];
-        self.item.longitude = [[NSNumber alloc] initWithDouble:item.placemark.location.coordinate.longitude];
+        NSLog(@"map item name %@", item.name);
+        // notification
+        NSDictionary* userInfo = @{ GeoFenceLocationSaveNotificationItem: @{ @"location"  : item.name,
+                                                                             @"latitude"  : [NSNumber numberWithDouble:item.placemark.coordinate.latitude],
+                                                                             @"longitude" : [NSNumber numberWithDouble:item.placemark.coordinate.longitude]} };
+        [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceLocationSaveNotification
+                                                            object:self
+                                                          userInfo:userInfo];
     }
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }

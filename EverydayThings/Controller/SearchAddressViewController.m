@@ -59,7 +59,6 @@ static NSString *kCellIdentifier = @"cellIdentifier";
     
     // create and reuse for later the mapViewController
     self.mapViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"MapViewControllerID"];
-    self.mapViewController.item = self.item;
     
     // use our custom segues to the destination view controller is reused
     self.detailSegue = [[DetailSegue alloc] initWithIdentifier:@"showDetail"

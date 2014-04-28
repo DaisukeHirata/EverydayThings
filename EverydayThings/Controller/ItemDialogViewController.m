@@ -10,9 +10,13 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "SearchAddressViewController.h"
+#import "GeoFenceLocationSaveNotification.h"
 
 @interface ItemDialogViewController ()
 @property (nonatomic, strong) NSMutableDictionary *values;
+@property (nonatomic, copy)   NSString *location;
+@property (nonatomic, strong) NSNumber *latitude;
+@property (nonatomic, strong) NSNumber *longitude;
 @end
 
 @implementation ItemDialogViewController
@@ -34,8 +38,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.item) {
+        self.latitude = self.item.latitude;
+        self.longitude = self.item.longitude;
+        self.location = self.item.location;
+    }
 
     [self createQuickDialogElementsWithItem:self.item];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceLocationSaveNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      NSDictionary *info = note.userInfo[GeoFenceLocationSaveNotificationItem];
+                                                      NSLog(@"location done %@", info[@"location"]);
+                                                      self.location  = info[@"location"];
+                                                      self.latitude  = info[@"latitude"];
+                                                      self.longitude = info[@"longitude"];
+                                                  }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -44,9 +65,9 @@
     
     self.tabBarController.tabBar.hidden = YES;
     
-    if (self.item && self.item.location) {
+    if ([self.location length]) {
         QButtonWithLabelElement *location = (QButtonWithLabelElement *)[[self root] elementWithKey:@"location"];
-        location.value = self.item.location;
+        location.value = self.location;
         [self.quickDialogTableView reloadCellForElements:location, nil];
     }
 
@@ -177,19 +198,18 @@
     };
     QButtonWithLabelElement *locationButton = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
     locationButton.onSelected =  ^{
-        NSLog(@"expireDate %@", self.values[@"expireDate"]);
         SearchAddressViewController *searchAddressViewController =
         [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
-        searchAddressViewController.item = self.item;
         [self.navigationController pushViewController:searchAddressViewController animated:YES];
 	};
     locationButton.enabled = item ? [item.geofence boolValue] ? YES : NO : NO;
-    locationButton.value = item ? item.location : @"";
+    locationButton.value = item ? self.location : @"";
     [self.root addSection:sectionGeofence];
     [sectionGeofence addElement:geofence];
     [sectionGeofence addElement:locationButton];
     geofence.key = @"geofence";
     locationButton.key = @"location";
+    
 }
 
 
@@ -214,10 +234,31 @@
     if (self.root) {
         if (!_values) _values = [[NSMutableDictionary alloc] init];
         [self.root fetchValueIntoObject:_values];
+        if (self.location)  _values[@"location"]  = self.location;
+        if (self.latitude)  _values[@"latitude"]  = self.latitude;
+        if (self.longitude) _values[@"longitude"] = self.longitude;
         return _values;
     } else {
         return nil;
     }
+}
+
+- (NSNumber *)latitude
+{
+    if (!_latitude) _latitude = [[NSNumber alloc] init];
+    return _latitude;
+}
+
+- (NSNumber *)longitude
+{
+    if (!_longitude) _longitude = [[NSNumber alloc] init];
+    return _longitude;
+}
+
+- (NSString *)location
+{
+    if (!_location) _location = [[NSString alloc] init];
+    return _location;
 }
 
 @end
