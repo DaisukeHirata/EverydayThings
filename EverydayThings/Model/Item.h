@@ -2,7 +2,7 @@
 //  Item.h
 //  EverydayThings
 //
-//  Created by Daisuke Hirata on 2014/04/27.
+//  Created by Daisuke Hirata on 2014/04/28.
 //  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
 //
 
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSString * itemId;
 @property (nonatomic, retain) ItemCategory *whichItemCategory;
 
 @end

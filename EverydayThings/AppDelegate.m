@@ -10,8 +10,9 @@
 #import "AppDelegate+MOC.h"
 #import "FontAwesomeKit.h"
 #import <CoreLocation/CoreLocation.h>
-#import "Item.h"
-#import "GeoFenceMonitoringLocationChangedNotification.h"
+#import "Item+helper.h"
+#import "GeoFenceMonitoringLocationReloadNotification.h"
+#import "UpdateApplicationBadgeNotification.h"
 
 @interface AppDelegate()<CLLocationManagerDelegate>
 @end
@@ -33,7 +34,7 @@
     [self setupTabBar];
     
     // Location Manager setup
-    if ([self isLocationManagerAvaiable]) {
+    if ([self isLocationManagerAvaiable] && [self useGeofence]) {
         [self initializeLocationManager];
         [self initializeRegionMonitoring:[self buildGeofenceData]];
         [self initializeLocationUpdates];
@@ -42,6 +43,12 @@
     // tune in geofence region change notification
     [self updateGeoFenceLocation];
     
+    // tune in update appication badge notification
+    [self tuneInUpdatingApplicationBadgeNotification];
+    
+    // turn on badge update in background
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
     return YES;
 }
 
@@ -49,6 +56,16 @@
 {
     NSLog(@"LocalNotification recieved.");
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
+}
+
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [self updateApplicationBadge];
+    // you need to end your performFetchWithCompletionHandler by responding back that you're finished and provide a status
+    // iOS expects you to return this promptly, within about 30 seconds, otherwise it will start to penalize your app’s background execution
+    // to preserve battery life.
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void) setupTabBar
@@ -85,6 +102,34 @@
     tab4.image = cog;
 }
 
+- (BOOL)useGeofence
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:@"geofence"];
+}
+
+- (void)updateApplicationBadge
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    if ([defaults boolForKey:@"badge"]) {
+        NSFetchRequest *request = [Item createRequestForBuyNowItems];
+        
+        NSError *error;
+        NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
+        
+        if (error) {
+            // error
+            NSLog(@"can not read geofence location data from item managed object");
+        } else if  ([matches count]) {
+            // found
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [matches count];
+        }
+    } else {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
+}
+
 #pragma mark - Coredata shared managed object context
 
 static NSManagedObjectContext *_sharedContext = nil;
@@ -97,22 +142,32 @@ static NSManagedObjectContext *_sharedContext = nil;
     return _sharedContext;
 }
 
-#pragma mark - Geofence monitoring Location changed
+#pragma mark - Tuning in notification
 
 - (void) updateGeoFenceLocation
 {
-    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceMonitoringLocationChangedNotification
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceMonitoringLocationReloadNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      NSLog(@"location changed");
-                                                      // Location Manager setup
                                                       if ([self isLocationManagerAvaiable]) {
                                                           [self stopLocationUpdates];
-                                                          [self initializeLocationManager];
-                                                          [self initializeRegionMonitoring:[self buildGeofenceData]];
-                                                          [self initializeLocationUpdates];
+                                                          if ([self useGeofence]) {
+                                                              [self initializeLocationManager];
+                                                              [self initializeRegionMonitoring:[self buildGeofenceData]];
+                                                              [self initializeLocationUpdates];
+                                                          }
                                                       }
+                                                  }];
+}
+
+- (void) tuneInUpdatingApplicationBadgeNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateApplicationBadgeNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [self updateApplicationBadge];
                                                   }];
 }
 

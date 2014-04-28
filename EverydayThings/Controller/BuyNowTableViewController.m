@@ -12,6 +12,7 @@
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
 #import "FAKFontAwesome.h"
+#import "UpdateApplicationBadgeNotification.h"
 
 @interface BuyNowTableViewController ()
 @end
@@ -24,12 +25,7 @@
 {
     [super viewDidLoad];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"buyNow = YES || elapsed = YES"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
-                                                              ascending:YES
-                                                               selector:@selector(localizedStandardCompare:)]];
-    request.fetchLimit = 100;
+    NSFetchRequest *request = [Item createRequestForBuyNowItems];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]
@@ -80,6 +76,16 @@
         UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
         [header.textLabel setTextColor:[UIColor whiteColor]];
     }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [super tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
+    
+    // update application badge
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNotification
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 @end

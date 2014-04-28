@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
-#import "GeoFenceMonitoringLocationChangedNotification.h"
+#import "GeoFenceMonitoringLocationReloadNotification.h"
 
 @implementation Item (Helper)
 
@@ -20,7 +20,7 @@
     NSManagedObjectContext *context = [AppDelegate sharedContext];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", values[@"name"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"itemId = %@", values[@"itemId"]];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -35,6 +35,7 @@
         // insert
         item = [NSEntityDescription insertNewObjectForEntityForName:@"Item"
                                              inManagedObjectContext:context];
+        item.itemId = [[NSUUID UUID] UUIDString];
     }
     
     if (item) {
@@ -68,7 +69,7 @@
         } else {
             if (locationChanged) {
                 // geofence region changed.
-                [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationChangedNotification
+                [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationReloadNotification
                                                                     object:self
                                                                   userInfo:nil];
             }
@@ -78,6 +79,15 @@
     return item;
 }
 
++ (NSFetchRequest *)createRequestForBuyNowItems
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = [NSPredicate predicateWithFormat:@"buyNow = YES || elapsed = YES"];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
+                                                              ascending:YES
+                                                               selector:@selector(localizedStandardCompare:)]];
+    return request;
+}
 
 - (NSInteger)expiredWeeks
 {

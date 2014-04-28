@@ -14,5 +14,6 @@
 - (NSInteger)cycleInDays;
 - (NSInteger)elapsedDaysAfterLastPurchaseDate;
 + (NSArray *)timeSpans;
++ (NSFetchRequest *)createRequestForBuyNowItems;
 
 @end

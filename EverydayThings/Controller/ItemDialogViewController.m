@@ -14,6 +14,7 @@
 
 @interface ItemDialogViewController ()
 @property (nonatomic, strong) NSMutableDictionary *values;
+@property (nonatomic, copy)   NSString *itemId;
 @property (nonatomic, copy)   NSString *location;
 @property (nonatomic, strong) NSNumber *latitude;
 @property (nonatomic, strong) NSNumber *longitude;
@@ -40,6 +41,7 @@
     [super viewDidLoad];
     
     if (self.item) {
+        self.itemId   = self.item.itemId;
         self.latitude = self.item.latitude;
         self.longitude = self.item.longitude;
         self.location = self.item.location;
@@ -57,6 +59,7 @@
                                                       self.latitude  = info[@"latitude"];
                                                       self.longitude = info[@"longitude"];
                                                   }];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,11 +73,8 @@
         location.value = self.location;
         [self.quickDialogTableView reloadCellForElements:location, nil];
     }
-
-    // very bad practice to fit size
-    self.quickDialogTableView.contentInset=UIEdgeInsetsMake(0.0, 0.0, [self getMaxHeight] + 250, 0);
-    self.quickDialogTableView.scrollIndicatorInsets = self.quickDialogTableView.contentInset;
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -124,24 +124,6 @@
     
     
     //
-    // purchase section
-    //
-    QDateTimeInlineElement *lastPurchaseDate =
-    [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
-                                             date:item ? item.lastPurchaseDate : nil
-                                          andMode:UIDatePickerModeDate];
-    QButtonWithLabelElement *button = [[QButtonWithLabelElement alloc] initWithTitle:@"I bought this."];
-    button.onSelected =  ^{
-        NSLog(@"pushed");
-	};
-    QSection *sectionPurchase = [[QSection alloc] initWithTitle:@"Purchase"];
-    [self.root addSection:sectionPurchase];
-    [sectionPurchase addElement:button];
-    [sectionPurchase addElement:lastPurchaseDate];
-    lastPurchaseDate.key = @"lastPurchaseDate";
-    
-    
-    //
     // Cycle to resupply section
     //
     QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to resupply"];
@@ -153,11 +135,22 @@
     QRadioElement *timeSpan = [[QRadioElement alloc] initWithItems:[Item timeSpans]
                                                           selected:item ? [[Item timeSpans] indexOfObject:item.timeSpan] : 0
                                                              title:@"Time Span"];
+    QDateTimeInlineElement *lastPurchaseDate =
+    [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
+                                             date:item ? item.lastPurchaseDate : nil
+                                          andMode:UIDatePickerModeDate];
+    QButtonWithLabelElement *button = [[QButtonWithLabelElement alloc] initWithTitle:@"I bought this."];
+    button.onSelected =  ^{
+        NSLog(@"pushed");
+	};
     [self.root addSection:sectionCycleToResuplly];
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
+    [sectionCycleToResuplly addElement:lastPurchaseDate];
+    [sectionCycleToResuplly addElement:button];
     cycle.key = @"cycle";
     timeSpan.key = @"timeSpan";
+    lastPurchaseDate.key = @"lastPurchaseDate";
     
     
     //
@@ -186,7 +179,7 @@
     // Geofence
     //
     QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
-    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use Geofence"
+    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"enable Geofence for this item?"
                                                              BoolValue:item ? [item.geofence boolValue] : NO];
     geofence.onSelected = ^{
         NSLog(@"selected");
@@ -212,21 +205,6 @@
     
 }
 
-
-#pragma mark - helper methods
-
--(float)getMaxHeight
-{
-    float h = 0;
-    
-    for (UIView *v in [self.quickDialogTableView subviews]) {
-        float fh = v.frame.origin.y + v.frame.size.height;
-        h = MAX(fh, h);
-    }
-    
-    return h;
-}
-
 #pragma mark - getter
 
 - (NSMutableDictionary *)values
@@ -234,6 +212,7 @@
     if (self.root) {
         if (!_values) _values = [[NSMutableDictionary alloc] init];
         [self.root fetchValueIntoObject:_values];
+        _values[@"itemId"] = [self.itemId length] ? self.itemId : @"NEW_ITEM_DUMMY_ID";
         if (self.location)  _values[@"location"]  = self.location;
         if (self.latitude)  _values[@"latitude"]  = self.latitude;
         if (self.longitude) _values[@"longitude"] = self.longitude;
@@ -260,5 +239,12 @@
     if (!_location) _location = [[NSString alloc] init];
     return _location;
 }
+
+- (NSString *)itemId
+{
+    if (!_itemId) _itemId = [[NSString alloc] init];
+    return _itemId;
+}
+
 
 @end
