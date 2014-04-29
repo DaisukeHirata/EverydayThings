@@ -59,6 +59,12 @@
     cell.detailTextLabel.textColor = ([[NSDate date] compare:item.expireDate] == NSOrderedDescending) ?
                                             [self hexToUIColor:@"ff6347" alpha:1.0] : [UIColor grayColor];
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
+    if ([item.geofence boolValue]) {
+        cell.accessoryView = [self geofenceImageView];
+        [cell.accessoryView setFrame:CGRectMake(0, 0, 12, 12)];
+    } else {
+        cell.accessoryView = nil;
+    }
     
     return cell;
 }

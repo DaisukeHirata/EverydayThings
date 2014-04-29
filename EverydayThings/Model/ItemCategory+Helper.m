@@ -112,7 +112,7 @@
 {
     UIImage *image;
     image = [UIImage imageWithStackedIcons:@[[self icons][name]]
-                                                imageSize:CGSizeMake(20, 20)];
+                                 imageSize:CGSizeMake(20, 20)];
     return image;
 }
 

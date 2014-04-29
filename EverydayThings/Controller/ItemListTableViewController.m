@@ -9,6 +9,7 @@
 #import "ItemListTableViewController.h"
 #import "ItemDialogViewController.h"
 #import "AppDelegate.h"
+#import "FAKFontAwesome.h"
 
 @interface ItemListTableViewController ()
 
@@ -89,6 +90,14 @@
 	CGFloat g = ((color & 0x00FF00) >> 8) /255.0f;
 	CGFloat b =  (color & 0x0000FF) /255.0f;
 	return [UIColor colorWithRed:r green:g blue:b alpha:a];
+}
+
+
+- (UIImageView *)geofenceImageView
+{
+    UIImage *image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome locationArrowIconWithSize:12]]
+                                          imageSize:CGSizeMake(12, 12)];
+    return [[UIImageView alloc] initWithImage:image];
 }
 
 @end

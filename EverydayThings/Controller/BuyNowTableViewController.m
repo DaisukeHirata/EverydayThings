@@ -11,7 +11,6 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
-#import "FAKFontAwesome.h"
 #import "UpdateApplicationBadgeNotification.h"
 
 @interface BuyNowTableViewController ()
@@ -58,6 +57,12 @@
         } else {
             cell.badgeColor = [UIColor lightGrayColor];
         }
+    }
+    if ([item.geofence boolValue]) {        
+        cell.accessoryView = [self geofenceImageView];
+        [cell.accessoryView setFrame:CGRectMake(0, 0, 12, 12)];
+    } else {
+        cell.accessoryView = nil;
     }
 
     return cell;
