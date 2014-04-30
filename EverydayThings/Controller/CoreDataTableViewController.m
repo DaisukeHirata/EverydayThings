@@ -3,7 +3,7 @@
 //  Calculator3
 //
 //  Created by Daisuke Hirata on 2014/02/21.
-//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
 #import "CoreDataTableViewController.h"
