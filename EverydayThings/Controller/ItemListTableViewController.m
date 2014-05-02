@@ -33,6 +33,19 @@
     {
         self.tableView.separatorInset = UIEdgeInsetsMake(0, 14, 0, 0);;
     }
+    
+    // add barcode button at left side.
+    UIImage *image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome barcodeIconWithSize:20]]
+                                          imageSize:CGSizeMake(20, 20)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(barcode)];
+}
+
+- (void)barcode
+{
+    NSLog(@"barcode pressed");
 }
 
 - (void)viewWillAppear:(BOOL)animated
