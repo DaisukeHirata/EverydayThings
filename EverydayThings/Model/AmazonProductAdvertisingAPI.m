@@ -13,8 +13,8 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import "AmazonItem.h"
 
-static NSString *accessKeyID = @"Please input your access key id";
 static NSString *associateTag = @"Please input your associate tag";
+static NSString *accessKeyID = @"Please input your access key id";
 static NSString *secretAccessKey = @"Please input your secret access key";
 
 @implementation AmazonProductAdvertisingAPI
