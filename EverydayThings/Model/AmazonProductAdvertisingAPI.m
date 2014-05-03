@@ -55,70 +55,34 @@
     return requestURLString;
 }
 
-+ (void)logXmlResponse:(NSDictionary *)xmlResponse
-{
-    NSLog(@"%@", xmlResponse);
-    if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSArray class]]) {
-        NSArray *items = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-        for (NSDictionary *item in items) {
-            NSLog(@"%@", item[@"ItemAttributes"][@"Title"][@"text"]);
-            if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
-                NSArray *imageSetArray = item[@"ImageSets"][@"ImageSet"];
-                for (NSDictionary *imageSet in imageSetArray) {
-                    NSLog(@"Thumbnail %@", imageSet[@"ThumbnailImage"][@"URL"][@"text"]);
-                }
-            } else {
-                NSLog(@"%@", item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"]);
-            }
-        }
-    } else if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *item = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-        NSLog(@"%@", item[@"ItemAttributes"][@"Title"][@"text"]);
-        if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
-            NSArray *imageSetArray = item[@"ImageSets"][@"ImageSet"];
-            for (NSDictionary *imageSet in imageSetArray) {
-                NSLog(@"Thumbnail %@", imageSet[@"ThumbnailImage"][@"URL"][@"text"]);
-            }
-        } else {
-            NSLog(@"%@", item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"]);
-        }
-    }
-}
-
 + (NSArray *)loadAmazonItems:(NSDictionary *)xmlResponse
 {
     NSMutableArray *tmpItems = [[NSMutableArray alloc] init];
+
+    NSDictionary *resItems = xmlResponse[@"ItemLookupResponse"][@"Items"];
     
-    NSDictionary *error = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Request"][@"Errors"][@"Error"];
-    
+    NSDictionary *error = resItems[@"Request"][@"Errors"][@"Error"];
     if (!error) {
-        if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSArray class]]) {
-            NSArray *items = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-            for (NSDictionary *item in items) {
-                AmazonItem *amazonItem = [[AmazonItem alloc] init];
-                amazonItem.title = item[@"ItemAttributes"][@"Title"][@"text"];
-                amazonItem.manufacturer = item[@"ItemAttributes"][@"Manufacturer"][@"text"];
-                amazonItem.price = item[@"OfferSummary"][@"LowestNewPrice"][@"FormattedPrice"][@"text"];
-                amazonItem.category = item[@"ItemAttributes"][@"ProductTypeName"][@"text"];
-                if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
-                    amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][0][@"ThumbnailImage"][@"URL"][@"text"];
-                } else {
-                    amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"];
-                }
-                [tmpItems addObject:amazonItem];
-            }
-        } else if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *item = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-            AmazonItem *amazonItem = [[AmazonItem alloc] init];
-            amazonItem.title = item[@"ItemAttributes"][@"Title"][@"text"];
-            amazonItem.manufacturer = item[@"ItemAttributes"][@"Manufacturer"][@"text"];
-            amazonItem.price = item[@"OfferSummary"][@"LowestNewPrice"][@"FormattedPrice"][@"text"];
-            amazonItem.category = item[@"ItemAttributes"][@"ProductTypeName"][@"text"];
-            if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
-                amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][0][@"ThumbnailImage"][@"URL"][@"text"];
-            } else {
-                amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"];
-            }
+        NSArray *items;
+        NSObject *item = resItems[@"Item"];
+        if ([item isKindOfClass:[NSArray class]]) {
+            items = (NSArray *)item;
+        } else if ([item isKindOfClass:[NSDictionary class]]) {
+            items = @[item];
+        }
+        
+        for (NSDictionary *item in items) {
+            NSDictionary *itemAttributes = item[@"ItemAttributes"];
+            NSDictionary *lowestNewPrice = item[@"OfferSummary"][@"LowestNewPrice"];
+            NSDictionary *imageSets      = item[@"ImageSets"];
+            NSDictionary *imageSet       = [imageSets[@"ImageSet"] isKindOfClass:[NSArray class]] ? imageSets[@"ImageSet"][0] : imageSets[@"ImageSet"];
+            
+            AmazonItem *amazonItem  = [[AmazonItem alloc] init];
+            amazonItem.title        = itemAttributes[@"Title"][@"text"];
+            amazonItem.manufacturer = itemAttributes[@"Manufacturer"][@"text"];
+            amazonItem.category     = itemAttributes[@"ProductTypeName"][@"text"];
+            amazonItem.price        = lowestNewPrice[@"FormattedPrice"][@"text"];
+            amazonItem.thumbnailURL = imageSet[@"ThumbnailImage"][@"URL"][@"text"];
             [tmpItems addObject:amazonItem];
         }
     } else {
@@ -126,5 +90,37 @@
     }
     
     return tmpItems;
+}
+
+
++ (void)logXmlResponse:(NSDictionary *)xmlResponse
+{
+    NSLog(@"%@", xmlResponse);
+    
+    NSDictionary *resItems = xmlResponse[@"ItemLookupResponse"][@"Items"];
+    NSDictionary *error = resItems[@"Request"][@"Errors"][@"Error"];
+    if (!error) {
+        NSArray *items;
+        NSObject *item = resItems[@"Item"];
+        if ([item isKindOfClass:[NSArray class]]) {
+            items = (NSArray *)item;
+        } else if ([item isKindOfClass:[NSDictionary class]]) {
+            items = @[item];
+        }
+        
+        for (NSDictionary *item in items) {
+            NSDictionary *itemAttributes = item[@"ItemAttributes"];
+            NSDictionary *lowestNewPrice = item[@"OfferSummary"][@"LowestNewPrice"];
+            NSDictionary *imageSets      = item[@"ImageSets"];
+            NSDictionary *imageSet       = [imageSets[@"ImageSet"] isKindOfClass:[NSArray class]] ? imageSets[@"ImageSet"][0] : imageSets[@"ImageSet"];
+            
+            NSLog(@"----------------------------");
+            NSLog(@"Title: %@", itemAttributes[@"Title"][@"text"]);
+            NSLog(@"Manufacturer: %@", itemAttributes[@"Manufacturer"][@"text"]);
+            NSLog(@"ProductTypeName: %@", itemAttributes[@"ProductTypeName"][@"text"]);
+            NSLog(@"Price: %@", lowestNewPrice[@"FormattedPrice"][@"text"]);
+            NSLog(@"ThumbnailURL: %@", imageSet[@"ThumbnailImage"][@"URL"][@"text"]);
+        }
+    }
 }
 @end
