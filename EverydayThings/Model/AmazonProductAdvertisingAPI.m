@@ -13,9 +13,9 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import "AmazonItem.h"
 
-static NSString *accessKeyID = @"Please input your access key id";
-static NSString *associateTag = @"Please input your associate tag";
-static NSString *secretAccessKey = @"Please input your secret access key";
+static NSString *associateTag = @"daisukihirata-22";
+static NSString *accessKeyID = @"AKIAIFXPDKTR5HBTUTXA";
+static NSString *secretAccessKey = @"NcvnZG0ESxnrXqWSFMepck7qIvueQNghK7K6imM0";
 
 @implementation AmazonProductAdvertisingAPI
 
