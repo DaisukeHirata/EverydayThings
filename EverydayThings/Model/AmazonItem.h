@@ -13,5 +13,5 @@
 @property (nonatomic, copy) NSString *thumbnailURL;
 @property (nonatomic, copy) NSString *manufacturer;
 @property (nonatomic, copy) NSString *price;
-
+@property (nonatomic, copy) NSString *category;
 @end

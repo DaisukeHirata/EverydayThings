@@ -13,9 +13,9 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import "AmazonItem.h"
 
-static NSString *accessKeyID = @"AKIAIFXPDKTR5HBTUTXA";
-static NSString *associateTag = @"daisukihirata-22";
-static NSString *secretAccessKey = @"NcvnZG0ESxnrXqWSFMepck7qIvueQNghK7K6imM0";
+static NSString *accessKeyID = @"Please input your access key id";
+static NSString *associateTag = @"Please input your associate tag";
+static NSString *secretAccessKey = @"Please input your secret access key";
 
 @implementation AmazonProductAdvertisingAPI
 
@@ -92,13 +92,32 @@ static NSString *secretAccessKey = @"NcvnZG0ESxnrXqWSFMepck7qIvueQNghK7K6imM0";
 + (NSArray *)loadAmazonItems:(NSDictionary *)xmlResponse
 {
     NSMutableArray *tmpItems = [[NSMutableArray alloc] init];
-    if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSArray class]]) {
-        NSArray *items = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-        for (NSDictionary *item in items) {
+    
+    NSDictionary *error = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Request"][@"Errors"][@"Error"];
+    
+    if (!error) {
+        if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSArray class]]) {
+            NSArray *items = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
+            for (NSDictionary *item in items) {
+                AmazonItem *amazonItem = [[AmazonItem alloc] init];
+                amazonItem.title = item[@"ItemAttributes"][@"Title"][@"text"];
+                amazonItem.manufacturer = item[@"ItemAttributes"][@"Manufacturer"][@"text"];
+                amazonItem.price = item[@"OfferSummary"][@"LowestNewPrice"][@"FormattedPrice"][@"text"];
+                amazonItem.category = item[@"ItemAttributes"][@"ProductTypeName"][@"text"];
+                if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
+                    amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][0][@"ThumbnailImage"][@"URL"][@"text"];
+                } else {
+                    amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"];
+                }
+                [tmpItems addObject:amazonItem];
+            }
+        } else if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *item = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
             AmazonItem *amazonItem = [[AmazonItem alloc] init];
             amazonItem.title = item[@"ItemAttributes"][@"Title"][@"text"];
             amazonItem.manufacturer = item[@"ItemAttributes"][@"Manufacturer"][@"text"];
             amazonItem.price = item[@"OfferSummary"][@"LowestNewPrice"][@"FormattedPrice"][@"text"];
+            amazonItem.category = item[@"ItemAttributes"][@"ProductTypeName"][@"text"];
             if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
                 amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][0][@"ThumbnailImage"][@"URL"][@"text"];
             } else {
@@ -106,19 +125,10 @@ static NSString *secretAccessKey = @"NcvnZG0ESxnrXqWSFMepck7qIvueQNghK7K6imM0";
             }
             [tmpItems addObject:amazonItem];
         }
-    } else if ([xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"] isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *item = xmlResponse[@"ItemLookupResponse"][@"Items"][@"Item"];
-        AmazonItem *amazonItem = [[AmazonItem alloc] init];
-        amazonItem.title = item[@"ItemAttributes"][@"Title"][@"text"];
-        amazonItem.manufacturer = item[@"ItemAttributes"][@"Manufacturer"][@"text"];
-        amazonItem.price = item[@"OfferSummary"][@"LowestNewPrice"][@"FormattedPrice"][@"text"];
-        if ([item[@"ImageSets"][@"ImageSet"] isKindOfClass:[NSArray class]]) {
-            amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][0][@"ThumbnailImage"][@"URL"][@"text"];
-        } else {
-            amazonItem.thumbnailURL = item[@"ImageSets"][@"ImageSet"][@"ThumbnailImage"][@"URL"][@"text"];
-        }
-        [tmpItems addObject:amazonItem];
+    } else {
+        NSLog(@"%@", error[@"Message"][@"text"]);
     }
+    
     return tmpItems;
 }
 @end
