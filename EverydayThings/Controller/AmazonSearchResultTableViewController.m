@@ -7,6 +7,7 @@
 //
 
 #import "AmazonSearchResultTableViewController.h"
+#import "ItemDialogViewController.h"
 #import "XMLReader.h"
 #import "AmazonProductAdvertisingAPI.h"
 #import "AFHTTPRequestOperationManager.h"
@@ -34,23 +35,33 @@
     AFHTTPResponseSerializer * responseSerializer = [AFHTTPResponseSerializer serializer];
     responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/xml", nil];
     manager.responseSerializer = responseSerializer;
-    
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [manager GET:[AmazonProductAdvertisingAPI requestURL:self.janCode]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
              NSError *xmlerror = nil;
              NSDictionary *xmlResponse = [XMLReader dictionaryForXMLData:responseObject
-                                                                     error:&xmlerror];
+                                                                   error:&xmlerror];
              if (!xmlerror) {
                  [AmazonProductAdvertisingAPI logXmlResponse:xmlResponse];
                  self.amazonItems = [AmazonProductAdvertisingAPI loadAmazonItems:xmlResponse];
-                 [self.tableView reloadData];
+                 if ([self.amazonItems count]) {
+                     [self.tableView reloadData];
+                 } else {
+                     [self alert:@"A searched item was not found."];
+                 }
              } else {
                  NSLog(@"XML Error:%@", xmlerror);
              }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
              NSLog(@"Error: %@", error);
+             if (operation.response.statusCode == 503) {
+                 [self fatalAlert:@"Sorry, Bar code searching service is busy. Please try it a few seconds later."];
+             }
          }];
 
 }
@@ -87,6 +98,17 @@
                    placeholderImage:[UIImage imageNamed:@"placeholder"]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AmazonItem *item = [self.amazonItems objectAtIndex:indexPath.row];
+    UIViewController *rewindController = [self.navigationController.viewControllers objectAtIndex:1];
+    if ([rewindController isKindOfClass:[ItemDialogViewController class]]) {
+        ItemDialogViewController *itemDialogViewController = (ItemDialogViewController *)rewindController;
+        itemDialogViewController.amazonItem = item;
+        [self.navigationController popToViewController:itemDialogViewController animated:YES];
+    }
 }
 
 /*
@@ -137,5 +159,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Alerts
+
+- (void)alert:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:@"Amazon Search"
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"OK", nil] show];
+}
+
+- (void)fatalAlert:(NSString *)message
+{
+    [[[UIAlertView alloc] initWithTitle:@"Amazon Search"
+                                message:message
+                               delegate:self    // we're going to cancel when dismissed
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"OK", nil] show];
+}
+
 
 @end

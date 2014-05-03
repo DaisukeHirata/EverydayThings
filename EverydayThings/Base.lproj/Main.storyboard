@@ -198,6 +198,93 @@
             </objects>
             <point key="canvasLocation" x="2266" y="847"/>
         </scene>
+        <!--Code Reader View Controller - Scan Bar Code-->
+        <scene sceneID="fwK-j4-ggB">
+            <objects>
+                <viewController storyboardIdentifier="JANCodeReaderViewControllerID" id="Tzc-af-oD4" customClass="JANCodeReaderViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W9G-eX-Ym2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="3XF-C3-6qT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scanning a bar code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="caW-Ck-TNJ">
+                                        <rect key="frame" x="20" y="505" width="280" height="43"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Scan Bar Code" id="Der-HX-kVL">
+                        <barButtonItem key="rightBarButtonItem" title="Use" id="UbS-cy-nth">
+                            <connections>
+                                <segue destination="Qur-kn-Enc" kind="push" id="BEA-KO-1zK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="captureOverlayLabel" destination="caW-Ck-TNJ" id="uqc-MY-QLc"/>
+                        <outlet property="captureView" destination="3XF-C3-6qT" id="ZAH-pR-lg1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zcn-uW-MEt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2266" y="136"/>
+        </scene>
+        <!--Amazon Search Result Table View Controller - Search Results-->
+        <scene sceneID="037-Bi-ieJ">
+            <objects>
+                <tableViewController id="Qur-kn-Enc" customClass="AmazonSearchResultTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zmb-0s-vVT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Amazon Item Cell" textLabel="Bnb-nC-yzQ" detailTextLabel="7Xj-1q-ktJ" style="IBUITableViewCellStyleSubtitle" id="EXZ-S6-ELK">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EXZ-S6-ELK" id="3Sl-ya-r7B">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bnb-nC-yzQ">
+                                            <rect key="frame" x="15" y="3" width="34" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Xj-1q-ktJ">
+                                            <rect key="frame" x="15" y="25" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Qur-kn-Enc" id="aoo-gc-fPt"/>
+                            <outlet property="delegate" destination="Qur-kn-Enc" id="dfg-Eo-vYm"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search Results" id="0QO-Cd-Ha8"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4h5-NR-KW3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2686" y="136"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="vgi-ts-syi">
             <objects>

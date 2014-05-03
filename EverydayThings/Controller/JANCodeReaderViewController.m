@@ -13,7 +13,6 @@
 @interface JANCodeReaderViewController () <AVCaptureMetadataOutputObjectsDelegate>
 @property (strong, nonatomic) AVCaptureSession *session;
 @property (weak, nonatomic) IBOutlet UIView *captureView;
-@property (weak, nonatomic) IBOutlet UILabel *janCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *captureOverlayLabel;
 @end
 
@@ -22,6 +21,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
     self.session = [[AVCaptureSession alloc] init];
     
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -45,7 +47,7 @@
         [self.session addOutput:output];
         
         // EAN13 EAN8
-        output.metadataObjectTypes = @[AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code];
+        output.metadataObjectTypes = @[AVMetadataObjectTypeEAN13Code];
         // QR code
         //output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode];
         // All
@@ -61,16 +63,19 @@
         preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
         [self.captureView.layer addSublayer:preview];
         
-        UILabel *overlayLabel = [[UILabel alloc] initWithFrame:self.captureOverlayLabel.frame];
-        overlayLabel.backgroundColor = [UIColor clearColor];
-        overlayLabel.font = [UIFont fontWithName:@"HelveticaNeue" size: 22.0];
-        overlayLabel.textColor = [UIColor lightTextColor];
-        overlayLabel.textAlignment = NSTextAlignmentCenter;
-        overlayLabel.text = @"Scanning a bar code ...";
-        [self.captureView addSubview:overlayLabel];
+        // overlay
+        [self.captureView addSubview:self.captureOverlayLabel];
     } else {
         NSLog(@"%@ %ld %@",[error domain],(long)[error code],[[error userInfo] description]);
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
@@ -83,11 +88,8 @@
         } else if ([metadata.type isEqualToString:AVMetadataObjectTypeEAN13Code]) {
             NSString *ean13 = [(AVMetadataMachineReadableCodeObject *)metadata stringValue];
             NSLog(@"%@", ean13);
-            self.janCodeLabel.text = ean13;
-        } else if ([metadata.type isEqualToString:AVMetadataObjectTypeEAN8Code]) {
-            NSString *ean8 = [(AVMetadataMachineReadableCodeObject *)metadata stringValue];
-            NSLog(@"%@", ean8);
-            self.janCodeLabel.text = ean8;
+            self.captureOverlayLabel.text = ean13;
+            self.navigationItem.rightBarButtonItem.enabled = YES;            
         }
     }
 }
@@ -99,8 +101,9 @@
     if ([segue.destinationViewController isKindOfClass:[AmazonSearchResultTableViewController class]]) {
         AmazonSearchResultTableViewController *controller =
         [segue destinationViewController];
-        if (![self.janCodeLabel.text isEqualToString:@"jan code here"]) {
-            controller.janCode = self.janCodeLabel.text;
+        [self.session stopRunning];
+        if (![self.captureOverlayLabel.text isEqualToString:@"Scanning a bar code"]) {
+            controller.janCode = self.captureOverlayLabel.text;
         } else {
             controller.janCode = @"4901340184527";
         }

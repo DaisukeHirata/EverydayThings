@@ -9,10 +9,12 @@
 #import "QuickDialogController.h"
 
 @class Item;
+@class AmazonItem;
 
 @interface ItemDialogViewController : QuickDialogController
 
 // in
 @property (nonatomic, strong) Item *item;
+@property (nonatomic, strong) AmazonItem *amazonItem;
 
 @end

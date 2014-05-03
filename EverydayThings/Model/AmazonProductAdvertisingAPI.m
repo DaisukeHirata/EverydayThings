@@ -6,16 +6,12 @@
 //  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
-
 #import "AmazonProductAdvertisingAPI.h"
 #import "NSString+URLEncode.h"
 #import "NSData+Base64.h"
 #import <CommonCrypto/CommonHMAC.h>
 #import "AmazonItem.h"
-
-static NSString *associateTag = @"Please input your associate tag";
-static NSString *accessKeyID = @"Please input your access key id";
-static NSString *secretAccessKey = @"Please input your secret access key";
+#import "AmazonProductAdvertisingAPIKey.h"
 
 @implementation AmazonProductAdvertisingAPI
 
@@ -28,7 +24,7 @@ static NSString *secretAccessKey = @"Please input your secret access key";
     
     //Enter the time stamp into the parameters
     //Sort the parameter/value pairs by byte value (not alphabetically, lowercase parameters will be listed after uppercase ones).
-    NSString *parameters = [NSString stringWithFormat:@"AWSAccessKeyId=%@&AssociateTag=%@&IdType=EAN&ItemId=%@&Operation=ItemLookup&ResponseGroup=Medium&SearchIndex=All&Service=AWSECommerceService&Timestamp=%@&Version=2011-08-01", accessKeyID, associateTag, ItemId, timeStamp];
+    NSString *parameters = [NSString stringWithFormat:@"AWSAccessKeyId=%@&AssociateTag=%@&IdType=EAN&ItemId=%@&Operation=ItemLookup&ResponseGroup=Medium&SearchIndex=All&Service=AWSECommerceService&Timestamp=%@&Version=2011-08-01", ACCESS_KEY_ID, ASSOCIATE_TAG, ItemId, timeStamp];
     
     //URL encode the request's comma (,) and colon (:) characters
     NSString *encodedParameters = [parameters minimalUrlEncode];
@@ -42,7 +38,7 @@ static NSString *secretAccessKey = @"Please input your secret access key";
     
     //Calculate an RFC 2104-compliant HMAC with the SHA256 hash algorithm using the string above with Secret Access Key
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
-    const char *cKey = [secretAccessKey cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cKey = [SECRET_ACCESS_KEY cStringUsingEncoding:NSASCIIStringEncoding];
     const char *cData = [stringToSign cStringUsingEncoding:NSASCIIStringEncoding];
     CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
     

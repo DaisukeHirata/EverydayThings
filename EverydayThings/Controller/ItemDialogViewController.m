@@ -10,7 +10,10 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "SearchAddressViewController.h"
+#import "JANCodeReaderViewController.h"
 #import "GeoFenceLocationSaveNotification.h"
+#import "FAKFontAwesome.h"
+#import "AmazonItem.h"
 
 @interface ItemDialogViewController ()
 @property (nonatomic, strong) NSMutableDictionary *values;
@@ -41,10 +44,20 @@
     [super viewDidLoad];
     
     if (self.item) {
+        // update item
         self.itemId   = self.item.itemId;
         self.latitude = self.item.latitude;
         self.longitude = self.item.longitude;
         self.location = self.item.location;
+    } else {
+        // new item
+        // add barcode button at left side.
+        UIImage *image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome barcodeIconWithSize:20]]
+                                              imageSize:CGSizeMake(20, 20)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image
+                                                                                  style:UIBarButtonItemStyleBordered
+                                                                                 target:self
+                                                                                 action:@selector(barcode)];
     }
 
     [self createQuickDialogElementsWithItem:self.item];
@@ -69,9 +82,16 @@
     self.tabBarController.tabBar.hidden = YES;
     
     if ([self.location length]) {
-        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[[self root] elementWithKey:@"location"];
+        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
         location.value = self.location;
         [self.quickDialogTableView reloadCellForElements:location, nil];
+    }
+    
+    if (self.amazonItem) {
+        QEntryElement *name = (QEntryElement *)[self.root elementWithKey:@"name"];
+        name.textValue = self.amazonItem.title;
+        [self.quickDialogTableView reloadCellForElements:name, nil];
+        NSLog(@"amazon category %@", self.amazonItem.category);
     }
 }
 
@@ -89,7 +109,6 @@
 
 #pragma mark - create dialog elements
 
-
 - (void)createQuickDialogElementsWithItem:(Item *)item
 {
     //
@@ -103,6 +122,12 @@
     QRadioElement *category = [[QRadioElement alloc] initWithItems:[ItemCategory categories]
                                                           selected:item ? [[ItemCategory categories] indexOfObject:item.whichItemCategory.name] : 0
                                                              title:@"Category"];
+    QButtonElement *photo = [[QButtonElement alloc] initWithTitle:@"Photo"];
+    photo.image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome barcodeIconWithSize:20]]
+                                       imageSize:CGSizeMake(20, 20)];
+    photo.onSelected =  ^{
+        NSLog(@"pushed");
+	};
     QBooleanElement *buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
                                                            BoolValue:item ? [item.buyNow boolValue] : NO];
     QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
@@ -113,6 +138,7 @@
     [self.root addSection:section];
     [section addElement:name];
     [section addElement:category];
+//    [section addElement:photo];
     [section addElement:buyNow];
     [section addElement:stock];
     [section addElement:expireDate];
@@ -203,6 +229,14 @@
     geofence.key = @"geofence";
     locationButton.key = @"location";
     
+}
+
+- (void)barcode
+{
+    NSLog(@"barcode pressed");
+    JANCodeReaderViewController *janCodeReaderViewController =
+    [[self storyboard] instantiateViewControllerWithIdentifier:@"JANCodeReaderViewControllerID"];
+    [self.navigationController pushViewController:janCodeReaderViewController animated:YES];
 }
 
 #pragma mark - getter
