@@ -63,7 +63,7 @@
     
     NSDictionary *error = resItems[@"Request"][@"Errors"][@"Error"];
     if (!error) {
-        NSArray *items = [resItems[@"Item"] isKindOfClass:[NSArray class]] ? resItems[@"Item"] : @[resItems[@"Item"]];
+        NSArray *items = [resItems[@"Item"] isKindOfClass:[NSArray class]] ? resItems[@"Item"] : @[resItems[@"Item"]];        
         for (NSDictionary *item in items) {
             NSDictionary *itemAttributes = item[@"ItemAttributes"];
             NSDictionary *lowestNewPrice = item[@"OfferSummary"][@"LowestNewPrice"];
@@ -107,8 +107,6 @@
             NSLog(@"Price: %@", lowestNewPrice[@"FormattedPrice"][@"text"]);
             NSLog(@"ThumbnailURL: %@", imageSet[@"ThumbnailImage"][@"URL"][@"text"]);
         }
-    } else {
-        NSLog(@"%@", error[@"Message"][@"text"]);
     }
 }
 @end
