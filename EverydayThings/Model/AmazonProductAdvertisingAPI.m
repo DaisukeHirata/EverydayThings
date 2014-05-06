@@ -63,14 +63,7 @@
     
     NSDictionary *error = resItems[@"Request"][@"Errors"][@"Error"];
     if (!error) {
-        NSArray *items;
-        NSObject *item = resItems[@"Item"];
-        if ([item isKindOfClass:[NSArray class]]) {
-            items = (NSArray *)item;
-        } else if ([item isKindOfClass:[NSDictionary class]]) {
-            items = @[item];
-        }
-        
+        NSArray *items = [resItems[@"Item"] isKindOfClass:[NSArray class]] ? resItems[@"Item"] : @[resItems[@"Item"]];        
         for (NSDictionary *item in items) {
             NSDictionary *itemAttributes = item[@"ItemAttributes"];
             NSDictionary *lowestNewPrice = item[@"OfferSummary"][@"LowestNewPrice"];
@@ -100,14 +93,7 @@
     NSDictionary *resItems = xmlResponse[@"ItemLookupResponse"][@"Items"];
     NSDictionary *error = resItems[@"Request"][@"Errors"][@"Error"];
     if (!error) {
-        NSArray *items;
-        NSObject *item = resItems[@"Item"];
-        if ([item isKindOfClass:[NSArray class]]) {
-            items = (NSArray *)item;
-        } else if ([item isKindOfClass:[NSDictionary class]]) {
-            items = @[item];
-        }
-        
+        NSArray *items = [resItems[@"Item"] isKindOfClass:[NSArray class]] ? resItems[@"Item"] : @[resItems[@"Item"]];
         for (NSDictionary *item in items) {
             NSDictionary *itemAttributes = item[@"ItemAttributes"];
             NSDictionary *lowestNewPrice = item[@"OfferSummary"][@"LowestNewPrice"];
