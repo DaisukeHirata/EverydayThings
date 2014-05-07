@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
+#import "TDBadgedCell.h"
 
 @interface AllItemsViewController ()
 
@@ -28,7 +29,7 @@
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];
-    request.fetchLimit = 100;
+    request.fetchLimit = 300;
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]
@@ -41,7 +42,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"All Items Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -52,6 +53,19 @@
         [cell.accessoryView setFrame:CGRectMake(0, 0, 12, 12)];
     } else {
         cell.accessoryView = nil;
+    }
+    if ([item cycleInDays]) {
+        cell.badgeString = [NSString stringWithFormat:@"%ld/%ld",
+                            (long)[item elapsedDaysAfterLastPurchaseDate],
+                            (long)[item cycleInDays]];
+        if ([item.elapsed isEqualToNumber:@1]) {
+            // elpased
+            cell.badgeColor = [self hexToUIColor:@"dc143c" alpha:1.0];
+        } else {
+            cell.badgeColor = [UIColor lightGrayColor];
+        }
+    } else {
+        cell.badgeString = nil;
     }
     
     return cell;

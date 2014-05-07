@@ -173,7 +173,7 @@
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
     [sectionCycleToResuplly addElement:lastPurchaseDate];
-    [sectionCycleToResuplly addElement:button];
+//    [sectionCycleToResuplly addElement:button];
     cycle.key = @"cycle";
     timeSpan.key = @"timeSpan";
     lastPurchaseDate.key = @"lastPurchaseDate";

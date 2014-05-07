@@ -32,6 +32,7 @@
 {
     // setup tabbar
     [self setupTabBar];
+    [self setTabBarBadgeNumber];
     
     // Location Manager setup
     if ([self isLocationManagerAvaiable] && [self useGeofence]) {
@@ -78,28 +79,39 @@
     CGFloat iconSize = 27;
     
     //tab1 buy now
-    UITabBarItem *tab1 = [tabItems objectAtIndex:0];
+    UITabBarItem *tab1 = tabItems[0];
     UIImage *shoppingCart = [UIImage imageWithStackedIcons:@[[FAKFontAwesome shoppingCartIconWithSize:iconSize]]
                                                  imageSize:iconImageSize];
     tab1.image = shoppingCart;
     
     //tab2 all items
-    UITabBarItem *tab2 = [tabItems objectAtIndex:1];
+    UITabBarItem *tab2 = tabItems[1];
     UIImage *list = [UIImage imageWithStackedIcons:@[[FAKFontAwesome listIconWithSize:iconSize]]
                                          imageSize:iconImageSize];
     tab2.image = list;
     
     //tab3 expired
-    UITabBarItem *tab3 = [tabItems objectAtIndex:2];
+    UITabBarItem *tab3 = tabItems[2];
     UIImage *exclamation = [UIImage imageWithStackedIcons:@[[FAKFontAwesome exclamationCircleIconWithSize:iconSize]]
                                                 imageSize:iconImageSize];
     tab3.image = exclamation;
     
     //tab4 setting
-    UITabBarItem *tab4 = [tabItems objectAtIndex:3];
+    UITabBarItem *tab4 = tabItems[3];
     UIImage *cog = [UIImage imageWithStackedIcons:@[[FAKFontAwesome cogIconWithSize:iconSize]]
                                         imageSize:iconImageSize];
     tab4.image = cog;
+}
+
+- (void)setTabBarBadgeNumber
+{
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    NSArray *tabItems = tabController.tabBar.items;
+
+    UITabBarItem *tbi = (UITabBarItem*)tabItems[0];
+    
+    NSString *badgeNumber = [NSString stringWithFormat:@"%d", [[Item itemsForBuyNow] count]];
+    [tbi setBadgeValue:badgeNumber];
 }
 
 - (BOOL)useGeofence
@@ -240,7 +252,7 @@ static NSManagedObjectContext *_sharedContext = nil;
     
     for (Item *item in items) {
         CLRegion *region = [self mapItemToRegion:item];
-        region.notifyOnEntry = NO;
+//        region.notifyOnEntry = NO;
 //        region.notifyOnExit = NO;
         [geofences addObject:region];
     }

@@ -57,6 +57,8 @@
         } else {
             cell.badgeColor = [UIColor lightGrayColor];
         }
+    } else {
+        cell.badgeString = nil;
     }
     if ([item.geofence boolValue]) {        
         cell.accessoryView = [self geofenceImageView];
