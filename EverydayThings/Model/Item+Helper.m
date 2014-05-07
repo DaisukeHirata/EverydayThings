@@ -3,13 +3,14 @@
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
-//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
+#import "UpdateApplicationBadgeNumberNotification.h"
 
 @implementation Item (Helper)
 
@@ -53,10 +54,6 @@
         item.whichItemCategory   = [ItemCategory itemCategoryWithIndex:[values[@"category"] intValue]];
         item.elapsed             = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
 
-        BOOL locationChanged = NO;
-        if (![item.location isEqualToString:values[@"location"]]) {
-            locationChanged = YES;
-        }
         item.location            = values[@"location"];
         item.geofence            = values[@"geofence"];
         item.latitude            = values[@"latitude"];
@@ -67,12 +64,16 @@
         if(error) {
             NSLog(@"could not save data : %@", error);
         } else {
-            if (locationChanged) {
-                // geofence region changed.
-                [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationReloadNotification
-                                                                    object:self
-                                                                  userInfo:nil];
-            }
+            // geofence region changed.
+            [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationReloadNotification
+                                                                object:self
+                                                              userInfo:nil];
+            
+            // update application badge number.
+            [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
+                                                                object:self
+                                                              userInfo:nil];
+
         }
     }
     
@@ -87,6 +88,37 @@
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];
     return request;
+        
+}
+
++ (NSArray *)itemsForBuyNow
+{
+    NSFetchRequest *request = [self createRequestForBuyNowItems];
+    
+    NSError *error;
+    NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
+    
+    if (error) {
+        // error
+        NSLog(@"can not read geofence location data from item managed object");
+    }
+    
+    return matches;
+}
+
++ (NSArray *)itemsForGeofence
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = [NSPredicate predicateWithFormat:@"(buyNow = YES || elapsed = YES) && geofence = YES"];
+    NSError *error;
+    NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
+    
+    if (!matches || error) {
+        // error
+        NSLog(@"can not read geofence location data from item managed object");
+    }
+    
+    return matches;
 }
 
 - (NSInteger)expiredWeeks

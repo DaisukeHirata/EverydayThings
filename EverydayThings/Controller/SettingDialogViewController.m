@@ -9,7 +9,7 @@
 #import "SettingDialogViewController.h"
 #import "SearchAddressViewController.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
-#import "UpdateApplicationBadgeNotification.h"
+#import "UpdateApplicationBadgeNumberNotification.h"
 
 @interface SettingDialogViewController ()
 
@@ -46,7 +46,7 @@
         [defaults setBool:badge.boolValue forKey:@"badge"];
         [defaults synchronize];
         // update application badge
-        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
                                                             object:self
                                                           userInfo:nil];
     };

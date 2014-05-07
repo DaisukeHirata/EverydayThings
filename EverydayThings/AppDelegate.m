@@ -12,13 +12,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Item+helper.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
-#import "UpdateApplicationBadgeNotification.h"
+#import "UpdateApplicationBadgeNumberNotification.h"
 
 @interface AppDelegate()<CLLocationManagerDelegate>
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation AppDelegate
-
 /*
  *  System Versioning Preprocessor Macros
  */
@@ -36,12 +36,12 @@
     // Location Manager setup
     if ([self isLocationManagerAvaiable] && [self useGeofence]) {
         [self initializeLocationManager];
+        [self stopMonitoringAllRegions];
         [self initializeRegionMonitoring:[self buildGeofenceData]];
-        [self initializeLocationUpdates];
     }
     
     // tune in geofence region change notification
-    [self updateGeoFenceLocation];
+    [self tuneInGeoFenceMonitoringLocationReloadNotification];
     
     // tune in update appication badge notification
     [self tuneInUpdatingApplicationBadgeNotification];
@@ -54,14 +54,14 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"LocalNotification recieved.");
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
 }
 
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [self updateApplicationBadge];
+    [self updateApplicationBadgeNumber];
+    [self updateGeofence];
     // you need to end your performFetchWithCompletionHandler by responding back that you're finished and provide a status
     // iOS expects you to return this promptly, within about 30 seconds, otherwise it will start to penalize your app’s background execution
     // to preserve battery life.
@@ -108,25 +108,32 @@
     return [defaults boolForKey:@"geofence"];
 }
 
-- (void)updateApplicationBadge
+- (void)updateApplicationBadgeNumber
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     if ([defaults boolForKey:@"badge"]) {
-        NSFetchRequest *request = [Item createRequestForBuyNowItems];
-        
-        NSError *error;
-        NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
-        
-        if (error) {
-            // error
-            NSLog(@"can not read geofence location data from item managed object");
-        } else if  ([matches count]) {
+        NSArray *items = [Item itemsForBuyNow];
+
+        if ([items count]) {
             // found
-            [UIApplication sharedApplication].applicationIconBadgeNumber = [matches count];
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [items count];
+        } else {
+            [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         }
     } else {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    }
+}
+
+- (void)updateGeofence
+{
+    if ([self isLocationManagerAvaiable]) {
+        [self stopMonitoringAllRegions];
+        if ([self useGeofence]) {
+            [self initializeLocationManager];
+            [self initializeRegionMonitoring:[self buildGeofenceData]];
+        }
     }
 }
 
@@ -144,37 +151,27 @@ static NSManagedObjectContext *_sharedContext = nil;
 
 #pragma mark - Tuning in notification
 
-- (void) updateGeoFenceLocation
+- (void) tuneInGeoFenceMonitoringLocationReloadNotification
 {
     [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceMonitoringLocationReloadNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      if ([self isLocationManagerAvaiable]) {
-                                                          [self stopLocationUpdates];
-                                                          if ([self useGeofence]) {
-                                                              [self initializeLocationManager];
-                                                              [self initializeRegionMonitoring:[self buildGeofenceData]];
-                                                              [self initializeLocationUpdates];
-                                                          }
-                                                      }
+                                                      [self updateGeofence];
                                                   }];
 }
 
 - (void) tuneInUpdatingApplicationBadgeNotification
 {
-    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateApplicationBadgeNotification
+    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateApplicationBadgeNumberNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      [self updateApplicationBadge];
+                                                      [self updateApplicationBadgeNumber];
                                                   }];
 }
 
 #pragma mark - Location utility
-
-CLLocationManager *_locationManager;
-NSArray *_regionArray;
 
 - (BOOL)isLocationManagerAvaiable
 {
@@ -209,45 +206,44 @@ NSArray *_regionArray;
         return;
     }
     
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
 }
 
 
-- (void) initializeRegionMonitoring:(NSArray*)geofences
+- (void)initializeRegionMonitoring:(NSArray*)geofences
 {
 
-    if (_locationManager == nil) {
+    if (self.locationManager == nil) {
         [NSException raise:@"Location Manager Not Initialized" format:@"You must initialize location manager first."];
     }
     
     for(CLRegion *geofence in geofences) {
-        [_locationManager startMonitoringForRegion:geofence];
+        [self.locationManager startMonitoringForRegion:geofence];
     }
     
 }
 
+- (void)stopMonitoringAllRegions
+{
+    for (CLRegion *region in [_locationManager monitoredRegions]) {
+        NSLog(@"stop monitoring region %@", region.identifier);
+        [self.locationManager stopMonitoringForRegion:region];
+    }
+}
+
 - (NSArray *)buildGeofenceData
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-    request.predicate = [NSPredicate predicateWithFormat:@"geofence = YES"];
-    request.fetchLimit = 30;
-    NSError *error;
-    NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
     NSMutableArray *geofences = [NSMutableArray array];
+
+    NSArray *items = [Item itemsForGeofence];
     
-    if (!matches || error) {
-        // error
-        NSLog(@"can not read geofence location data from item managed object");
-    } else if  ([matches count]) {
-        // found
-        for (Item *item in matches) {
-            NSLog(@"%@", item.location);
-            CLRegion *region = [self mapItemToRegion:item];
-            region.notifyOnEntry = YES;
-            region.notifyOnExit = NO;
-            [geofences addObject:region];
-        }
+    for (Item *item in items) {
+        CLRegion *region = [self mapItemToRegion:item];
+        region.notifyOnEntry = YES;
+//        region.notifyOnExit = NO;
+        region.notifyOnExit = YES;
+        [geofences addObject:region];
     }
     
     return geofences;
@@ -261,7 +257,7 @@ NSArray *_regionArray;
     CLLocationDegrees longitude =[item.longitude doubleValue];
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
     
-    CLLocationDistance regionRadius = 500;
+    CLLocationDistance regionRadius = 300.0; // 1 ~ 400 meters work better.
     
     CLRegion * region =nil;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -281,22 +277,11 @@ NSArray *_regionArray;
     return region;
 }
 
-- (void)initializeLocationUpdates
-{
-    [_locationManager startUpdatingLocation];
-}
-
-- (void)stopLocationUpdates
-{
-    [_locationManager stopUpdatingLocation];
-}
-
-
 #pragma mark - Location Manager - Region Task Methods
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
-    NSLog(@"Entered Region - %@", region.identifier);
+    NSLog(@"Entered Region -> %@", region.identifier);
     
     // register notification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -308,7 +293,12 @@ NSArray *_regionArray;
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
-    NSLog(@"Exited Region - %@", region.identifier);
+    NSLog(@"Exited Region <- %@", region.identifier);
+}
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+{
+    NSLog(@"Error Monitoring Region %@ %@", region.identifier, error);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
@@ -321,6 +311,17 @@ NSArray *_regionArray;
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     NSLog(@"%@", [NSString stringWithFormat:@"%f,%f",newLocation.coordinate.latitude, newLocation.coordinate.longitude]);
+}
+
+// for more accurate location. However, which can result in higher power usage.
+- (void)initializeLocationUpdates
+{
+    [_locationManager startUpdatingLocation];
+}
+
+- (void)stopLocationUpdates
+{
+    [_locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Alert Methods

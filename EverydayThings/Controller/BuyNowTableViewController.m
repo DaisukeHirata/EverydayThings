@@ -11,7 +11,7 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
-#import "UpdateApplicationBadgeNotification.h"
+#import "UpdateApplicationBadgeNumberNotification.h"
 
 @interface BuyNowTableViewController ()
 @end
@@ -88,7 +88,7 @@
     [super tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
     
     // update application badge
-    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
                                                         object:self
                                                       userInfo:nil];
 }

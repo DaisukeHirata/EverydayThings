@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E32E38FE1918FF0B00DD02B3 /* Shimbashi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */; };
 		E35FCFD31918818100CB76DA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD01918818100CB76DA /* NSData+Base64.m */; };
 		E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD21918818100CB76DA /* NSString+URLEncode.m */; };
 		E35FCFDC191881B600CB76DA /* Daizawa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E35FCFD6191881B600CB76DA /* Daizawa.gpx */; };
@@ -163,6 +164,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Shimbashi.gpx; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E35FCFD01918818100CB76DA /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E35FCFD11918818100CB76DA /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
@@ -211,7 +213,7 @@
 		E35FD0171918820B00CB76DA /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		E35FD0191918823E00CB76DA /* GeoFenceLocationSaveNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoFenceLocationSaveNotification.h; sourceTree = "<group>"; };
 		E35FD01A1918823E00CB76DA /* GeoFenceMonitoringLocationReloadNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoFenceMonitoringLocationReloadNotification.h; sourceTree = "<group>"; };
-		E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateApplicationBadgeNotification.h; sourceTree = "<group>"; };
+		E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNumberNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateApplicationBadgeNumberNotification.h; sourceTree = "<group>"; };
 		E35FD01C191882BF00CB76DA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E35FD01F191882F800CB76DA /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		E35FD020191882F800CB76DA /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				E35FCFD7191881B600CB76DA /* Miraikan.gpx */,
 				E35FCFD8191881B600CB76DA /* SangenjayaStation.gpx */,
 				E35FCFD9191881B600CB76DA /* ShibuyaStation.gpx */,
+				E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */,
 				E35FCFDA191881B600CB76DA /* ShimokitazawaStation.gpx */,
 				E35FCFDB191881B600CB76DA /* WalkToMilleniumPark.gpx */,
 			);
@@ -761,7 +764,7 @@
 				E3B92F0B1905F663000346CA /* Main.storyboard */,
 				E35FD0191918823E00CB76DA /* GeoFenceLocationSaveNotification.h */,
 				E35FD01A1918823E00CB76DA /* GeoFenceMonitoringLocationReloadNotification.h */,
-				E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNotification.h */,
+				E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNumberNotification.h */,
 				E3B92EFC1905F373000346CA /* Controller */,
 				E3B92F351905FE0E000346CA /* Model */,
 				E3B92F3F1905FE18000346CA /* View */,
@@ -957,6 +960,7 @@
 				E3B92EDC1905F13B000346CA /* Images.xcassets in Resources */,
 				E35FCFDD191881B600CB76DA /* Miraikan.gpx in Resources */,
 				E37EC2741908A3FD005DB65F /* zocial-regular-webfont.ttf in Resources */,
+				E32E38FE1918FF0B00DD02B3 /* Shimbashi.gpx in Resources */,
 				E35FCFE0191881B600CB76DA /* ShimokitazawaStation.gpx in Resources */,
 				E37EC2711908A3FD005DB65F /* FontAwesome.otf in Resources */,
 				E3B92ECE1905F13B000346CA /* InfoPlist.strings in Resources */,
