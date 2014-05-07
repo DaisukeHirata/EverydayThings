@@ -3,7 +3,7 @@
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/23.
-//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

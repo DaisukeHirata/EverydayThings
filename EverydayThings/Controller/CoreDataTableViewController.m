@@ -1,6 +1,6 @@
 //
 //  CoreDataTableViewController.m
-//  Calculator3
+//  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/02/21.
 //  Copyright (c) 2014 Daisuke Hirata. All rights reserved.

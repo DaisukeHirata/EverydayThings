@@ -3,7 +3,7 @@
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
-//  Copyright (c) 2014年 Daisuke Hirata. All rights reserved.
+//  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -240,9 +240,8 @@ static NSManagedObjectContext *_sharedContext = nil;
     
     for (Item *item in items) {
         CLRegion *region = [self mapItemToRegion:item];
-        region.notifyOnEntry = YES;
+        region.notifyOnEntry = NO;
 //        region.notifyOnExit = NO;
-        region.notifyOnExit = YES;
         [geofences addObject:region];
     }
     
@@ -257,7 +256,7 @@ static NSManagedObjectContext *_sharedContext = nil;
     CLLocationDegrees longitude =[item.longitude doubleValue];
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
     
-    CLLocationDistance regionRadius = 300.0; // 1 ~ 400 meters work better.
+    CLLocationDistance regionRadius = 200.0; // 1 ~ 400 meters work better.
     
     CLRegion * region =nil;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -303,7 +302,10 @@ static NSManagedObjectContext *_sharedContext = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
-    NSLog(@"Started monitoring %@ region %f %f", region.identifier, region.center.latitude, region.center.longitude);
+    if ([region isKindOfClass:[CLCircularRegion class]]) {
+        CLCircularRegion *circularRegion = (CLCircularRegion *)region;
+        NSLog(@"Started monitoring %@ region %f %f", circularRegion.identifier, circularRegion.center.latitude, circularRegion.center.longitude);
+    }
 }
 
 #pragma mark - Location Manager - Standard Task Methods
