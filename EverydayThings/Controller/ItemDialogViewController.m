@@ -163,44 +163,18 @@
     [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
                                              date:item ? item.lastPurchaseDate : nil
                                           andMode:UIDatePickerModeDate];
-    QButtonWithLabelElement *button = [[QButtonWithLabelElement alloc] initWithTitle:@"I bought this."];
-    button.onSelected =  ^{
-        NSLog(@"pushed");
-	};
     [self.root addSection:sectionCycleToResuplly];
     [sectionCycleToResuplly addElement:stock];
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
     [sectionCycleToResuplly addElement:lastPurchaseDate];
-//    [sectionCycleToResuplly addElement:button];
     stock.key = @"stock";
     cycle.key = @"cycle";
     timeSpan.key = @"timeSpan";
     lastPurchaseDate.key = @"lastPurchaseDate";
     
     
-    //
-    // Cycle to resupply section
-    //
-    QSection *sectionDetail = [[QSection alloc] initWithTitle:@"Detail"];
-    QEntryElement *whereToBuy = [[QEntryElement alloc] initWithTitle:@"Where to buy"
-                                                               Value:@""
-                                                         Placeholder:@"Enter"];
-    QEntryElement *favoriteProductName = [[QEntryElement alloc] initWithTitle:@"Favorite Product Name"
-                                                                        Value:@""
-                                                                  Placeholder:@"Enter"];
-    QEntryElement *whereToStock = [[QEntryElement alloc] initWithTitle:@"Where to stock"
-                                                                 Value:@""
-                                                           Placeholder:@"Enter"];
-    [self.root addSection:sectionDetail];
-    [sectionDetail addElement:whereToBuy];
-    [sectionDetail addElement:favoriteProductName];
-    [sectionDetail addElement:whereToStock];
-    whereToBuy.key = @"whereToBuy";
-    favoriteProductName.key = @"favoriteProductName";
-    whereToStock.key = @"whereToStock";
-    
-    
+
     //
     // Geofence
     //

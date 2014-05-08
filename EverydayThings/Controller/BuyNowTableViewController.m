@@ -55,6 +55,10 @@
     
     Item *item = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    // adjust font size by text length
+    cell.textLabel.minimumScaleFactor = 0.5f;
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    
     cell.textLabel.text = item.name;
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     if ([item cycleInDays]) {

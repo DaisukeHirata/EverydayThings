@@ -85,11 +85,10 @@
     AmazonItem *item = [self.amazonItems objectAtIndex:indexPath.row];
     
     // adjust font size by text length
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:15.f];
-    cell.textLabel.minimumScaleFactor = 8.f/15.f;
+    cell.textLabel.minimumScaleFactor = 0.5f;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.textLabel.text = item.title;
     
+    cell.textLabel.text = item.title;
     cell.detailTextLabel.text = item.price;
     
     // prevend auto scaling. maintain the aspect ratio.
