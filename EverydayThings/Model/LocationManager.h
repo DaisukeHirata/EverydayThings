@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface LocationManager : NSObject
-
++ (LocationManager *)sharedLocationManager;
+- (BOOL)isLocationManagerAvaiable;
+- (void)initializeLocationManager;
+- (void)stopMonitoringAllRegions;
+- (void)initializeRegionMonitoring:(NSArray*)geofences;
+- (NSArray *)buildGeofenceData;
 @end
