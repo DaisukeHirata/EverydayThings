@@ -1,5 +1,5 @@
 //
-//  ExpireListTableViewController.h
+//  DueDateTableViewController.h
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
@@ -8,6 +8,6 @@
 
 #import "ItemListTableViewController.h"
 
-@interface ExpireListTableViewController : ItemListTableViewController
+@interface DueDateTableViewController : ItemListTableViewController
 
 @end

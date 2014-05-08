@@ -122,19 +122,23 @@
     UIImage *image;
 
     FAKFontAwesome *arrowIcon = [FAKFontAwesome locationArrowIconWithSize:12];
-    
     [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"d3d3d3" alpha:0.7]];
-
-    if (monitored) {
-        [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"87b4e2" alpha:0.7]];
-    }
     
     if (inside) {
         [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"0056d9" alpha:1.0]];
+        image = [UIImage imageWithStackedIcons:@[arrowIcon] imageSize:CGSizeMake(12, 12)];
+    }
+    else if (monitored) {
+        [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"d788ff" alpha:0.5]];
+        FAKFontAwesome *borderIcon = [FAKFontAwesome locationArrowIconWithSize:4.5];
+        [borderIcon addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]];
+        image = [UIImage imageWithStackedIcons:@[arrowIcon, borderIcon] imageSize:CGSizeMake(12, 12)];
+    }
+    else
+    {
+        image = [UIImage imageWithStackedIcons:@[arrowIcon] imageSize:CGSizeMake(12, 12)];
     }
     
-    image = [UIImage imageWithStackedIcons:@[arrowIcon] imageSize:CGSizeMake(12, 12)];
-        
     return [[UIImageView alloc] initWithImage:image];
 }
 

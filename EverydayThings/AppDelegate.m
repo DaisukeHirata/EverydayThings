@@ -116,17 +116,17 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                  imageSize:iconImageSize];
     tab1.image = shoppingCart;
     
-    //tab2 all items
+    //tab2 expired
     UITabBarItem *tab2 = tabItems[1];
+    UIImage *exclamation = [UIImage imageWithStackedIcons:@[[FAKFontAwesome calendarIconWithSize:iconSize]]
+                                                imageSize:iconImageSize];
+    tab2.image = exclamation;
+
+    //tab3 all items
+    UITabBarItem *tab3 = tabItems[2];
     UIImage *list = [UIImage imageWithStackedIcons:@[[FAKFontAwesome listIconWithSize:iconSize]]
                                          imageSize:iconImageSize];
-    tab2.image = list;
-    
-    //tab3 expired
-    UITabBarItem *tab3 = tabItems[2];
-    UIImage *exclamation = [UIImage imageWithStackedIcons:@[[FAKFontAwesome exclamationCircleIconWithSize:iconSize]]
-                                                imageSize:iconImageSize];
-    tab3.image = exclamation;
+    tab3.image = list;
     
     //tab4 setting
     UITabBarItem *tab4 = tabItems[3];

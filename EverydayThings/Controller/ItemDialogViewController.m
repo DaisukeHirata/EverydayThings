@@ -179,7 +179,7 @@
     // Geofence
     //
     QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
-    sectionGeofence.footer = @"Set a location where you buy this item. Geofence reminds you only when BuyNow items you have is at the nearby location.";
+    sectionGeofence.footer = @"Set a location you buy this item. Geofence reminds you only when BuyNow items you have is at the nearby location.";
     QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Geofence"
                                                              BoolValue:item ? [item.geofence boolValue] : NO];
     geofence.onSelected = ^{

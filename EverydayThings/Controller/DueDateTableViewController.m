@@ -1,21 +1,21 @@
 //
-//  ExpireListTableViewController.m
+//  DueDateTableViewController.m
 //  EverydayThings
 //
 //  Created by Daisuke Hirata on 2014/04/22.
 //  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
-#import "ExpireListTableViewController.h"
+#import "DueDateTableViewController.h"
 #import "AppDelegate.h"
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 
-@interface ExpireListTableViewController ()
+@interface DueDateTableViewController ()
 
 @end
 
-@implementation ExpireListTableViewController
+@implementation DueDateTableViewController
 
 #pragma mark - View Controller Lifecycle
 

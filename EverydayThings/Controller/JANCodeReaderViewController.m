@@ -22,8 +22,6 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-    
     self.session = [[AVCaptureSession alloc] init];
     
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -65,9 +63,11 @@
         
         // overlay
         [self.captureView addSubview:self.captureOverlayLabel];
+        
+        self.navigationItem.rightBarButtonItem = nil;
     } else {
+        // for iOS simulator
         NSLog(@"%@ %ld %@",[error domain],(long)[error code],[[error userInfo] description]);
-        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
 }
 
@@ -86,10 +86,13 @@
             NSString *qrcode = [(AVMetadataMachineReadableCodeObject *)metadata stringValue];
             NSLog(@"%@", qrcode);
         } else if ([metadata.type isEqualToString:AVMetadataObjectTypeEAN13Code]) {
+            [self.session stopRunning];
             NSString *ean13 = [(AVMetadataMachineReadableCodeObject *)metadata stringValue];
             NSLog(@"%@", ean13);
-            self.captureOverlayLabel.text = ean13;
-            self.navigationItem.rightBarButtonItem.enabled = YES;            
+            AmazonSearchResultTableViewController *controller =
+            [[self storyboard] instantiateViewControllerWithIdentifier:@"AmazonSearchResultTableViewController"];
+            controller.janCode = ean13;
+            [self.navigationController pushViewController:controller animated:YES];
         }
     }
 }
@@ -98,13 +101,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // for iOS simulator
     if ([segue.destinationViewController isKindOfClass:[AmazonSearchResultTableViewController class]]) {
         AmazonSearchResultTableViewController *controller =
         [segue destinationViewController];
         [self.session stopRunning];
-        if (![self.captureOverlayLabel.text isEqualToString:@"Scanning a bar code"]) {
-            controller.janCode = self.captureOverlayLabel.text;
-        } else {
+        if ([self.captureOverlayLabel.text isEqualToString:@"Scanning a bar code"]) {
             controller.janCode = @"4901340184527";
         }
     }

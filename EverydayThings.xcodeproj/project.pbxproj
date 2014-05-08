@@ -51,7 +51,7 @@
 		E35FD05B191885E000CB76DA /* AmazonSearchResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD045191885E000CB76DA /* AmazonSearchResultTableViewController.m */; };
 		E35FD05C191885E000CB76DA /* BuyNowTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD047191885E000CB76DA /* BuyNowTableViewController.m */; };
 		E35FD05D191885E000CB76DA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD049191885E000CB76DA /* CoreDataTableViewController.m */; };
-		E35FD05E191885E000CB76DA /* ExpireListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD04B191885E000CB76DA /* ExpireListTableViewController.m */; };
+		E35FD05E191885E000CB76DA /* DueDateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD04B191885E000CB76DA /* DueDateTableViewController.m */; };
 		E35FD05F191885E000CB76DA /* ItemDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD04D191885E000CB76DA /* ItemDialogViewController.m */; };
 		E35FD060191885E000CB76DA /* ItemListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD04F191885E000CB76DA /* ItemListTableViewController.m */; };
 		E35FD061191885E000CB76DA /* JANCodeReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD051191885E000CB76DA /* JANCodeReaderViewController.m */; };
@@ -251,8 +251,8 @@
 		E35FD047191885E000CB76DA /* BuyNowTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyNowTableViewController.m; sourceTree = "<group>"; };
 		E35FD048191885E000CB76DA /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		E35FD049191885E000CB76DA /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
-		E35FD04A191885E000CB76DA /* ExpireListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpireListTableViewController.h; sourceTree = "<group>"; };
-		E35FD04B191885E000CB76DA /* ExpireListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpireListTableViewController.m; sourceTree = "<group>"; };
+		E35FD04A191885E000CB76DA /* DueDateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DueDateTableViewController.h; sourceTree = "<group>"; };
+		E35FD04B191885E000CB76DA /* DueDateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DueDateTableViewController.m; sourceTree = "<group>"; };
 		E35FD04C191885E000CB76DA /* ItemDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDialogViewController.h; sourceTree = "<group>"; };
 		E35FD04D191885E000CB76DA /* ItemDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDialogViewController.m; sourceTree = "<group>"; };
 		E35FD04E191885E000CB76DA /* ItemListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListTableViewController.h; sourceTree = "<group>"; };
@@ -827,8 +827,8 @@
 				E35FD047191885E000CB76DA /* BuyNowTableViewController.m */,
 				E35FD048191885E000CB76DA /* CoreDataTableViewController.h */,
 				E35FD049191885E000CB76DA /* CoreDataTableViewController.m */,
-				E35FD04A191885E000CB76DA /* ExpireListTableViewController.h */,
-				E35FD04B191885E000CB76DA /* ExpireListTableViewController.m */,
+				E35FD04A191885E000CB76DA /* DueDateTableViewController.h */,
+				E35FD04B191885E000CB76DA /* DueDateTableViewController.m */,
 				E35FD04C191885E000CB76DA /* ItemDialogViewController.h */,
 				E35FD04D191885E000CB76DA /* ItemDialogViewController.m */,
 				E35FD04E191885E000CB76DA /* ItemListTableViewController.h */,
@@ -1039,7 +1039,7 @@
 				E395090B190A1F96002EAEB8 /* QTextField.m in Sources */,
 				E35FD062191885E000CB76DA /* MapViewController.m in Sources */,
 				E39508FE190A1F96002EAEB8 /* QRadioElement.m in Sources */,
-				E35FD05E191885E000CB76DA /* ExpireListTableViewController.m in Sources */,
+				E35FD05E191885E000CB76DA /* DueDateTableViewController.m in Sources */,
 				E35FCFE8191881DB00CB76DA /* AmazonProductAdvertisingAPI.m in Sources */,
 				E35FD05C191885E000CB76DA /* BuyNowTableViewController.m in Sources */,
 				E35FD060191885E000CB76DA /* ItemListTableViewController.m in Sources */,
