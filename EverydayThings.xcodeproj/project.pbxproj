@@ -167,6 +167,7 @@
 /* Begin PBXFileReference section */
 		E318CAE4191B113D00CCFA07 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		E318CAE5191B113D00CCFA07 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeofenceRegionStateChangedNotification.h; sourceTree = "<group>"; };
 		E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Shimbashi.gpx; sourceTree = "<group>"; };
 		E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateBuyNowTabBadgeNumberNotification.h; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -768,6 +769,7 @@
 				E3B92F0B1905F663000346CA /* Main.storyboard */,
 				E35FD0191918823E00CB76DA /* GeofenceLocationSaveNotification.h */,
 				E35FD01A1918823E00CB76DA /* GeofenceMonitoringLocationReloadNotification.h */,
+				E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */,
 				E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNumberNotification.h */,
 				E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */,
 				E3B92EFC1905F373000346CA /* Controller */,

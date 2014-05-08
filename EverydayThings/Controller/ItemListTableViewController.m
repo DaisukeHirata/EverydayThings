@@ -10,12 +10,15 @@
 #import "ItemDialogViewController.h"
 #import "AppDelegate.h"
 #import "FAKFontAwesome.h"
+#import "GeofenceRegionStateChangedNotification.h"
 
 @interface ItemListTableViewController ()
 
 @end
 
 @implementation ItemListTableViewController
+
+#pragma mark - View Controller Lifecycle
 
 /*
  *  System Versioning Preprocessor Macros
@@ -33,6 +36,9 @@
     {
         self.tableView.separatorInset = UIEdgeInsetsMake(0, 14, 0, 0);;
     }
+
+    // when region changed, then reload data to sync geofence icon color
+    [self tuneInGeofenceRegionStateChangedNotification];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -42,6 +48,8 @@
     // needs to upload section header color
     [self.tableView reloadData];
 }
+
+#pragma mark - tableview controller delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -56,12 +64,6 @@
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     return nil;
-}
-
-- (IBAction)addButtonPressed:(UIBarButtonItem *)sender {
-    ItemDialogViewController *itemDialogViewController =
-    [[self storyboard] instantiateViewControllerWithIdentifier:@"ItemDialogViewController"];
-    [self.navigationController pushViewController:itemDialogViewController animated:YES];
 }
 
 // delete row delegate
@@ -81,6 +83,29 @@
     }
 }
 
+#pragma mark - navigation
+
+- (IBAction)addButtonPressed:(UIBarButtonItem *)sender {
+    ItemDialogViewController *itemDialogViewController =
+    [[self storyboard] instantiateViewControllerWithIdentifier:@"ItemDialogViewController"];
+    [self.navigationController pushViewController:itemDialogViewController animated:YES];
+}
+
+#pragma mark - notification
+
+- (void) tuneInGeofenceRegionStateChangedNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeofenceRegionStateChangedNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [self.tableView reloadData];
+                                                  }];
+}
+
+
+#pragma mark - util
+
 - (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
 {
 	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
@@ -92,12 +117,37 @@
 	return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
-
-- (UIImageView *)geofenceImageView
+- (UIImageView *)geofenceImageViewMonitored:(BOOL)monitored insideRegion:(BOOL)inside
 {
-    UIImage *image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome locationArrowIconWithSize:12]]
-                                          imageSize:CGSizeMake(12, 12)];
+    UIImage *image;
+
+    FAKFontAwesome *arrowIcon = [FAKFontAwesome locationArrowIconWithSize:12];
+    
+    [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"d3d3d3" alpha:0.7]];
+
+    if (monitored) {
+        [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"87b4e2" alpha:0.7]];
+    }
+    
+    if (inside) {
+        [arrowIcon addAttribute:NSForegroundColorAttributeName value:[self hexToUIColor:@"0056d9" alpha:1.0]];
+    }
+    
+    image = [UIImage imageWithStackedIcons:@[arrowIcon] imageSize:CGSizeMake(12, 12)];
+        
     return [[UIImageView alloc] initWithImage:image];
 }
+
+#pragma mark - Location manager things
+
+- (LocationManager *)locationManager
+{
+    if (!_locationManager) {
+        _locationManager = [LocationManager sharedLocationManager];
+    }
+    return _locationManager;
+}
+
+
 
 @end

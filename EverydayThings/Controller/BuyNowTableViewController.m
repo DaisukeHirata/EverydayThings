@@ -15,6 +15,7 @@
 #import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @interface BuyNowTableViewController ()
+
 @end
 
 @implementation BuyNowTableViewController
@@ -42,7 +43,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
                                                         object:self
                                                       userInfo:nil];
-
 }
 
 
@@ -75,8 +75,9 @@
         cell.badgeString = nil;
     }
     if ([item.geofence boolValue]) {        
-        cell.accessoryView = [self geofenceImageView];
-        [cell.accessoryView setFrame:CGRectMake(0, 0, 12, 12)];
+        cell.accessoryView = [self geofenceImageViewMonitored:[self.locationManager monitoredRegion:item.location]
+                                                 insideRegion:[self.locationManager insideRegion:item.location]];
+
     } else {
         cell.accessoryView = nil;
     }

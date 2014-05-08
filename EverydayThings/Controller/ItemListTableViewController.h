@@ -7,10 +7,12 @@
 //
 
 #import "CoreDataTableViewController.h"
+#import "LocationManager.h"
 
 @interface ItemListTableViewController : CoreDataTableViewController
+@property (nonatomic, strong) LocationManager *locationManager;
 
 - (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a;
-- (UIImageView *)geofenceImageView;
+- (UIImageView *)geofenceImageViewMonitored:(BOOL)monitored insideRegion:(BOOL)inside;
 
 @end

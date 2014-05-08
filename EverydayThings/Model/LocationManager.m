@@ -9,14 +9,16 @@
 #import "LocationManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Item+Helper.h"
+#import "GeofenceRegionStateChangedNotification.h"
 
 @interface LocationManager() <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) NSMutableDictionary *regionStates;
 @end
 
 @implementation LocationManager
 
-#pragma mark - Coredata shared managed object context
+#pragma mark - Location Manager shared instance
 
 static LocationManager *_sharedLocationManager = nil;
 
@@ -105,6 +107,24 @@ static LocationManager *_sharedLocationManager = nil;
     return geofences;
 }
 
+- (void)checkStateForMonitoredRegions
+{
+    self.regionStates = [[NSMutableDictionary alloc] init];
+    for (CLRegion *region in [_locationManager monitoredRegions]) {
+        [self.locationManager requestStateForRegion:region];
+    }
+}
+
+- (BOOL)monitoredRegion:(NSString *)region
+{
+    return [self.regionStates objectForKey:region] != nil ? YES : NO;
+}
+
+- (BOOL)insideRegion:(NSString *)region
+{
+    return [self.regionStates[region] boolValue];
+}
+
 /*
  *  System Versioning Preprocessor Macros
  */
@@ -147,6 +167,7 @@ static LocationManager *_sharedLocationManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     NSLog(@"Entered Region -> %@", region.identifier);
+    [self checkStateForMonitoredRegions];
     
     // register notification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -159,6 +180,7 @@ static LocationManager *_sharedLocationManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
     NSLog(@"Exited Region <- %@", region.identifier);
+    [self checkStateForMonitoredRegions];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
@@ -172,6 +194,43 @@ static LocationManager *_sharedLocationManager = nil;
         CLCircularRegion *circularRegion = (CLCircularRegion *)region;
         NSLog(@"Started monitoring %@ region %f %f", circularRegion.identifier, circularRegion.center.latitude, circularRegion.center.longitude);
     }
+    [self checkStateForMonitoredRegions];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+{
+    NSLog(@"didDetermineState:%@(%@)", [self regionStateString:state], region.identifier);
+    
+    if ([region isKindOfClass:[CLCircularRegion class]]) {
+        switch (state) {
+            case CLRegionStateInside:
+                self.regionStates[region.identifier] = [NSNumber numberWithBool:YES];
+                break;
+            case CLRegionStateOutside:
+            case CLRegionStateUnknown:
+                self.regionStates[region.identifier] = [NSNumber numberWithBool:NO];
+                break;
+        }
+    }
+    
+    // notify region state changed
+    [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceRegionStateChangedNotification
+                                                        object:self
+                                                      userInfo:nil];
+
+}
+
+- (NSString *)regionStateString:(CLRegionState)state
+{
+    switch (state) {
+        case CLRegionStateInside:
+            return @"inside";
+        case CLRegionStateOutside:
+            return @"outside";
+        case CLRegionStateUnknown:
+            return @"unknown";
+    }
+    return @"";
 }
 
 #pragma mark - Location Manager - Standard Task Methods

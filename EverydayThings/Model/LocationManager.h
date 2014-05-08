@@ -15,4 +15,6 @@
 - (void)stopMonitoringAllRegions;
 - (void)initializeRegionMonitoring:(NSArray*)geofences;
 - (NSArray *)buildGeofenceData;
+- (BOOL)monitoredRegion:(NSString *)region;
+- (BOOL)insideRegion:(NSString *)region;
 @end
