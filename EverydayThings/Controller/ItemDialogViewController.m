@@ -62,11 +62,11 @@
 
     [self createQuickDialogElementsWithItem:self.item];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceLocationSaveNotification
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeofenceLocationSaveNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      NSDictionary *info = note.userInfo[GeoFenceLocationSaveNotificationItem];
+                                                      NSDictionary *info = note.userInfo[GeofenceLocationSaveNotificationItem];
                                                       NSLog(@"location done %@", info[@"location"]);
                                                       self.location  = info[@"location"];
                                                       self.latitude  = info[@"latitude"];
@@ -130,8 +130,6 @@
 	};
     QBooleanElement *buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
                                                            BoolValue:item ? [item.buyNow boolValue] : NO];
-    QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
-                                                          BoolValue:item ? [item.stock boolValue ] : NO];
     QDateTimeInlineElement *expireDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Expire Date"
                                                                                   date:item ? item.expireDate : nil
                                                                                andMode:UIDatePickerModeDate];
@@ -140,18 +138,18 @@
     [section addElement:category];
 //    [section addElement:photo];
     [section addElement:buyNow];
-    [section addElement:stock];
     [section addElement:expireDate];
     name.key = @"name";
     category.key = @"category";
     buyNow.key = @"buyNow";
-    stock.key = @"stock";
     expireDate.key = @"expireDate";
     
     
     //
     // Cycle to resupply section
     //
+    QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
+                                                          BoolValue:item ? [item.stock boolValue ] : NO];
     QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to resupply"];
     QEntryElement *cycle = [[QEntryElement alloc] initWithTitle:@"Cycle"
                                                           Value:item ? [item.cycle stringValue]: @""
@@ -170,10 +168,12 @@
         NSLog(@"pushed");
 	};
     [self.root addSection:sectionCycleToResuplly];
+    [sectionCycleToResuplly addElement:stock];
     [sectionCycleToResuplly addElement:cycle];
     [sectionCycleToResuplly addElement:timeSpan];
     [sectionCycleToResuplly addElement:lastPurchaseDate];
 //    [sectionCycleToResuplly addElement:button];
+    stock.key = @"stock";
     cycle.key = @"cycle";
     timeSpan.key = @"timeSpan";
     lastPurchaseDate.key = @"lastPurchaseDate";

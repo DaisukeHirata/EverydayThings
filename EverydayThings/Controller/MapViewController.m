@@ -92,10 +92,10 @@
     for (MKMapItem *item in self.mapItemList) {
         NSLog(@"map item name %@", item.name);
         // notification
-        NSDictionary* userInfo = @{ GeoFenceLocationSaveNotificationItem: @{ @"location"  : item.name,
+        NSDictionary* userInfo = @{ GeofenceLocationSaveNotificationItem: @{ @"location"  : item.name,
                                                                              @"latitude"  : [NSNumber numberWithDouble:item.placemark.coordinate.latitude],
                                                                              @"longitude" : [NSNumber numberWithDouble:item.placemark.coordinate.longitude]} };
-        [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceLocationSaveNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceLocationSaveNotification
                                                             object:self
                                                           userInfo:userInfo];
     }

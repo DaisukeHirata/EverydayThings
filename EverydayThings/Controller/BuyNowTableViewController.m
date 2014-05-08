@@ -12,6 +12,7 @@
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
+#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @interface BuyNowTableViewController ()
 @end
@@ -33,7 +34,16 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 
+    // update buy now tab badge number.
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
+                                                        object:self
+                                                      userInfo:nil];
+
+}
 
 
 #pragma mark - Table view data source delegate

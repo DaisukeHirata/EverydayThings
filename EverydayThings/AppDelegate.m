@@ -11,8 +11,9 @@
 #import "FontAwesomeKit.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Item+helper.h"
-#import "GeoFenceMonitoringLocationReloadNotification.h"
+#import "GeofenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
+#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @interface AppDelegate()<CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -32,7 +33,6 @@
 {
     // setup tabbar
     [self setupTabBar];
-    [self setTabBarBadgeNumber];
     
     // Location Manager setup
     if ([self isLocationManagerAvaiable] && [self useGeofence]) {
@@ -42,10 +42,13 @@
     }
     
     // tune in geofence region change notification
-    [self tuneInGeoFenceMonitoringLocationReloadNotification];
+    [self tuneInGeofenceMonitoringLocationReloadNotification];
     
     // tune in update appication badge notification
     [self tuneInUpdatingApplicationBadgeNotification];
+    
+    // tune in updating buy now tab badge number notification
+    [self tuneInUpdatingBuyNowBadgeNotification];
     
     // turn on badge update in background
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -103,15 +106,19 @@
     tab4.image = cog;
 }
 
-- (void)setTabBarBadgeNumber
+- (void)setBuyNowTabBadgeNumber
 {
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     NSArray *tabItems = tabController.tabBar.items;
 
     UITabBarItem *tbi = (UITabBarItem*)tabItems[0];
+    NSUInteger count = [[Item itemsForBuyNow] count];
     
-    NSString *badgeNumber = [NSString stringWithFormat:@"%d", [[Item itemsForBuyNow] count]];
-    [tbi setBadgeValue:badgeNumber];
+    if (count != 0) {
+        tbi.badgeValue = [NSString stringWithFormat:@"%d", count];
+    } else {
+        tbi.badgeValue = nil;
+    }
 }
 
 - (BOOL)useGeofence
@@ -136,6 +143,11 @@
     } else {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
+}
+
+- (void)updateBuyNowTabBadgeNumber
+{
+    [self setBuyNowTabBadgeNumber];
 }
 
 - (void)updateGeofence
@@ -163,9 +175,9 @@ static NSManagedObjectContext *_sharedContext = nil;
 
 #pragma mark - Tuning in notification
 
-- (void) tuneInGeoFenceMonitoringLocationReloadNotification
+- (void) tuneInGeofenceMonitoringLocationReloadNotification
 {
-    [[NSNotificationCenter defaultCenter] addObserverForName:GeoFenceMonitoringLocationReloadNotification
+    [[NSNotificationCenter defaultCenter] addObserverForName:GeofenceMonitoringLocationReloadNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
@@ -182,6 +194,17 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                       [self updateApplicationBadgeNumber];
                                                   }];
 }
+
+- (void) tuneInUpdatingBuyNowBadgeNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateBuyNowTabBadgeNumberNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [self updateBuyNowTabBadgeNumber];
+                                                  }];
+}
+
 
 #pragma mark - Location utility
 

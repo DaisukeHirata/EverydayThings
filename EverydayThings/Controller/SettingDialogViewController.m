@@ -64,7 +64,7 @@
         [defaults setBool:geofence.boolValue forKey:@"geofence"];
         [defaults synchronize];
         // geofence region changed.
-        [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationReloadNotification
+        [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
                                                             object:self
                                                           userInfo:nil];
     };

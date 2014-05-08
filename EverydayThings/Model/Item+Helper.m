@@ -11,6 +11,7 @@
 #import "ItemCategory+Helper.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
+#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @implementation Item (Helper)
 
@@ -65,12 +66,17 @@
             NSLog(@"could not save data : %@", error);
         } else {
             // geofence region changed.
-            [[NSNotificationCenter defaultCenter] postNotificationName:GeoFenceMonitoringLocationReloadNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
                                                                 object:self
                                                               userInfo:nil];
             
             // update application badge number.
             [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
+                                                                object:self
+                                                              userInfo:nil];
+            
+            // update buy now tab badge number.
+            [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
                                                                 object:self
                                                               userInfo:nil];
 
