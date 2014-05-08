@@ -150,7 +150,8 @@
     //
     QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
                                                           BoolValue:item ? [item.stock boolValue ] : NO];
-    QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to resupply"];
+    QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to supply"];
+    sectionCycleToResuplly.footer = @"CYCLE TO SUPPLY helps you recognize an approximate time to supply this item based on a consumption cycle, avoid stockout items.";
     QEntryElement *cycle = [[QEntryElement alloc] initWithTitle:@"Cycle"
                                                           Value:item ? [item.cycle stringValue]: @""
                                                     Placeholder:@""];
@@ -174,12 +175,12 @@
     lastPurchaseDate.key = @"lastPurchaseDate";
     
     
-
     //
     // Geofence
     //
     QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
-    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"enable Geofence for this item?"
+    sectionGeofence.footer = @"Set a location where you buy this item. Geofence reminds you only when BuyNow items you have is at the nearby location.";
+    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Geofence"
                                                              BoolValue:item ? [item.geofence boolValue] : NO];
     geofence.onSelected = ^{
         NSLog(@"selected");

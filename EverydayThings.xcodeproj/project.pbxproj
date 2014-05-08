@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E318CAE5191B113D00CCFA07 /* LocationManager.m */; };
 		E32E38FE1918FF0B00DD02B3 /* Shimbashi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */; };
 		E35FCFD31918818100CB76DA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD01918818100CB76DA /* NSData+Base64.m */; };
 		E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD21918818100CB76DA /* NSString+URLEncode.m */; };
@@ -164,6 +165,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E318CAE4191B113D00CCFA07 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		E318CAE5191B113D00CCFA07 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Shimbashi.gpx; sourceTree = "<group>"; };
 		E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateBuyNowTabBadgeNumberNotification.h; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -847,6 +850,13 @@
 			children = (
 				E35FCFCE1918818100CB76DA /* Category */,
 				E3B92F5319060E71000346CA /* Coredata */,
+				E35FCFE2191881DB00CB76DA /* AmazonItem.h */,
+				E35FCFE3191881DB00CB76DA /* AmazonItem.m */,
+				E35FCFE4191881DB00CB76DA /* AmazonProductAdvertisingAPI.h */,
+				E35FCFE5191881DB00CB76DA /* AmazonProductAdvertisingAPI.m */,
+				E35FCFE6191881DB00CB76DA /* AmazonProductAdvertisingAPIKey.h */,
+				E318CAE4191B113D00CCFA07 /* LocationManager.h */,
+				E318CAE5191B113D00CCFA07 /* LocationManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -872,11 +882,6 @@
 				E3B92F5619061FC5000346CA /* Item+Helper.m */,
 				E3B92F5819063E89000346CA /* ItemCategory+Helper.h */,
 				E3B92F5919063E89000346CA /* ItemCategory+Helper.m */,
-				E35FCFE2191881DB00CB76DA /* AmazonItem.h */,
-				E35FCFE3191881DB00CB76DA /* AmazonItem.m */,
-				E35FCFE4191881DB00CB76DA /* AmazonProductAdvertisingAPI.h */,
-				E35FCFE5191881DB00CB76DA /* AmazonProductAdvertisingAPI.m */,
-				E35FCFE6191881DB00CB76DA /* AmazonProductAdvertisingAPIKey.h */,
 			);
 			name = Coredata;
 			sourceTree = "<group>";
@@ -1101,6 +1106,7 @@
 				E39508F1190A1F96002EAEB8 /* QEmptyListElement.m in Sources */,
 				E35FD065191885E000CB76DA /* SettingDialogViewController.m in Sources */,
 				E39508F9190A1F96002EAEB8 /* QLabelElement.m in Sources */,
+				E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */,
 				E39508F0190A1F96002EAEB8 /* QElement.m in Sources */,
 				E3950911190A1F96002EAEB8 /* QuickDialogDataSource.m in Sources */,
 				E35FD0091918820200CB76DA /* SDImageCache.m in Sources */,
