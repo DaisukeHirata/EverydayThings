@@ -21,13 +21,7 @@
 
 @implementation AppDelegate
 
-- (LocationManager *)locationManager
-{
-    if (!_locationManager) {
-        _locationManager = [LocationManager sharedLocationManager];
-    }
-    return _locationManager;
-}
+#pragma mark - Application Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -71,6 +65,41 @@
     // to preserve battery life.
     completionHandler(UIBackgroundFetchResultNewData);
 }
+
+#pragma mark - Coredata shared managed object context
+
+static NSManagedObjectContext *_sharedContext = nil;
+
++ (NSManagedObjectContext *)sharedContext
+{
+    if (!_sharedContext) {
+        _sharedContext = [AppDelegate createMainQueueManagedObjectContext];
+    }
+    return _sharedContext;
+}
+
+#pragma mark - Location manager things
+
+- (LocationManager *)locationManager
+{
+    if (!_locationManager) {
+        _locationManager = [LocationManager sharedLocationManager];
+    }
+    return _locationManager;
+}
+
+- (void)updateGeofence
+{
+    if ([self.locationManager isLocationManagerAvaiable]) {
+        [self.locationManager stopMonitoringAllRegions];
+        if ([self useGeofence]) {
+            [self.locationManager initializeLocationManager];
+            [self.locationManager initializeRegionMonitoring:[self.locationManager buildGeofenceData]];
+        }
+    }
+}
+
+#pragma mark - UI
 
 - (void) setupTabBar
 {
@@ -121,12 +150,6 @@
     }
 }
 
-- (BOOL)useGeofence
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults boolForKey:@"geofence"];
-}
-
 - (void)updateApplicationBadgeNumber
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -148,29 +171,6 @@
 - (void)updateBuyNowTabBadgeNumber
 {
     [self setBuyNowTabBadgeNumber];
-}
-
-- (void)updateGeofence
-{
-    if ([self.locationManager isLocationManagerAvaiable]) {
-        [self.locationManager stopMonitoringAllRegions];
-        if ([self useGeofence]) {
-            [self.locationManager initializeLocationManager];
-            [self.locationManager initializeRegionMonitoring:[self.locationManager buildGeofenceData]];
-        }
-    }
-}
-
-#pragma mark - Coredata shared managed object context
-
-static NSManagedObjectContext *_sharedContext = nil;
-
-+ (NSManagedObjectContext *)sharedContext
-{
-    if (!_sharedContext) {
-        _sharedContext = [AppDelegate createMainQueueManagedObjectContext];
-    }
-    return _sharedContext;
 }
 
 #pragma mark - Tuning in notification
@@ -203,6 +203,14 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                   usingBlock:^(NSNotification *note) {
                                                       [self updateBuyNowTabBadgeNumber];
                                                   }];
+}
+
+#pragma mark - global setting
+
+- (BOOL)useGeofence
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:@"geofence"];
 }
 
 @end
