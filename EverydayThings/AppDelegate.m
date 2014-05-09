@@ -22,9 +22,8 @@
 @implementation AppDelegate
 
 #pragma mark - Application Delegate
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
     // setup tabbar
     [self setupTabBar];
 
@@ -60,10 +59,18 @@
 {
     [self updateApplicationBadgeNumber];
     [self updateGeofence];
+    [Item updateElapsed];
     // you need to end your performFetchWithCompletionHandler by responding back that you're finished and provide a status
     // iOS expects you to return this promptly, within about 30 seconds, otherwise it will start to penalize your app’s background execution
     // to preserve battery life.
     completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Item updateElapsed];
+    });
 }
 
 #pragma mark - Coredata shared managed object context

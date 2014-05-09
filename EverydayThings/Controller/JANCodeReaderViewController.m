@@ -64,6 +64,7 @@
         // overlay
         [self.captureView addSubview:self.captureOverlayLabel];
         
+        // remove use button. use button is for iOS simulator.
         self.navigationItem.rightBarButtonItem = nil;
     } else {
         // for iOS simulator

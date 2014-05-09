@@ -126,7 +126,6 @@
     [[QBindingEvaluator new] bindObject:self toData:data];
 }
 
-
 - (void)bindToObject:(id)data shallow:(BOOL)shallow
 {
     [[QBindingEvaluator new] bindObject:self toData:data];

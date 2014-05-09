@@ -16,11 +16,28 @@
 #import "AmazonItem.h"
 
 @interface ItemDialogViewController ()
+// top
+@property (nonatomic, copy)   NSString *name;
+//@property (nonatomic, strong) QRadioElement *category;
+//@property (nonatomic, strong) QBooleanElement *buyNow;
+//@property (nonatomic, strong) QButtonElement *photo;
+
+// cycle to supply
+//@property (nonatomic, strong) QBooleanElement *stock;
+//@property (nonatomic, strong) QEntryElement *cycle;
+//@property (nonatomic, strong) QRadioElement *timeSpan;
+//@property (nonatomic, strong) QDateTimeInlineElement *lastPurchaseDate;
+
+// geofence
+@property (nonatomic)         BOOL geofence;
+@property (nonatomic, copy)   NSString *location;
+
+
 @property (nonatomic, strong) NSMutableDictionary *values;
 @property (nonatomic, copy)   NSString *itemId;
-@property (nonatomic, copy)   NSString *location;
 @property (nonatomic, strong) NSNumber *latitude;
 @property (nonatomic, strong) NSNumber *longitude;
+
 @end
 
 @implementation ItemDialogViewController
@@ -48,7 +65,6 @@
         self.itemId   = self.item.itemId;
         self.latitude = self.item.latitude;
         self.longitude = self.item.longitude;
-        self.location = self.item.location;
     } else {
         // new item
         // add barcode button at left side.
@@ -81,16 +97,8 @@
     
     self.tabBarController.tabBar.hidden = YES;
     
-    if ([self.location length]) {
-        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
-        location.value = self.location;
-        [self.quickDialogTableView reloadCellForElements:location, nil];
-    }
-    
     if (self.amazonItem) {
-        QEntryElement *name = (QEntryElement *)[self.root elementWithKey:@"name"];
-        name.textValue = self.amazonItem.title;
-        [self.quickDialogTableView reloadCellForElements:name, nil];
+        self.name = self.amazonItem.title;
         NSLog(@"amazon category %@", self.amazonItem.category);
     }
 }
@@ -99,8 +107,10 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-        if ([self.values[@"name"] length]) {
-            [Item saveItem:self.values];
+        if ([self.name length]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [Item saveItem:self.values];
+            });
         }
     }
     [super viewWillDisappear:animated];
@@ -114,65 +124,32 @@
     //
     // General section
     //
-    QSection *section = [[QSection alloc] init];
-    QEntryElement *name = [[QEntryElement alloc] initWithTitle:@"Name"
-                                                         Value:item ? item.name : @""
-                                                   Placeholder:@"Enter name"];
-    name.appearance.entryAlignment = NSTextAlignmentRight;
-    QRadioElement *category = [[QRadioElement alloc] initWithItems:[ItemCategory categories]
-                                                          selected:item ? [[ItemCategory categories] indexOfObject:item.whichItemCategory.name] : 0
-                                                             title:@"Category"];
-    QButtonElement *photo = [[QButtonElement alloc] initWithTitle:@"Photo"];
-    photo.image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome barcodeIconWithSize:20]]
-                                       imageSize:CGSizeMake(20, 20)];
-    photo.onSelected =  ^{
-        NSLog(@"pushed");
-	};
-    QBooleanElement *buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
-                                                           BoolValue:item ? [item.buyNow boolValue] : NO];
-    QDateTimeInlineElement *expireDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Expire Date"
-                                                                                  date:item ? item.expireDate : nil
-                                                                               andMode:UIDatePickerModeDate];
-    [self.root addSection:section];
-    [section addElement:name];
-    [section addElement:category];
-//    [section addElement:photo];
-    [section addElement:buyNow];
-    [section addElement:expireDate];
-    name.key = @"name";
-    category.key = @"category";
-    buyNow.key = @"buyNow";
-    expireDate.key = @"expireDate";
+    QSection *sectionTop = [[QSection alloc] init];
+    [self.root addSection:sectionTop];
+    [sectionTop addElement:[self createNameEntryElement]];
+    [sectionTop addElement:[self createCategoryRadioElement]];
+    [sectionTop addElement:[self createBuyNowBooleanElement]];
     
     
     //
     // Cycle to resupply section
     //
-    QBooleanElement *stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
-                                                          BoolValue:item ? [item.stock boolValue ] : NO];
     QSection *sectionCycleToResuplly = [[QSection alloc] initWithTitle:@"Cycle to supply"];
     sectionCycleToResuplly.footer = @"CYCLE TO SUPPLY helps you recognize an approximate time to supply this item based on a consumption cycle, avoid stockout items.";
-    QEntryElement *cycle = [[QEntryElement alloc] initWithTitle:@"Cycle"
-                                                          Value:item ? [item.cycle stringValue]: @""
-                                                    Placeholder:@""];
-    cycle.appearance.entryAlignment = NSTextAlignmentRight;
-    cycle.keyboardType = UIKeyboardTypeNumberPad;
-    QRadioElement *timeSpan = [[QRadioElement alloc] initWithItems:[Item timeSpans]
-                                                          selected:item ? [[Item timeSpans] indexOfObject:item.timeSpan] : 0
-                                                             title:@"Time Span"];
-    QDateTimeInlineElement *lastPurchaseDate =
-    [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
-                                             date:item ? item.lastPurchaseDate : nil
-                                          andMode:UIDatePickerModeDate];
     [self.root addSection:sectionCycleToResuplly];
-    [sectionCycleToResuplly addElement:stock];
-    [sectionCycleToResuplly addElement:cycle];
-    [sectionCycleToResuplly addElement:timeSpan];
-    [sectionCycleToResuplly addElement:lastPurchaseDate];
-    stock.key = @"stock";
-    cycle.key = @"cycle";
-    timeSpan.key = @"timeSpan";
-    lastPurchaseDate.key = @"lastPurchaseDate";
+    [sectionCycleToResuplly addElement:[self createStockBooleanElement]];
+    [sectionCycleToResuplly addElement:[self createCycleEntryElement]];
+    [sectionCycleToResuplly addElement:[self createtimeSpanRadioElement]];
+    [sectionCycleToResuplly addElement:[self createlastPurchaseDateTimeInlineElement]];
+    
+
+    //
+    // Due date section
+    //
+    QSection *sectionDueDate = [[QSection alloc] initWithTitle:@"Due Date"];
+    sectionDueDate.footer = @"This item will be shown in a Due date Tab, when a due date is coming within a month.";
+    [self.root addSection:sectionDueDate];
+    [sectionDueDate addElement:[self createDueDateDateTimeInlineElement]];
     
     
     //
@@ -180,55 +157,190 @@
     //
     QSection *sectionGeofence = [[QSection alloc] initWithTitle:@"Geofence"];
     sectionGeofence.footer = @"Set a location you buy this item. Geofence reminds you only when BuyNow items you have is at the nearby location.";
-    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Geofence"
-                                                             BoolValue:item ? [item.geofence boolValue] : NO];
-    geofence.onSelected = ^{
-        NSLog(@"selected");
-        QBooleanElement *geofence = (QBooleanElement *)[[self root] elementWithKey:@"geofence"];
-        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[[self root] elementWithKey:@"location"];
-        location.enabled = geofence.boolValue ? YES : NO;
-        NSLog(@"%@", geofence.value);
-        [self.quickDialogTableView reloadCellForElements:location, nil];
-    };
-    QButtonWithLabelElement *locationButton = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
-    locationButton.onSelected =  ^{
-        SearchAddressViewController *searchAddressViewController =
-        [[self storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
-        [self.navigationController pushViewController:searchAddressViewController animated:YES];
-	};
-    locationButton.enabled = item ? [item.geofence boolValue] ? YES : NO : NO;
-    locationButton.value = item ? self.location : @"";
     [self.root addSection:sectionGeofence];
-    [sectionGeofence addElement:geofence];
-    [sectionGeofence addElement:locationButton];
+    [sectionGeofence addElement:[self createGeofenceBooleanElement]];
+    [sectionGeofence addElement:[self createLocationButtonWithLabelElement]];
+}
+
+#pragma mark - QuickDialog Element Setter Getter
+
+#define WeakSelf __weak __typeof__(self)
+
+- (QEntryElement *)createNameEntryElement
+{
+    QEntryElement *name;
+    name = [[QEntryElement alloc] initWithTitle:@"Name"
+                                          Value:self.item ? self.item.name : @""
+                                    Placeholder:@"Enter name"];
+    name.appearance.entryAlignment = NSTextAlignmentRight;
+    name.key = @"name";
+    return name;
+}
+
+- (QRadioElement *)createCategoryRadioElement
+{
+    QRadioElement *category;
+    category = [[QRadioElement alloc] initWithItems:[ItemCategory categories]
+                                           selected:self.item ? [[ItemCategory categories] indexOfObject:self.item.whichItemCategory.name] : 0
+                                              title:@"Category"];
+    category.key = @"category";
+    return category;
+}
+
+- (QBooleanElement *)createBuyNowBooleanElement
+{
+    QBooleanElement *buyNow;
+    buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
+                                          BoolValue:self.item ? [self.item.buyNow boolValue] : NO];
+    buyNow.key = @"buyNow";
+    return buyNow;
+}
+
+- (QButtonElement *)createPhotoButtonElement
+{
+    QButtonElement *photo;
+    photo = [[QButtonElement alloc] initWithTitle:@"Photo"];
+    photo.key = @"photo";
+    photo.image = [UIImage imageWithStackedIcons:@[[FAKFontAwesome barcodeIconWithSize:20]]
+                                       imageSize:CGSizeMake(20, 20)];
+    photo.onSelected =  ^{
+        NSLog(@"photo pushed");
+    };
+    return photo;
+}
+
+
+- (QBooleanElement *)createStockBooleanElement
+{
+    QBooleanElement * stock;
+    stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
+                                         BoolValue:self.item ? [self.item.stock boolValue ] : NO];
+    stock.key = @"stock";
+    return stock;
+}
+
+- (QEntryElement *)createCycleEntryElement
+{
+    QEntryElement *cycle;
+    cycle = [[QEntryElement alloc] initWithTitle:@"Cycle"
+                                           Value:self.item ? [self.item.cycle stringValue] : @""
+                                     Placeholder:@""];
+    cycle.key = @"cycle";
+    cycle.appearance.entryAlignment = NSTextAlignmentRight;
+    cycle.keyboardType = UIKeyboardTypeNumberPad;
+    return cycle;
+}
+
+- (QRadioElement *)createtimeSpanRadioElement
+{
+    QRadioElement *timeSpan;
+    timeSpan = [[QRadioElement alloc] initWithItems:[Item timeSpans]
+                                           selected:self.item ? [[Item timeSpans] indexOfObject:self.item.timeSpan] : 0
+                                              title:@"Time Span"];
+    timeSpan.key = @"timeSpan";
+    return timeSpan;
+}
+
+- (QDateTimeInlineElement *)createlastPurchaseDateTimeInlineElement
+{
+    QDateTimeInlineElement *lastPurchaseDate;
+    lastPurchaseDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Last Purchase Date"
+                                                                date:self.item ? self.item.lastPurchaseDate : nil
+                                                             andMode:UIDatePickerModeDate];
+    lastPurchaseDate.key = @"lastPurchaseDate";
+    return lastPurchaseDate;
+}
+
+- (QDateTimeInlineElement *)createDueDateDateTimeInlineElement
+{
+    QDateTimeInlineElement *dueDate;
+    dueDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Due Date"
+                                                       date:self.item ? self.item.expireDate : nil
+                                                    andMode:UIDatePickerModeDate];
+    dueDate.key = @"dueDate";
+    return dueDate;
+}
+
+- (QBooleanElement *)createGeofenceBooleanElement
+{
+    QBooleanElement *geofence;
+    geofence = [[QBooleanElement alloc] initWithTitle:@"Geofence"
+                                            BoolValue:self.item ? [self.item.geofence boolValue] : NO];
     geofence.key = @"geofence";
-    locationButton.key = @"location";
-    
+    WeakSelf weakSelf = self;
+    geofence.onSelected = ^{
+        [weakSelf setLocationEnabled:weakSelf.geofence];
+    };
+    return geofence;
 }
 
-- (void)barcode
+- (QButtonWithLabelElement *)createLocationButtonWithLabelElement
 {
-    NSLog(@"barcode pressed");
-    JANCodeReaderViewController *janCodeReaderViewController =
-    [[self storyboard] instantiateViewControllerWithIdentifier:@"JANCodeReaderViewControllerID"];
-    [self.navigationController pushViewController:janCodeReaderViewController animated:YES];
+    QButtonWithLabelElement *location;
+    location         = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
+    location.key     = @"location";
+    location.enabled = self.item ? [self.item.geofence boolValue] ? YES : NO : NO;
+    location.value   = self.item ? self.item.location : @"";
+    WeakSelf weakSelf = self;
+    location.onSelected =  ^{
+        SearchAddressViewController *searchAddressViewController =
+        [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"SearchAddressViewController"];
+        [weakSelf.navigationController pushViewController:searchAddressViewController animated:YES];
+    };
+    return location;
 }
 
-#pragma mark - getter
-
-- (NSMutableDictionary *)values
+- (void)setLocationEnabled:(BOOL)enabled
 {
-    if (self.root) {
-        if (!_values) _values = [[NSMutableDictionary alloc] init];
-        [self.root fetchValueIntoObject:_values];
-        _values[@"itemId"] = [self.itemId length] ? self.itemId : @"NEW_ITEM_DUMMY_ID";
-        if (self.location)  _values[@"location"]  = self.location;
-        if (self.latitude)  _values[@"latitude"]  = self.latitude;
-        if (self.longitude) _values[@"longitude"] = self.longitude;
-        return _values;
-    } else {
-        return nil;
-    }
+    QButtonWithLabelElement *location = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
+    location.value = self.location;
+    location.enabled = enabled;
+    [self.quickDialogTableView reloadCellForElements:location, nil];
+}
+
+#pragma mark - quick dialog element property getter & setter
+
+@synthesize name = _name;
+@synthesize location = _location;
+
+- (NSString *)name
+{
+    QEntryElement *nameElement = (QEntryElement *)[self.root elementWithKey:@"name"];
+    return nameElement.textValue;
+}
+
+- (void)setName:(NSString *)name
+{
+    QEntryElement *nameElement = (QEntryElement *)[self.root elementWithKey:@"name"];
+    nameElement.textValue = name;
+    [self.quickDialogTableView reloadCellForElements:nameElement, nil];
+}
+
+- (NSString *)location
+{
+    QButtonWithLabelElement *locationElement = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
+    return locationElement.value;
+}
+
+- (void)setLocation:(NSString *)location
+{
+    QButtonWithLabelElement *locationElement = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
+    locationElement.value = location;
+    [self.quickDialogTableView reloadCellForElements:locationElement, nil];
+}
+
+- (BOOL)geofence
+{
+    QBooleanElement *geofenceElement = (QBooleanElement *)[self.root elementWithKey:@"geofence"];
+    return geofenceElement.boolValue;
+}
+
+#pragma mark - normal property getter & setter
+
+- (NSString *)itemId
+{
+    if (!_itemId) _itemId = [[NSString alloc] init];
+    return _itemId;
 }
 
 - (NSNumber *)latitude
@@ -243,17 +355,31 @@
     return _longitude;
 }
 
-- (NSString *)location
+- (NSMutableDictionary *)values
 {
-    if (!_location) _location = [[NSString alloc] init];
-    return _location;
+    if (self.root) {
+        if (!_values) _values = [[NSMutableDictionary alloc] init];
+        [self.root fetchValueIntoObject:_values];
+        _values[@"itemId"] = [self.itemId length] ? self.itemId : @"NEW_ITEM_DUMMY_ID";
+        if (self.latitude)  _values[@"latitude"]  = self.latitude;
+        if (self.longitude) _values[@"longitude"] = self.longitude;
+        return _values;
+    } else {
+        return nil;
+    }
 }
 
-- (NSString *)itemId
+#pragma mark - action
+
+- (void)barcode
 {
-    if (!_itemId) _itemId = [[NSString alloc] init];
-    return _itemId;
+    NSLog(@"barcode pressed");
+    JANCodeReaderViewController *janCodeReaderViewController =
+    [[self storyboard] instantiateViewControllerWithIdentifier:@"JANCodeReaderViewControllerID"];
+    [self.navigationController pushViewController:janCodeReaderViewController animated:YES];
 }
+
+
 
 
 @end

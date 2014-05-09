@@ -17,5 +17,6 @@
 + (NSFetchRequest *)createRequestForBuyNowItems;
 + (NSArray *)itemsForGeofence;
 + (NSArray *)itemsForBuyNow;
++ (void)updateElapsed;
 
 @end

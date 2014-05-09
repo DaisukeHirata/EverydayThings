@@ -107,8 +107,9 @@ static LocationManager *_sharedLocationManager = nil;
     return geofences;
 }
 
-- (void)checkStateForMonitoredRegions
+- (void)checkStateForAllMonitoredRegions
 {
+    NSLog(@"---checkStateForAllMonitoredRegions---");
     self.regionStates = [[NSMutableDictionary alloc] init];
     for (CLRegion *region in [_locationManager monitoredRegions]) {
         [self.locationManager requestStateForRegion:region];
@@ -167,7 +168,7 @@ static LocationManager *_sharedLocationManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     NSLog(@"Entered Region -> %@", region.identifier);
-    [self checkStateForMonitoredRegions];
+    [self checkStateForAllMonitoredRegions];
     
     // register notification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -180,7 +181,7 @@ static LocationManager *_sharedLocationManager = nil;
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
 {
     NSLog(@"Exited Region <- %@", region.identifier);
-    [self checkStateForMonitoredRegions];
+    [self checkStateForAllMonitoredRegions];
 }
 
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
@@ -193,8 +194,8 @@ static LocationManager *_sharedLocationManager = nil;
     if ([region isKindOfClass:[CLCircularRegion class]]) {
         CLCircularRegion *circularRegion = (CLCircularRegion *)region;
         NSLog(@"Started monitoring %@ region %f %f", circularRegion.identifier, circularRegion.center.latitude, circularRegion.center.longitude);
+        [self.locationManager requestStateForRegion:region];
     }
-    [self checkStateForMonitoredRegions];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
@@ -231,6 +232,12 @@ static LocationManager *_sharedLocationManager = nil;
             return @"unknown";
     }
     return @"";
+}
+
+- (NSMutableDictionary *)regionStates
+{
+    if (!_regionStates) _regionStates = [[NSMutableDictionary alloc] init];
+    return _regionStates;
 }
 
 #pragma mark - Location Manager - Standard Task Methods

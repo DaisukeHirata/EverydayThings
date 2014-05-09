@@ -45,10 +45,7 @@
         item.buyNow              = values[@"buyNow"];
         item.stock               = values[@"stock"];
         item.lastPurchaseDate    = values[@"lastPurchaseDate"];
-        item.expireDate          = values[@"expireDate"];
-        item.whereToBuy          = values[@"whereToBuy"];
-        item.favoriteProductName = values[@"favoriteProductName"];
-        item.whereToStock        = values[@"whereToStock"];
+        item.expireDate          = values[@"dueDate"];
         item.cycle               = [values[@"cycle"] length] != 0 ?
                                         [NSDecimalNumber decimalNumberWithString:values[@"cycle"]] : nil;
         item.timeSpan            = [Item timeSpans][[values[@"timeSpan"] intValue]];
@@ -84,6 +81,33 @@
     }
     
     return item;
+}
+
++ (void)updateElapsed
+{
+    NSLog(@"update elapsed status...");
+    NSManagedObjectContext *context = [AppDelegate sharedContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = nil; // all of Item.
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (error) {
+        // error
+        NSLog(@"Error updateElpased");
+    } else if  ([matches count]) {
+        // update
+        for (Item *item in matches) {
+            item.elapsed = [item elapsedDaysAfterLastPurchaseDate] > [item cycleInDays] ? @1 : @0;
+        }
+        error = nil;
+        [context save:&error];
+        if(error) {
+            NSLog(@"could not save data : %@", error);
+        }
+    }
 }
 
 + (NSFetchRequest *)createRequestForBuyNowItems

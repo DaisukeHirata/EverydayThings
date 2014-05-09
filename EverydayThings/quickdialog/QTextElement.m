@@ -74,6 +74,7 @@
 }
 
 - (void)fetchValueIntoObject:(id)obj {
+    
 	if (_key==nil)
 		return;
 	
