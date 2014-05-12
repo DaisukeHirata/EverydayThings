@@ -88,10 +88,24 @@ static LocationManager *_sharedLocationManager = nil;
     for (CLRegion *region in [_locationManager monitoredRegions]) {
         NSLog(@"stop monitoring region %@", region.identifier);
         [self.locationManager stopMonitoringForRegion:region];
+        if ([self.regionStates objectForKey:region.identifier]) {
+            [self.regionStates removeObjectForKey:region.identifier];
+        }
     }
 }
 
-- (NSArray *)buildGeofenceData
+- (void)stopMonitoringRegions:(NSArray *)regions
+{
+    for (CLRegion *region in regions) {
+        NSLog(@"stop monitoring region %@", region.identifier);
+        [self.locationManager stopMonitoringForRegion:region];
+        if ([self.regionStates objectForKey:region.identifier]) {
+            [self.regionStates removeObjectForKey:region.identifier];
+        }
+    }
+}
+
+- (NSArray *)buildAllGeofenceData
 {
     NSMutableArray *geofences = [NSMutableArray array];
     
@@ -103,6 +117,16 @@ static LocationManager *_sharedLocationManager = nil;
         //        region.notifyOnExit = NO;
         [geofences addObject:region];
     }
+    
+    return geofences;
+}
+
+- (NSArray *)buildGeofenceDataForItem:(Item *)item;
+{
+    NSMutableArray *geofences = [NSMutableArray array];
+    
+    CLRegion *region = [self mapItemToRegion:item];
+    [geofences addObject:region];
     
     return geofences;
 }
@@ -143,7 +167,7 @@ static LocationManager *_sharedLocationManager = nil;
     CLLocationDegrees longitude =[item.longitude doubleValue];
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(latitude, longitude);
     
-    CLLocationDistance regionRadius = 200.0; // 1 ~ 400 meters work better.
+    CLLocationDistance regionRadius = 400.0; // 1 ~ 400 meters work better.
     
     CLRegion * region =nil;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -194,8 +218,19 @@ static LocationManager *_sharedLocationManager = nil;
     if ([region isKindOfClass:[CLCircularRegion class]]) {
         CLCircularRegion *circularRegion = (CLCircularRegion *)region;
         NSLog(@"Started monitoring %@ region %f %f", circularRegion.identifier, circularRegion.center.latitude, circularRegion.center.longitude);
-        [self.locationManager requestStateForRegion:region];
+
+        // immediate check would fail sometimes. check state after 2 sec. 
+        [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                         target:self
+                                       selector:@selector(requestStateForRegion:)
+                                       userInfo:@{@"region":region}
+                                        repeats:NO];
+        
     }
+}
+
+- (void)requestStateForRegion:(NSTimer*)timer{
+    [self.locationManager requestStateForRegion:timer.userInfo[@"region"]];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region

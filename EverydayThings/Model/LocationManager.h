@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class Item;
+
 @interface LocationManager : NSObject
 + (LocationManager *)sharedLocationManager;
 - (BOOL)isLocationManagerAvaiable;
 - (void)initializeLocationManager;
 - (void)stopMonitoringAllRegions;
+- (void)stopMonitoringRegions:(NSArray *)regions;
 - (void)initializeRegionMonitoring:(NSArray*)geofences;
-- (NSArray *)buildGeofenceData;
+- (NSArray *)buildAllGeofenceData;
+- (NSArray *)buildGeofenceDataForItem:(Item *)item;
 - (BOOL)monitoredRegion:(NSString *)region;
 - (BOOL)insideRegion:(NSString *)region;
 @end

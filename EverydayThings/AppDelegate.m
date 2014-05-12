@@ -31,7 +31,7 @@
     if ([self.locationManager isLocationManagerAvaiable] && [self useGeofence]) {
         [self.locationManager initializeLocationManager];
         [self.locationManager stopMonitoringAllRegions];
-        [self.locationManager initializeRegionMonitoring:[self.locationManager buildGeofenceData]];
+        [self.locationManager initializeRegionMonitoring:[self.locationManager buildAllGeofenceData]];
     }
     
     // tune in geofence region change notification
@@ -58,7 +58,7 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [self updateApplicationBadgeNumber];
-    [self updateGeofence];
+    [self updateAllGeofence];
     [Item updateElapsed];
     // you need to end your performFetchWithCompletionHandler by responding back that you're finished and provide a status
     // iOS expects you to return this promptly, within about 30 seconds, otherwise it will start to penalize your app’s background execution
@@ -95,16 +95,32 @@ static NSManagedObjectContext *_sharedContext = nil;
     return _locationManager;
 }
 
-- (void)updateGeofence
+- (void)updateAllGeofence
 {
     if ([self.locationManager isLocationManagerAvaiable]) {
         [self.locationManager stopMonitoringAllRegions];
         if ([self useGeofence]) {
             [self.locationManager initializeLocationManager];
-            [self.locationManager initializeRegionMonitoring:[self.locationManager buildGeofenceData]];
+            [self.locationManager initializeRegionMonitoring:[self.locationManager buildAllGeofenceData]];
         }
     }
 }
+
+- (void)updateGeofenceForItem:(Item *)item
+{
+    if ([self.locationManager isLocationManagerAvaiable]) {
+        NSArray *regions = [self.locationManager buildGeofenceDataForItem:item];
+        if ([self.locationManager monitoredRegion:item.name]) {
+            [self.locationManager stopMonitoringRegions:regions];            
+        }
+        if ([self useGeofence] &&
+            [item.geofence isEqualToNumber:@1] &&
+            ([item.buyNow isEqualToNumber:@1] || [item.elapsed isEqualToNumber:@1]) ) {
+            [self.locationManager initializeRegionMonitoring:regions];
+        }
+    }
+}
+
 
 #pragma mark - UI
 
@@ -188,7 +204,11 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
-                                                      [self updateGeofence];
+                                                      if (note.userInfo[@"item"]) {
+                                                          [self updateGeofenceForItem:note.userInfo[@"item"]];
+                                                      } else {
+                                                          [self updateAllGeofence];
+                                                      }
                                                   }];
 }
 

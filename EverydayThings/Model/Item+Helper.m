@@ -41,6 +41,11 @@
     }
     
     if (item) {
+        
+        NSNumber *oldBuynow   = item.buyNow;
+        NSNumber *oldElapsed  = item.elapsed;
+        NSNumber *oldGeofence = item.geofence;
+        
         item.name                = values[@"name"];
         item.buyNow              = values[@"buyNow"];
         item.stock               = values[@"stock"];
@@ -62,10 +67,14 @@
         if(error) {
             NSLog(@"could not save data : %@", error);
         } else {
-            // geofence region changed.
-            [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
-                                                                object:self
-                                                              userInfo:nil];
+            if (!([oldGeofence isEqualToNumber:item.geofence] &&
+                  [oldBuynow isEqualToNumber:item.buyNow]     &&
+                  [oldElapsed isEqualToNumber:item.elapsed])  ) {
+                // geofence region changed.
+                [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
+                                                                    object:self
+                                                                  userInfo:nil];
+            }
             
             // update application badge number.
             [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification

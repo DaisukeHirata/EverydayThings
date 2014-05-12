@@ -16,22 +16,18 @@
 #import "AmazonItem.h"
 
 @interface ItemDialogViewController ()
+
 // top
 @property (nonatomic, copy)   NSString *name;
-//@property (nonatomic, strong) QRadioElement *category;
-//@property (nonatomic, strong) QBooleanElement *buyNow;
-//@property (nonatomic, strong) QButtonElement *photo;
 
 // cycle to supply
-//@property (nonatomic, strong) QBooleanElement *stock;
-//@property (nonatomic, strong) QEntryElement *cycle;
-//@property (nonatomic, strong) QRadioElement *timeSpan;
-//@property (nonatomic, strong) QDateTimeInlineElement *lastPurchaseDate;
+@property (nonatomic)         BOOL stock;
+@property (nonatomic, copy)   NSString *cycle;
+@property(nonatomic, strong)  NSDate *lastPurchaseDate;
 
 // geofence
 @property (nonatomic)         BOOL geofence;
 @property (nonatomic, copy)   NSString *location;
-
 
 @property (nonatomic, strong) NSMutableDictionary *values;
 @property (nonatomic, copy)   NSString *itemId;
@@ -52,6 +48,10 @@
         _root.title = @"Item";
         self.root = _root;
         self.resizeWhenKeyboardPresented =YES;
+        UIBarButtonItem* saveItem = [[UIBarButtonItem alloc]  initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+                                                                                   target:self
+                                                                                   action:@selector(save:)];
+        self.navigationItem.leftBarButtonItem = saveItem;
     }
     return self;
 }
@@ -59,7 +59,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     if (self.item) {
         // update item
         self.itemId   = self.item.itemId;
@@ -73,7 +73,7 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image
                                                                                   style:UIBarButtonItemStyleBordered
                                                                                  target:self
-                                                                                 action:@selector(barcode)];
+                                                                                action:@selector(barcode)];
     }
 
     [self createQuickDialogElementsWithItem:self.item];
@@ -88,7 +88,6 @@
                                                       self.latitude  = info[@"latitude"];
                                                       self.longitude = info[@"longitude"];
                                                   }];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -103,20 +102,12 @@
     }
 }
 
-
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
-        if ([self.name length]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [Item saveItem:self.values];
-            });
-        }
-    }
     [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
 }
-
+    
 #pragma mark - create dialog elements
 
 - (void)createQuickDialogElementsWithItem:(Item *)item
@@ -216,6 +207,13 @@
     stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
                                          BoolValue:self.item ? [self.item.stock boolValue ] : NO];
     stock.key = @"stock";
+    WeakSelf weakSelf = self;
+    stock.onSelected = ^{
+        [weakSelf setCycleToSupplyEnabled:weakSelf.stock];
+        if (weakSelf.stock && !weakSelf.lastPurchaseDate) {
+            weakSelf.lastPurchaseDate = [NSDate date];
+        }
+    };
     return stock;
 }
 
@@ -226,6 +224,7 @@
                                            Value:self.item ? [self.item.cycle stringValue] : @""
                                      Placeholder:@""];
     cycle.key = @"cycle";
+    cycle.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     cycle.appearance.entryAlignment = NSTextAlignmentRight;
     cycle.keyboardType = UIKeyboardTypeNumberPad;
     return cycle;
@@ -238,6 +237,7 @@
                                            selected:self.item ? [[Item timeSpans] indexOfObject:self.item.timeSpan] : 0
                                               title:@"Time Span"];
     timeSpan.key = @"timeSpan";
+    timeSpan.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     return timeSpan;
 }
 
@@ -248,7 +248,27 @@
                                                                 date:self.item ? self.item.lastPurchaseDate : nil
                                                              andMode:UIDatePickerModeDate];
     lastPurchaseDate.key = @"lastPurchaseDate";
+    lastPurchaseDate.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     return lastPurchaseDate;
+}
+
+
+- (void)setCycleToSupplyEnabled:(BOOL)enabled
+{
+    // cycle
+    QEntryElement *cycle = (QEntryElement *)[self.root elementWithKey:@"cycle"];
+    cycle.enabled = enabled;
+    [self.quickDialogTableView reloadCellForElements:cycle, nil];
+    
+    // timeSpan
+    QRadioElement *timeSpan = (QRadioElement *)[self.root elementWithKey:@"timeSpan"];
+    timeSpan.enabled = enabled;
+    [self.quickDialogTableView reloadCellForElements:timeSpan, nil];
+    
+    // lastPurchaseDate
+    QDateTimeInlineElement *lastPurchaseDate = (QDateTimeInlineElement *)[self.root elementWithKey:@"lastPurchaseDate"];
+    lastPurchaseDate.enabled = enabled;
+    [self.quickDialogTableView reloadCellForElements:lastPurchaseDate, nil];
 }
 
 - (QDateTimeInlineElement *)createDueDateDateTimeInlineElement
@@ -316,6 +336,25 @@
     [self.quickDialogTableView reloadCellForElements:nameElement, nil];
 }
 
+- (BOOL)stock
+{
+    QBooleanElement *stockElement = (QBooleanElement *)[self.root elementWithKey:@"stock"];
+    return stockElement.boolValue;
+}
+
+- (NSString *)cycle
+{
+    QEntryElement *cycleElement = (QEntryElement *)[self.root elementWithKey:@"cycle"];
+    return cycleElement.textValue;
+}
+
+- (void)setLastPurchaseDate:(NSDate *)lastPurchaseDate
+{
+    QDateTimeInlineElement *lastPurchaseDateElement = (QDateTimeInlineElement *)[self.root elementWithKey:@"lastPurchaseDate"];
+    lastPurchaseDateElement.dateValue = lastPurchaseDate;
+    [self.quickDialogTableView reloadCellForElements:lastPurchaseDateElement, nil];
+}
+
 - (NSString *)location
 {
     QButtonWithLabelElement *locationElement = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
@@ -371,14 +410,51 @@
 
 #pragma mark - action
 
+- (void)save:(UIBarButtonItem *)sender
+{
+    // validation
+    if ([self.name length] == 0) {
+        [self showAlert:@"Please enter a name."];
+        return;
+    }
+    
+    if (self.stock && [self.cycle length] == 0) {
+        [self showAlert:@"Please enter cycle if you enable stock."];
+        return;
+    }
+    
+    if (self.geofence && [self.location length] == 0) {
+        [self showAlert:@"Please enter a location if you enable geofence."];
+        return;
+    }
+    
+    // save
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Item saveItem:self.values];
+    });
+    
+    // back to previous viewcontroller
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)barcode
 {
-    NSLog(@"barcode pressed");
     JANCodeReaderViewController *janCodeReaderViewController =
     [[self storyboard] instantiateViewControllerWithIdentifier:@"JANCodeReaderViewControllerID"];
     [self.navigationController pushViewController:janCodeReaderViewController animated:YES];
 }
 
+#pragma mark - Alert Methods
+
+- (void) showAlert:(NSString *)alertText
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                      message:alertText
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+}
 
 
 

@@ -61,7 +61,7 @@
     
     cell.textLabel.text = item.name;
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
-    if ([item cycleInDays]) {
+    if ([item.stock boolValue]) {
         cell.badgeString = [NSString stringWithFormat:@"%ld/%ld",
                             (long)[item elapsedDaysAfterLastPurchaseDate],
                             (long)[item cycleInDays]];

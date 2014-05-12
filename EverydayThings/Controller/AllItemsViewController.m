@@ -58,7 +58,7 @@
     } else {
         cell.accessoryView = nil;
     }
-    if ([item cycleInDays]) {
+    if ([item.stock boolValue]) {
         cell.badgeString = [NSString stringWithFormat:@"%ld/%ld",
                             (long)[item elapsedDaysAfterLastPurchaseDate],
                             (long)[item cycleInDays]];
