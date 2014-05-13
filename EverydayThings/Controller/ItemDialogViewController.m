@@ -20,7 +20,7 @@
 // top
 @property (nonatomic, copy)   NSString *name;
 
-// cycle to supply
+// cycle t  o supply
 @property (nonatomic)         BOOL stock;
 @property (nonatomic, copy)   NSString *cycle;
 @property(nonatomic, strong)  NSDate *lastPurchaseDate;

@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FAKFontAwesome.h"
 #import "GeofenceRegionStateChangedNotification.h"
+#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @interface ItemListTableViewController ()
 
@@ -80,6 +81,10 @@
         NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[AppDelegate sharedContext] deleteObject:managedObject];
         [[AppDelegate sharedContext] save:nil];
+        // update buy now tab badge number.
+        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
+                                                            object:self
+                                                          userInfo:nil];
     }
 }
 

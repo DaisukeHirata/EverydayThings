@@ -38,8 +38,8 @@
     // badge
     //
     BOOL baddeValue = [defaults boolForKey:@"badge"];
-    QSection *section = [[QSection alloc] init];
-    QBooleanElement *badge = [[QBooleanElement alloc] initWithTitle:@"Use Badge"
+    QSection *homeScreenSection = [[QSection alloc] initWithTitle:@"Home Screen"];
+    QBooleanElement *badge = [[QBooleanElement alloc] initWithTitle:@"Show BuyNow Badge"
                                                           BoolValue:baddeValue ? baddeValue : NO];
     badge.onSelected = ^{
         QBooleanElement *badge = (QBooleanElement *)[[self root] elementWithKey:@"badge"];
@@ -57,6 +57,7 @@
     // geofence
     //
     BOOL geofenceValue = [defaults boolForKey:@"geofence"];
+    QSection *locationServiceSection = [[QSection alloc] initWithTitle:@"Location Service"];
     QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use GeoFence"
                                                              BoolValue:geofenceValue ? geofenceValue : NO];
     geofence.onSelected = ^{
@@ -71,9 +72,11 @@
     geofence.key = @"geofence";
     
     
-    [self.root addSection:section];
-    [section addElement:badge];
-    [section addElement:geofence];
+    [self.root addSection:homeScreenSection];
+    [homeScreenSection addElement:badge];
+
+    [self.root addSection:locationServiceSection];
+    [locationServiceSection addElement:geofence];
 }
 
 @end
