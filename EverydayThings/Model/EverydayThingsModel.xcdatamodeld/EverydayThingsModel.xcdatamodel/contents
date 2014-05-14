@@ -3,29 +3,29 @@
     <entity name="Item" representedClassName="Item" syncable="YES">
         <attribute name="buyNow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="cycle" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="elapsed" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="expireDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="favoriteProductName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="geofence" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="itemId" attributeType="String" syncable="YES"/>
         <attribute name="lastPurchaseDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="memo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stock" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="timeSpan" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="whereToBuy" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="whereToStock" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="whichItemCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ItemCategory" inverseName="items" inverseEntity="ItemCategory" syncable="YES"/>
     </entity>
     <entity name="ItemCategory" representedClassName="ItemCategory" syncable="YES">
+        <attribute name="categoryId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="whichItemCategory" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="142" positionY="-27" width="128" height="298"/>
-        <element name="ItemCategory" positionX="-36" positionY="-27" width="128" height="88"/>
+        <element name="Item" positionX="142" positionY="-63" width="128" height="268"/>
+        <element name="ItemCategory" positionX="-36" positionY="-63" width="128" height="118"/>
     </elements>
 </model>

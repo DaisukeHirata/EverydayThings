@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E318CAE5191B113D00CCFA07 /* LocationManager.m */; };
 		E32E38FE1918FF0B00DD02B3 /* Shimbashi.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */; };
+		E359DCEB1921A23B00D7003B /* EditItemCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DCEA1921A23B00D7003B /* EditItemCategoryTableViewController.m */; };
+		E359DCF11921A58D00D7003B /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DCF01921A58D00D7003B /* Item.m */; };
+		E359DCF31921AE0900D7003B /* InitialData.plist in Resources */ = {isa = PBXBuildFile; fileRef = E359DCF21921AE0900D7003B /* InitialData.plist */; };
+		E359DCF61921CCCA00D7003B /* CategoryDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */; };
+		E359DD2A19221CC400D7003B /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DD2919221CC400D7003B /* ItemCategory.m */; };
 		E35FCFD31918818100CB76DA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD01918818100CB76DA /* NSData+Base64.m */; };
 		E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD21918818100CB76DA /* NSString+URLEncode.m */; };
 		E35FCFDC191881B600CB76DA /* Daizawa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E35FCFD6191881B600CB76DA /* Daizawa.gpx */; };
@@ -60,8 +65,6 @@
 		E35FD064191885E000CB76DA /* SearchAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD057191885E000CB76DA /* SearchAddressViewController.m */; };
 		E35FD065191885E000CB76DA /* SettingDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FD059191885E000CB76DA /* SettingDialogViewController.m */; };
 		E37EC2511907B479005DB65F /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC2501907B479005DB65F /* TDBadgedCell.m */; };
-		E37EC2541907C383005DB65F /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC2531907C383005DB65F /* ItemCategory.m */; };
-		E37EC2571907C383005DB65F /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC2561907C383005DB65F /* Item.m */; };
 		E37EC26C1908A3FD005DB65F /* FAKFontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC25E1908A3FD005DB65F /* FAKFontAwesome.m */; };
 		E37EC26D1908A3FD005DB65F /* FAKFoundationIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC2601908A3FD005DB65F /* FAKFoundationIcons.m */; };
 		E37EC26E1908A3FD005DB65F /* FAKIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = E37EC2621908A3FD005DB65F /* FAKIcon.m */; };
@@ -170,6 +173,15 @@
 		E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeofenceRegionStateChangedNotification.h; sourceTree = "<group>"; };
 		E32E38FD1918FF0B00DD02B3 /* Shimbashi.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Shimbashi.gpx; sourceTree = "<group>"; };
 		E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateBuyNowTabBadgeNumberNotification.h; sourceTree = "<group>"; };
+		E359DCE91921A23B00D7003B /* EditItemCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemCategoryTableViewController.h; sourceTree = "<group>"; };
+		E359DCEA1921A23B00D7003B /* EditItemCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemCategoryTableViewController.m; sourceTree = "<group>"; };
+		E359DCEF1921A58D00D7003B /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		E359DCF01921A58D00D7003B /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		E359DCF21921AE0900D7003B /* InitialData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InitialData.plist; path = EverydayThings/InitialData.plist; sourceTree = SOURCE_ROOT; };
+		E359DCF41921CCCA00D7003B /* CategoryDialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDialogViewController.h; sourceTree = "<group>"; };
+		E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryDialogViewController.m; sourceTree = "<group>"; };
+		E359DD2819221CC400D7003B /* ItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCategory.h; sourceTree = "<group>"; };
+		E359DD2919221CC400D7003B /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCategory.m; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E35FCFD01918818100CB76DA /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E35FCFD11918818100CB76DA /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
@@ -269,10 +281,6 @@
 		E35FD059191885E000CB76DA /* SettingDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingDialogViewController.m; sourceTree = "<group>"; };
 		E37EC24F1907B479005DB65F /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
 		E37EC2501907B479005DB65F /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
-		E37EC2521907C383005DB65F /* ItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCategory.h; sourceTree = "<group>"; };
-		E37EC2531907C383005DB65F /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCategory.m; sourceTree = "<group>"; };
-		E37EC2551907C383005DB65F /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
-		E37EC2561907C383005DB65F /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		E37EC25D1908A3FD005DB65F /* FAKFontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKFontAwesome.h; sourceTree = "<group>"; };
 		E37EC25E1908A3FD005DB65F /* FAKFontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAKFontAwesome.m; sourceTree = "<group>"; };
 		E37EC25F1908A3FD005DB65F /* FAKFoundationIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAKFoundationIcons.h; sourceTree = "<group>"; };
@@ -794,6 +802,7 @@
 				E3B92ECF1905F13B000346CA /* main.m */,
 				E3B92ED11905F13B000346CA /* EverydayThings-Prefix.pch */,
 				E3B4265D1909274600936522 /* regions.plist */,
+				E359DCF21921AE0900D7003B /* InitialData.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -843,6 +852,10 @@
 				E35FD057191885E000CB76DA /* SearchAddressViewController.m */,
 				E35FD058191885E000CB76DA /* SettingDialogViewController.h */,
 				E35FD059191885E000CB76DA /* SettingDialogViewController.m */,
+				E359DCE91921A23B00D7003B /* EditItemCategoryTableViewController.h */,
+				E359DCEA1921A23B00D7003B /* EditItemCategoryTableViewController.m */,
+				E359DCF41921CCCA00D7003B /* CategoryDialogViewController.h */,
+				E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -876,10 +889,10 @@
 			isa = PBXGroup;
 			children = (
 				E3B92F361905FE0E000346CA /* EverydayThingsModel.xcdatamodeld */,
-				E37EC2551907C383005DB65F /* Item.h */,
-				E37EC2561907C383005DB65F /* Item.m */,
-				E37EC2521907C383005DB65F /* ItemCategory.h */,
-				E37EC2531907C383005DB65F /* ItemCategory.m */,
+				E359DD2819221CC400D7003B /* ItemCategory.h */,
+				E359DD2919221CC400D7003B /* ItemCategory.m */,
+				E359DCEF1921A58D00D7003B /* Item.h */,
+				E359DCF01921A58D00D7003B /* Item.m */,
 				E3B92F5519061FC5000346CA /* Item+Helper.h */,
 				E3B92F5619061FC5000346CA /* Item+Helper.m */,
 				E3B92F5819063E89000346CA /* ItemCategory+Helper.h */,
@@ -979,6 +992,7 @@
 				E35FCFDC191881B600CB76DA /* Daizawa.gpx in Resources */,
 				E35FCFDF191881B600CB76DA /* ShibuyaStation.gpx in Resources */,
 				E37EC2721908A3FD005DB65F /* foundation-icons.ttf in Resources */,
+				E359DCF31921AE0900D7003B /* InitialData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,6 +1016,7 @@
 				E39508EF190A1F96002EAEB8 /* QElement+Appearance.m in Sources */,
 				E39508FA190A1F96002EAEB8 /* QLoadingElement.m in Sources */,
 				E35FD05D191885E000CB76DA /* CoreDataTableViewController.m in Sources */,
+				E359DD2A19221CC400D7003B /* ItemCategory.m in Sources */,
 				E3950912190A1F96002EAEB8 /* QuickDialogTableDelegate.m in Sources */,
 				E35FD00C1918820200CB76DA /* SDWebImageDownloader.m in Sources */,
 				E39508F2190A1F96002EAEB8 /* QEntryElement.m in Sources */,
@@ -1037,6 +1052,7 @@
 				E3950905190A1F96002EAEB8 /* QSegmentedElement.m in Sources */,
 				E3950900190A1F96002EAEB8 /* QRadioSection.m in Sources */,
 				E395090B190A1F96002EAEB8 /* QTextField.m in Sources */,
+				E359DCF11921A58D00D7003B /* Item.m in Sources */,
 				E35FD062191885E000CB76DA /* MapViewController.m in Sources */,
 				E39508FE190A1F96002EAEB8 /* QRadioElement.m in Sources */,
 				E35FD05E191885E000CB76DA /* DueDateTableViewController.m in Sources */,
@@ -1055,7 +1071,6 @@
 				E39508F7190A1F96002EAEB8 /* QImageElement.m in Sources */,
 				E35FD0111918820200CB76DA /* UIImage+GIF.m in Sources */,
 				E3B92ED41905F13B000346CA /* AppDelegate.m in Sources */,
-				E37EC2571907C383005DB65F /* Item.m in Sources */,
 				E35FD0071918820200CB76DA /* MKAnnotationView+WebCache.m in Sources */,
 				E35FD00E1918820200CB76DA /* SDWebImageManager.m in Sources */,
 				E39508EA190A1F96002EAEB8 /* QDateTimeElement.m in Sources */,
@@ -1077,10 +1092,10 @@
 				E39508E1190A1F96002EAEB8 /* QBadgeElement.m in Sources */,
 				E35FD0121918820200CB76DA /* UIImage+MultiFormat.m in Sources */,
 				E39508EC190A1F96002EAEB8 /* QDecimalElement.m in Sources */,
-				E37EC2541907C383005DB65F /* ItemCategory.m in Sources */,
 				E35FD034191882F800CB76DA /* AFHTTPSessionManager.m in Sources */,
 				E39508F3190A1F96002EAEB8 /* QEntryTableViewCell.m in Sources */,
 				E35FD00F1918820200CB76DA /* SDWebImagePrefetcher.m in Sources */,
+				E359DCF61921CCCA00D7003B /* CategoryDialogViewController.m in Sources */,
 				E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */,
 				E35FD0081918820200CB76DA /* NSData+ImageContentType.m in Sources */,
 				E35FD0141918820200CB76DA /* UIImageView+WebCache.m in Sources */,
@@ -1111,6 +1126,7 @@
 				E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */,
 				E39508F0190A1F96002EAEB8 /* QElement.m in Sources */,
 				E3950911190A1F96002EAEB8 /* QuickDialogDataSource.m in Sources */,
+				E359DCEB1921A23B00D7003B /* EditItemCategoryTableViewController.m in Sources */,
 				E35FD0091918820200CB76DA /* SDImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

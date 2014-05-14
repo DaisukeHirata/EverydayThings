@@ -10,12 +10,15 @@
 #import "SearchAddressViewController.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
+#import "EditItemCategoryTableViewController.h"
 
 @interface SettingDialogViewController ()
 
 @end
 
 @implementation SettingDialogViewController
+
+#define WeakSelf __weak __typeof__(self)
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -33,6 +36,41 @@
     [super viewDidLoad];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    
+    //
+    // category
+    //
+    QSection *categorySection = [[QSection alloc] initWithTitle:@"Item Category"];
+    QButtonElement *categoryButton = [[QButtonElement alloc] initWithTitle:@"Edit Category"];
+    WeakSelf weakSelf = self;
+    categoryButton.onSelected = ^{
+        EditItemCategoryTableViewController *editItemCategoryTableViewController =
+        [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"EditItemCategoryTableViewController"];
+        [weakSelf.navigationController pushViewController:editItemCategoryTableViewController animated:YES];
+    };
+
+    categoryButton.key = @"category";
+
+    
+    //
+    // geofence
+    //
+    BOOL geofenceValue = [defaults boolForKey:@"geofence"];
+    QSection *locationServiceSection = [[QSection alloc] initWithTitle:@"Location Service"];
+    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use GeoFence"
+                                                             BoolValue:geofenceValue ? geofenceValue : NO];
+    geofence.onSelected = ^{
+        QBooleanElement *geofence = (QBooleanElement *)[[self root] elementWithKey:@"geofence"];
+        [defaults setBool:geofence.boolValue forKey:@"geofence"];
+        [defaults synchronize];
+        // geofence region changed.
+        [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
+                                                            object:self
+                                                          userInfo:nil];
+    };
+    geofence.key = @"geofence";
+
     
     //
     // badge
@@ -52,31 +90,27 @@
     };
     badge.key = @"badge";
 
-
-    //
-    // geofence
-    //
-    BOOL geofenceValue = [defaults boolForKey:@"geofence"];
-    QSection *locationServiceSection = [[QSection alloc] initWithTitle:@"Location Service"];
-    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use GeoFence"
-                                                             BoolValue:geofenceValue ? geofenceValue : NO];
-    geofence.onSelected = ^{
-        QBooleanElement *geofence = (QBooleanElement *)[[self root] elementWithKey:@"geofence"];
-        [defaults setBool:geofence.boolValue forKey:@"geofence"];
-        [defaults synchronize];
-        // geofence region changed.
-        [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
-                                                            object:self
-                                                          userInfo:nil];
-    };
-    geofence.key = @"geofence";
     
+    //
+    // Feedback
+    //
+    
+    
+    [self.root addSection:categorySection];
+    [categorySection addElement:categoryButton];
+    
+    [self.root addSection:locationServiceSection];
+    [locationServiceSection addElement:geofence];
     
     [self.root addSection:homeScreenSection];
     [homeScreenSection addElement:badge];
+    
+}
 
-    [self.root addSection:locationServiceSection];
-    [locationServiceSection addElement:geofence];
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+    [super viewWillAppear:animated];
 }
 
 @end

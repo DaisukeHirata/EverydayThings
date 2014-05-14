@@ -29,8 +29,10 @@
         } else if (![matches count]) {
             category       = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
                                                            inManagedObjectContext:context];
-            category.name  = name;
-            category.color = @"FFD119";
+            category.categoryId = [[NSUUID UUID] UUIDString];
+            category.name       = name;
+            category.color      = @"FFD119";
+            category.icon       = @"circle";
             NSError *error = nil;
             [context save:&error];
             if(error){
@@ -43,6 +45,60 @@
     
     return category;
 }
+
++ (ItemCategory *)saveItemCategory:(NSDictionary *)values
+{
+    ItemCategory *category = nil;
+    NSManagedObjectContext *context = [AppDelegate sharedContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", values[@"name"]];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (!matches || error || ([matches count] > 1)) {
+        // error
+        category = nil; // not necessary. it's for readability
+    } else if  ([matches count]) {
+        // update
+        category = [matches firstObject];
+    } else {
+        // insert
+        category = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
+                                                 inManagedObjectContext:context];
+        category.categoryId = [[NSUUID UUID] UUIDString];
+    }
+    
+    if (category) {
+        
+        NSString *oldIcon = category.icon;
+        
+        category.name  = values[@"name"];
+        category.color = values[@"color"];
+        category.icon  = values[@"icon"];
+        
+        NSError *error = nil;
+        [context save:&error];
+        if(error) {
+            NSLog(@"could not save data : %@", error);
+        } else {
+            if (![oldIcon isEqualToString:category.icon]) {
+                /*
+                 // update application badge number.
+                 [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
+                 object:self
+                 userInfo:nil];
+                 
+                 */
+            }
+        }
+    }
+    
+    return category;
+}
+
+
 
 + (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index
 {
@@ -74,27 +130,86 @@
     return category;
 }
 
++ (NSFetchRequest *)fetchAllRequest
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
+    request.predicate = nil;
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                              ascending:YES
+                                                               selector:@selector(localizedStandardCompare:)]];
+    return request;
+}
+
++ (NSArray *)fetchAll
+{
+    NSArray *matches = nil;
+    
+    NSFetchRequest *request = [self fetchAllRequest];
+    NSError *error;
+    matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
+    
+    if (error) {
+        // error
+        NSLog(@"can not read category data.");
+    }
+
+    return matches;
+}
 
 + (NSArray *)categories
 {
-    return @[@"Grocery", @"Food", @"Emergency Goods", @"Drug", @"None"];
+    NSMutableArray *categories = [[NSMutableArray alloc] init];
+    
+    NSArray *matches = [self fetchAll];
+    
+    for (ItemCategory *category in matches) {
+        [categories addObject:category.name];
+    }
+    
+    return categories;
 }
 
 + (NSDictionary *)colors
 {
-    return @{@"Grocery"         : [self hexToUIColor:@"FFD119" alpha:1.0],
-             @"Food"            : [self hexToUIColor:@"38AD26" alpha:1.0],
-             @"Emergency Goods" : [self hexToUIColor:@"987D45" alpha:1.0],
-             @"Drug"            : [self hexToUIColor:@"3775CB" alpha:1.0]};
+    NSMutableDictionary *colors = [[NSMutableDictionary alloc] init];
+    
+    NSArray *matches = [self fetchAll];
+    
+    for (ItemCategory *category in matches) {
+        NSString *colorCode = [self colorChoices][category.color];
+        colors[category.name] = [self hexToUIColor:colorCode alpha:1.0];
+    }
+    
+    return colors;
 }
 
 + (NSDictionary *)icons
 {
-    return @{@"Grocery"         : [FAKFontAwesome homeIconWithSize:20],
-             @"Food"            : [FAKFontAwesome cutleryIconWithSize:20],
-             @"Emergency Goods" : [FAKFontAwesome suitcaseIconWithSize:20],
-             @"Drug"            : [FAKFontAwesome ambulanceIconWithSize:20],
-             @"None"            : [FAKFontAwesome circleIconWithSize:10]};
+    NSMutableDictionary *icons = nil;
+    
+    if (!icons) {
+        icons = [[NSMutableDictionary alloc] init];
+        
+        NSDictionary *allFonts = [FAKFontAwesome allIconFonts];
+
+        NSArray *matches = [self fetchAll];
+        for (ItemCategory *category in matches) {
+            NSString *iconName = category.icon;
+            icons[category.name] = allFonts[iconName];
+        }
+    }
+    
+    return icons;
+}
+
++ (NSDictionary *)colorChoices
+{
+    return @{@"Red"    : @"FF0000",
+             @"Yellow" : @"FFD119",
+             @"Blue"   : @"3775CB",
+             @"Brown"  : @"987D45",
+             @"Green"  : @"38AD26",
+             @"Default": @"F7F7F7"};
 }
 
 + (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
@@ -111,9 +226,42 @@
 + (UIImage *)iconWithCategoryName:(NSString *)name
 {
     UIImage *image;
-    image = [UIImage imageWithStackedIcons:@[[self icons][name]]
+    NSDictionary *icons = [self icons];
+    image = [UIImage imageWithStackedIcons:@[icons[name]]
                                  imageSize:CGSizeMake(20, 20)];
     return image;
+}
+
++ (void)insertInitialData
+{
+    NSLog(@"this is initial insertion.");
+    
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"InitialData" ofType:@"plist"];
+    NSArray* initialDataList = [NSArray arrayWithContentsOfFile:path];
+    
+    if (initialDataList) {
+        
+        NSManagedObjectContext* context = [AppDelegate sharedContext];
+        
+        for (NSDictionary *dataDict in initialDataList) {
+            // insert category
+            ItemCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
+                                                                   inManagedObjectContext:context];
+            category.name  = dataDict[@"name"];
+            category.color = dataDict[@"color"];
+            category.icon  = dataDict[@"icon"];
+            
+            NSError *error = nil;
+            [context save:&error];
+            
+            if (error) {
+                NSLog(@"Initialize data failed: %@", error);
+            }
+        }
+    } else {
+        NSLog(@"Initialize Data file not found");
+        abort();
+    }
 }
 
 @end

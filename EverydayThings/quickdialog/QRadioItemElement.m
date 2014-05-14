@@ -16,6 +16,7 @@
 #import "QSection.h"
 #import "QRootElement.h"
 #import "QRadioItemElement.h"
+#import "FAKFontAwesome.h"
 
 @implementation QRadioItemElement
 
@@ -82,5 +83,10 @@
     }
 }
 
+-(void)setImageNamed:(NSString *)name {
+    if(name != nil) {
+        self.image = [FAKFontAwesome allIconImages][name];
+    }
+}
 
 @end

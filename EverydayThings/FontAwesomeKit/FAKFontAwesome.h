@@ -372,4 +372,9 @@
 + (instancetype)vimeoSquareIconWithSize:(CGFloat)size;
 + (instancetype)tryIconWithSize:(CGFloat)size;
 + (instancetype)plusSquareOIconWithSize:(CGFloat)size;
+
++ (NSDictionary *)allIcons;
++ (NSDictionary *)allIconFonts;
++ (NSDictionary *)allIconImages;
+
 @end

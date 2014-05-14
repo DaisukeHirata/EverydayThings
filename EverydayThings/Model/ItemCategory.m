@@ -2,7 +2,7 @@
 //  ItemCategory.m
 //  EverydayThings
 //
-//  Created by Daisuke Hirata on 2014/04/23.
+//  Created by Daisuke Hirata on 5/13/14.
 //  Copyright (c) 2014 Daisuke Hirata. All rights reserved.
 //
 
@@ -14,6 +14,8 @@
 
 @dynamic color;
 @dynamic name;
+@dynamic icon;
+@dynamic categoryId;
 @dynamic items;
 
 @end

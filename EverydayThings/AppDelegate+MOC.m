@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate+MOC.h"
+#import "ItemCategory+Helper.h"
 
 @implementation AppDelegate (MOC)
 
@@ -58,10 +59,23 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"MOC.sqlite"];
     
     NSError *error = nil;
+    BOOL isInitialBoot = NO;
+    if ([storeURL checkResourceIsReachableAndReturnError:&error] == NO) {
+        isInitialBoot = YES;
+    }
+
+    error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        
+        // migrate here.
         abort();
+    }
+
+    // if this is a first time to launch this application, insert initial data to model.
+    if (isInitialBoot) {
+        [ItemCategory insertInitialData];
     }
     
     return persistentStoreCoordinator;

@@ -31,8 +31,8 @@
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     [comps setMonth:1];
     NSDate *nearFutureDate = [cal dateByAddingComponents:comps toDate:today options:0];
-    request.predicate = [NSPredicate predicateWithFormat:@"expireDate < %@", nearFutureDate];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"expireDate"
+    request.predicate = [NSPredicate predicateWithFormat:@"dueDate < %@", nearFutureDate];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"dueDate"
                                                               ascending:YES]];
     request.fetchLimit = 100;
     
@@ -59,8 +59,8 @@
     [formatter setDateFormat:@"YYYY-MM-dd"];
     
     cell.textLabel.text = item.name;
-    cell.detailTextLabel.text = [formatter stringFromDate:item.expireDate];
-    cell.detailTextLabel.textColor = ([[NSDate date] compare:item.expireDate] == NSOrderedDescending) ?
+    cell.detailTextLabel.text = [formatter stringFromDate:item.dueDate];
+    cell.detailTextLabel.textColor = ([[NSDate date] compare:item.dueDate] == NSOrderedDescending) ?
                                             [self hexToUIColor:@"ff6347" alpha:1.0] : [UIColor grayColor];
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     if ([item.geofence boolValue]) {

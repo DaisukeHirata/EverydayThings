@@ -12,8 +12,15 @@
 
 + (ItemCategory *)itemCategoryWithName:(NSString *)name;
 + (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index;
++ (ItemCategory *)saveItemCategory:(NSDictionary *)values;
+
 + (NSArray *)categories;
 + (NSDictionary *)colors;
++ (NSDictionary *)icons;
+
++ (NSDictionary *)colorChoices;
 + (UIImage *)iconWithCategoryName:(NSString *)name;
++ (NSFetchRequest *)fetchAllRequest;
++ (void)insertInitialData;
 
 @end

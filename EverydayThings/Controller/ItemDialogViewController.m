@@ -153,7 +153,7 @@
     [sectionGeofence addElement:[self createLocationButtonWithLabelElement]];
 }
 
-#pragma mark - QuickDialog Element Setter Getter
+#pragma mark - Create QuickDialog Element
 
 #define WeakSelf __weak __typeof__(self)
 
@@ -275,7 +275,7 @@
 {
     QDateTimeInlineElement *dueDate;
     dueDate = [[QDateTimeInlineElement alloc] initWithTitle:@"Due Date"
-                                                       date:self.item ? self.item.expireDate : nil
+                                                       date:self.item ? self.item.dueDate : nil
                                                     andMode:UIDatePickerModeDate];
     dueDate.key = @"dueDate";
     return dueDate;
@@ -413,11 +413,6 @@
 - (void)save:(UIBarButtonItem *)sender
 {
     // validation
-    if ([self.name length] == 0) {
-        [self showAlert:@"Please enter a name."];
-        return;
-    }
-    
     if (self.stock && [self.cycle length] == 0) {
         [self showAlert:@"Please enter cycle if you enable stock."];
         return;
@@ -428,10 +423,12 @@
         return;
     }
     
-    // save
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [Item saveItem:self.values];
-    });
+    if ([self.name length] != 0) {
+        // save
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [Item saveItem:self.values];
+        });
+    }
     
     // back to previous viewcontroller
     [self.navigationController popViewControllerAnimated:YES];

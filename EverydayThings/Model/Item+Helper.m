@@ -50,7 +50,7 @@
         item.buyNow              = values[@"buyNow"];
         item.stock               = values[@"stock"];
         item.lastPurchaseDate    = values[@"lastPurchaseDate"];
-        item.expireDate          = values[@"dueDate"];
+        item.dueDate             = values[@"dueDate"];
         item.cycle               = [values[@"cycle"] length] != 0 ?
                                         [NSDecimalNumber decimalNumberWithString:values[@"cycle"]] : nil;
         item.timeSpan            = [Item timeSpans][[values[@"timeSpan"] intValue]];
@@ -162,11 +162,11 @@
 
 - (NSInteger)expiredWeeks
 {
-	// now - expire date
+	// now - due date
 	NSTimeInterval since = 0;
     
-    if (self.expireDate) {
-        since = [[NSDate date] timeIntervalSinceDate:self.expireDate];
+    if (self.dueDate) {
+        since = [[NSDate date] timeIntervalSinceDate:self.dueDate];
     }
     
     // convert second into week

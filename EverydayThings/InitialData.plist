@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Grocery</string>
+		<key>color</key>
+		<string>Green</string>
+		<key>icon</key>
+		<string>cutlery</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Daily Commodity</string>
+		<key>color</key>
+		<string>Yellow</string>
+		<key>icon</key>
+		<string>home</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Emergency Goods</string>
+		<key>color</key>
+		<string>Brown</string>
+		<key>icon</key>
+		<string>suitcase</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Drug</string>
+		<key>color</key>
+		<string>Blue</string>
+		<key>icon</key>
+		<string>ambulance</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>None</string>
+		<key>color</key>
+		<string>Default</string>
+		<key>icon</key>
+		<string>circle</string>
+	</dict>
+</array>
+</plist>

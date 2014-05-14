@@ -139,7 +139,7 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                  imageSize:iconImageSize];
     tab1.image = shoppingCart;
     
-    //tab2 expired
+    //tab2 due date
     UITabBarItem *tab2 = tabItems[1];
     UIImage *exclamation = [UIImage imageWithStackedIcons:@[[FAKFontAwesome calendarIconWithSize:iconSize]]
                                                 imageSize:iconImageSize];

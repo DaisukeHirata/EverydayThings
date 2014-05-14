@@ -763,4 +763,37 @@
              
              };
 }
+
++ (NSDictionary *)allIconFonts
+{
+    static NSMutableDictionary *icons = nil;
+    
+    if (!icons) {
+        icons = [[NSMutableDictionary alloc] init];
+        NSDictionary *allIcons = [self allIcons];
+        for (NSString *key in allIcons) {
+            NSString *name = allIcons[key];
+            icons[name] = [FAKFontAwesome iconWithCode:key size:[name isEqualToString:@"circle"] ? 10 : 20];
+        }
+    }
+    
+    return icons;
+}
+
++ (NSDictionary *)allIconImages
+{
+    static NSMutableDictionary *images = nil;
+    
+    if (!images) {
+        images = [[NSMutableDictionary alloc] init];
+        NSDictionary *allFonts = [self allIconFonts];
+        for (NSString *key in allFonts) {
+            images[key] = [UIImage imageWithStackedIcons:@[allFonts[key]]
+                                         imageSize:CGSizeMake(20, 20)];
+        }
+    }
+    
+    return images;
+}
+
 @end
