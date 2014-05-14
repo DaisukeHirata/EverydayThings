@@ -447,6 +447,7 @@
 		E3B92F5B1906422D000346CA /* AppDelegate+MOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+MOC.h"; sourceTree = "<group>"; };
 		E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MOC.m"; sourceTree = "<group>"; };
 		E3B92F5F1906448D000346CA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E3D9E4851922FAD400078B75 /* UpdateCategoryToNoneNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UpdateCategoryToNoneNotification.h; path = EverydayThings/UpdateCategoryToNoneNotification.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -780,6 +781,7 @@
 				E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */,
 				E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNumberNotification.h */,
 				E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */,
+				E3D9E4851922FAD400078B75 /* UpdateCategoryToNoneNotification.h */,
 				E3B92EFC1905F373000346CA /* Controller */,
 				E3B92F351905FE0E000346CA /* Model */,
 				E3B92F3F1905FE18000346CA /* View */,

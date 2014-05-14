@@ -12,47 +12,13 @@
 
 @implementation ItemCategory (Helper)
 
-+ (ItemCategory *)itemCategoryWithName:(NSString *)name
-{
-    ItemCategory *category = nil;
-    NSManagedObjectContext *context = [AppDelegate sharedContext];
-
-    if ([name length]) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
-        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
-        
-        NSError *error;
-        NSArray *matches = [context executeFetchRequest:request error:&error];
-        
-        if (!matches || error || ([matches count] > 1)) {
-            // handle error
-        } else if (![matches count]) {
-            category       = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
-                                                           inManagedObjectContext:context];
-            category.categoryId = [[NSUUID UUID] UUIDString];
-            category.name       = name;
-            category.color      = @"FFD119";
-            category.icon       = @"circle";
-            NSError *error = nil;
-            [context save:&error];
-            if(error){
-                NSLog(@"could not save data : %@", error);
-            }
-        } else {
-            category = [matches lastObject];
-        }
-    }
-    
-    return category;
-}
-
 + (ItemCategory *)saveItemCategory:(NSDictionary *)values
 {
     ItemCategory *category = nil;
     NSManagedObjectContext *context = [AppDelegate sharedContext];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", values[@"name"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"categoryId = %@", values[@"categoryId"]];
     
     NSError *error;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -98,42 +64,60 @@
     return category;
 }
 
-
-
-+ (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index
++ (ItemCategory *)itemCategoryWithName:(NSString *)name
 {
     ItemCategory *category = nil;
     NSManagedObjectContext *context = [AppDelegate sharedContext];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", [ItemCategory categories][index]];
+    if ([name length]) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", name];
         
-    NSError *error;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
+        NSError *error;
+        NSArray *matches = [context executeFetchRequest:request error:&error];
         
-    if (!matches || error || ([matches count] > 1)) {
-        // handle error
-    } else if (![matches count]) {
-        category       = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
-                                                        inManagedObjectContext:context];
-        category.name  = [ItemCategory categories][index];
-        category.color = @"FFD119";
-        NSError *error = nil;
-        [context save:&error];
-        if(error){
-            NSLog(@"could not save data : %@", error);
+        if (!matches || error || ([matches count] > 1)) {
+            // handle error
+        } else if (![matches count]) {
+            category       = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
+                                                           inManagedObjectContext:context];
+            category.categoryId = [[NSUUID UUID] UUIDString];
+            category.name       = name;
+            category.color      = @"F7F7F7";
+            category.icon       = @"circle";
+            NSError *error = nil;
+            [context save:&error];
+            if(error){
+                NSLog(@"could not save data : %@", error);
+            }
+        } else {
+            category = [matches lastObject];
         }
-    } else {
-        category = [matches lastObject];
     }
     
     return category;
+}
+
++ (ItemCategory *)itemCategoryWithIndex:(NSUInteger)index
+{
+    NSString *name = [ItemCategory categories][index];
+    return [self itemCategoryWithName:name];
 }
 
 + (NSFetchRequest *)fetchAllRequest
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
     request.predicate = nil;
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                              ascending:YES
+                                                               selector:@selector(localizedStandardCompare:)]];
+    return request;
+}
+
++ (NSFetchRequest *)fetchAllRequestExceptNone
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ItemCategory"];
+    request.predicate = [NSPredicate predicateWithFormat:@"name != %@", @"None"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name"
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];
@@ -247,9 +231,10 @@
             // insert category
             ItemCategory *category = [NSEntityDescription insertNewObjectForEntityForName:@"ItemCategory"
                                                                    inManagedObjectContext:context];
-            category.name  = dataDict[@"name"];
-            category.color = dataDict[@"color"];
-            category.icon  = dataDict[@"icon"];
+            category.categoryId = [[NSUUID UUID] UUIDString];
+            category.name       = dataDict[@"name"];
+            category.color      = dataDict[@"color"];
+            category.icon       = dataDict[@"icon"];
             
             NSError *error = nil;
             [context save:&error];

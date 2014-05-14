@@ -45,7 +45,7 @@
     if ((self = [super initWithCoder:aDecoder])) {
         QRootElement *_root = [[QRootElement alloc] init];
         _root.grouped = YES;
-        _root.title = @"Item";
+        _root.title = @"New Item";
         self.root = _root;
         self.resizeWhenKeyboardPresented =YES;
         UIBarButtonItem* saveItem = [[UIBarButtonItem alloc]  initWithBarButtonSystemItem:UIBarButtonSystemItemSave
@@ -62,9 +62,10 @@
         
     if (self.item) {
         // update item
-        self.itemId   = self.item.itemId;
-        self.latitude = self.item.latitude;
-        self.longitude = self.item.longitude;
+        self.root.title = self.item.name;
+        self.itemId     = self.item.itemId;
+        self.latitude   = self.item.latitude;
+        self.longitude  = self.item.longitude;
     } else {
         // new item
         // add barcode button at left side.

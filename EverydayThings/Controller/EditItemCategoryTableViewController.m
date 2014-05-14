@@ -11,6 +11,7 @@
 #import "ItemCategory+helper.h"
 #import "AppDelegate.h"
 #import "FAKFontAwesome.h"
+#import "UpdateCategoryToNoneNotification.h"
 
 @interface EditItemCategoryTableViewController ()
 
@@ -31,7 +32,7 @@
 {
     [super viewDidLoad];
     
-    NSFetchRequest *request = [ItemCategory fetchAllRequest];
+    NSFetchRequest *request = [ItemCategory fetchAllRequestExceptNone];
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]
@@ -81,5 +82,31 @@
     
     return cell;
 }
+
+// delete row delegate
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return YES - we will be able to delete all rows
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // delete
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+        ItemCategory *category = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSString *categoryName = category.name;
+
+        // update category if this category is used by items.
+        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateCategoryToNoneNotification
+                                                            object:self
+                                                          userInfo:@{@"categoryName":categoryName}];
+
+        [[AppDelegate sharedContext] deleteObject:category];
+        [[AppDelegate sharedContext] save:nil];
+    }
+}
+
 
 @end

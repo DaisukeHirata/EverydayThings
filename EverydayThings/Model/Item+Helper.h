@@ -18,5 +18,6 @@
 + (NSArray *)itemsForGeofence;
 + (NSArray *)itemsForBuyNow;
 + (void)updateElapsed;
++ (void)updateCategoryToNone:(NSString *)name;
 
 @end

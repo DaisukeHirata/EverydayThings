@@ -76,6 +76,10 @@
     // if this is a first time to launch this application, insert initial data to model.
     if (isInitialBoot) {
         [ItemCategory insertInitialData];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES forKey:@"badge"];
+        [defaults setBool:YES forKey:@"geofence"];
+        [defaults synchronize];
     }
     
     return persistentStoreCoordinator;

@@ -12,6 +12,8 @@
 
 @interface CategoryDialogViewController ()
 @property (nonatomic, strong) NSMutableDictionary *values;
+@property (nonatomic, copy)   NSString *categoryId;
+@property (nonatomic, copy)   NSString *name;
 @end
 
 @implementation CategoryDialogViewController
@@ -21,15 +23,13 @@
     if ((self = [super initWithCoder:aDecoder])) {
         QRootElement *_root = [[QRootElement alloc] init];
         _root.grouped = YES;
-        _root.title = @"Item";
+        _root.title = @"New Category";
         self.root = _root;
         self.resizeWhenKeyboardPresented =YES;
-        /*
         UIBarButtonItem* saveItem = [[UIBarButtonItem alloc]  initWithBarButtonSystemItem:UIBarButtonSystemItemSave
                                                                                    target:self
                                                                                    action:@selector(save:)];
         self.navigationItem.leftBarButtonItem = saveItem;
-         */
     }
     return self;
 }
@@ -37,6 +37,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (self.category) {
+        self.root.title = self.category.name;
+        self.categoryId = self.category.categoryId;
+    }
     
     QSection *section = [[QSection alloc] initWithTitle:@"Category"];
     [section addElement:[self createNameEntryElement]];
@@ -53,14 +58,18 @@
     self.tabBarController.tabBar.hidden = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)save:(id)sender
 {
-    [super viewWillDisappear:animated];
+    if ([self.name isEqualToString:@"None"]) {
+        [self showAlert:@"A name can not be 'None'"];
+        return;
+    }
     
-    NSString *name = self.values[@"icon"];
-    NSLog(@"%@", name);
-    
-    [ItemCategory saveItemCategory:self.values];
+    if ([self.name length] != 0) {
+        [ItemCategory saveItemCategory:self.values];
+    }
+    // back to previous viewcontroller
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Create QuickDialog Element
@@ -108,8 +117,9 @@
         [self.root fetchValueIntoObject:_values];
         NSUInteger iconIndex = [_values[@"icon"] integerValue];
         NSUInteger colorIndex = [_values[@"color"] integerValue];
-        _values[@"icon"]  = [self iconsArray][iconIndex];
-        _values[@"color"] = [self colorsArray][colorIndex];
+        _values[@"categoryId"] = [self.categoryId length] ? self.categoryId : @"NEW_CATEGORY_DUMMY_ID";
+        _values[@"icon"]       = [self iconsArray][iconIndex];
+        _values[@"color"]      = [self colorsArray][colorIndex];
         return _values;
     } else {
         return nil;
@@ -149,5 +159,34 @@
     NSArray *colors = [self colorsArray];
     return [colors indexOfObject:name];
 }
+
+#pragma mark - normal property getter & setter
+
+- (NSString *)categoryId
+{
+    if (!_categoryId) _categoryId = [[NSString alloc] init];
+    return _categoryId;
+}
+
+#pragma mark - quick dialog element property getter & setter
+
+- (NSString *)name
+{
+    QEntryElement *nameElement = (QEntryElement *)[self.root elementWithKey:@"name"];
+    return nameElement.textValue;
+}
+
+#pragma mark - Alert Methods
+
+- (void) showAlert:(NSString *)alertText
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                      message:alertText
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+}
+
 
 @end

@@ -14,6 +14,7 @@
 #import "GeofenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
 #import "UpdateBuyNowTabBadgeNumberNotification.h"
+#import "UpdateCategoryToNoneNotification.h"
 
 @interface AppDelegate()
 @property (nonatomic, strong) LocationManager *locationManager;
@@ -42,6 +43,9 @@
     
     // tune in updating buy now tab badge number notification
     [self tuneInUpdatingBuyNowBadgeNotification];
+    
+    // tune in updating category of items to none if a category used by those items.
+    [self tuneInUpdateCategoryToNoneNotification];
     
     // turn on badge update in background
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -229,6 +233,16 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
                                                       [self updateBuyNowTabBadgeNumber];
+                                                  }];
+}
+
+- (void) tuneInUpdateCategoryToNoneNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateCategoryToNoneNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [Item updateCategoryToNone:note.userInfo[@"categoryName"]];
                                                   }];
 }
 

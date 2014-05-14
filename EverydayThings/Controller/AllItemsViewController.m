@@ -85,8 +85,10 @@
         view.tintColor = [ItemCategory colors][sectionName];
         
         // Text Color
-        UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-        [header.textLabel setTextColor:[UIColor whiteColor]];
+        if (![sectionName isEqualToString:@"None"]) {
+            UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+            [header.textLabel setTextColor:[UIColor whiteColor]];
+        }
     }
 }
 

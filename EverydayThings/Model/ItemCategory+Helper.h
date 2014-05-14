@@ -21,6 +21,7 @@
 + (NSDictionary *)colorChoices;
 + (UIImage *)iconWithCategoryName:(NSString *)name;
 + (NSFetchRequest *)fetchAllRequest;
++ (NSFetchRequest *)fetchAllRequestExceptNone;
 + (void)insertInitialData;
 
 @end

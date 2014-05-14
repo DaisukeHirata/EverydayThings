@@ -160,6 +160,34 @@
     return matches;
 }
 
++ (void)updateCategoryToNone:(NSString *)name
+{
+    NSLog(@"update category");
+    NSManagedObjectContext *context = [AppDelegate sharedContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    request.predicate = [NSPredicate predicateWithFormat:@"whichItemCategory.name = %@", name];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    if (error) {
+        // error
+        NSLog(@"Error updateElpased");
+    } else if  ([matches count]) {
+        // update
+        for (Item *item in matches) {
+            item.whichItemCategory = [ItemCategory itemCategoryWithName:@"None"];
+        }
+        error = nil;
+        [context save:&error];
+        if(error) {
+            NSLog(@"could not save data : %@", error);
+        }
+    }
+}
+
+
 - (NSInteger)expiredWeeks
 {
 	// now - due date
