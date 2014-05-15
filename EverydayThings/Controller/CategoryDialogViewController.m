@@ -87,14 +87,14 @@
     return name;
 }
 
-- (QRadioElement *)createIconRadioElement
+- (QFontAwesomeRadioElement *)createIconRadioElement
 {
-    QRadioElement *icon;
+    QFontAwesomeRadioElement *icon;
     
     NSArray *icons = [self iconsArray];
-    icon = [[QRadioElement alloc] initWithItems:icons
-                                       selected:self.category ? [self iconIndex:self.category.icon] : 0
-                                          title:@"Icon"];
+    icon = [[QFontAwesomeRadioElement alloc] initWithItems:icons
+                                                  selected:self.category ? [self iconIndex:self.category.icon] : 0
+                                                     title:@"Icon"];
     icon.itemsImageNames = icons;
     icon.key = @"icon";
     return icon;

@@ -49,6 +49,8 @@
 #import "QRadioItemElement.h"
 #import "QColorRadioElement.h"
 #import "QColorRadioItemElement.h"
+#import "QFontAwesomeRadioElement.h"
+#import "QFontAwesomeRadioItemElement.h"
 #import "QSelectItemElement.h"
 #import "QTextElement.h"
 #import "QDecimalElement.h"

@@ -83,10 +83,4 @@
     }
 }
 
--(void)setImageNamed:(NSString *)name {
-    if(name != nil) {
-        self.image = [FAKFontAwesome allIconImages][name];
-    }
-}
-
 @end
