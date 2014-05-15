@@ -34,7 +34,6 @@
     request.predicate = [NSPredicate predicateWithFormat:@"dueDate < %@", nearFutureDate];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"dueDate"
                                                               ascending:YES]];
-    request.fetchLimit = 100;
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]

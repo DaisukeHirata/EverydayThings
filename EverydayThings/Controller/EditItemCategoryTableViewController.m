@@ -103,6 +103,7 @@
                                                             object:self
                                                           userInfo:@{@"categoryName":categoryName}];
 
+        // delete and save
         [[AppDelegate sharedContext] deleteObject:category];
         [[AppDelegate sharedContext] save:nil];
     }

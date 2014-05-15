@@ -64,13 +64,6 @@ static NSString *kCellIdentifier = @"cellIdentifier";
     self.detailSegue = [[DetailSegue alloc] initWithIdentifier:@"showDetail"
                                                               source:self
                                                          destination:self.mapViewController];
-    
-    /*
-    self.showAllSegue = [[DetailSegue alloc] initWithIdentifier:@"showAll"
-                                                        source:self
-                                                   destination:self.mapViewController];
-     */
-
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -37,9 +37,6 @@
     }
     
     if (category) {
-        
-        NSString *oldIcon = category.icon;
-        
         category.name  = values[@"name"];
         category.color = values[@"color"];
         category.icon  = values[@"icon"];
@@ -48,16 +45,6 @@
         [context save:&error];
         if(error) {
             NSLog(@"could not save data : %@", error);
-        } else {
-            if (![oldIcon isEqualToString:category.icon]) {
-                /*
-                 // update application badge number.
-                 [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
-                 object:self
-                 userInfo:nil];
-                 
-                 */
-            }
         }
     }
     
@@ -169,18 +156,14 @@
 
 + (NSDictionary *)icons
 {
-    NSMutableDictionary *icons = nil;
-    
-    if (!icons) {
-        icons = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *icons = [[NSMutableDictionary alloc] init];
         
-        NSDictionary *allFonts = [FAKFontAwesome allIconFonts];
+    NSDictionary *allFonts = [FAKFontAwesome allIconFonts];
 
-        NSArray *matches = [self fetchAll];
-        for (ItemCategory *category in matches) {
-            NSString *iconName = category.icon;
-            icons[category.name] = allFonts[iconName];
-        }
+    NSArray *matches = [self fetchAll];
+    for (ItemCategory *category in matches) {
+        NSString *iconName = category.icon;
+        icons[category.name] = allFonts[iconName];
     }
     
     return icons;

@@ -19,6 +19,7 @@
 
 // top
 @property (nonatomic, copy)   NSString *name;
+@property (nonatomic, copy)   NSString *category;
 
 // cycle t  o supply
 @property (nonatomic)         BOOL stock;
@@ -98,8 +99,8 @@
     self.tabBarController.tabBar.hidden = YES;
     
     if (self.amazonItem) {
-        self.name = self.amazonItem.title;
-        NSLog(@"amazon category %@", self.amazonItem.category);
+        self.name     = self.amazonItem.title;
+        self.category = self.amazonItem.category;
     }
 }
 
@@ -335,6 +336,18 @@
     QEntryElement *nameElement = (QEntryElement *)[self.root elementWithKey:@"name"];
     nameElement.textValue = name;
     [self.quickDialogTableView reloadCellForElements:nameElement, nil];
+}
+
+- (void)setCategory:(NSString *)category
+{
+    // get category index
+    [ItemCategory itemCategoryWithName:category];
+    NSArray *categories = [ItemCategory categories];
+    NSUInteger index = [categories indexOfObject:category];
+    
+    QRadioElement *categoryElement = (QRadioElement *)[self.root elementWithKey:@"category"];
+    categoryElement.selected = index;
+    [self.quickDialogTableView reloadCellForElements:categoryElement, nil];
 }
 
 - (BOOL)stock

@@ -45,6 +45,7 @@
         NSNumber *oldBuynow   = item.buyNow;
         NSNumber *oldElapsed  = item.elapsed;
         NSNumber *oldGeofence = item.geofence;
+        NSString *oldLocation = item.location;
         
         item.name                = values[@"name"];
         item.buyNow              = values[@"buyNow"];
@@ -69,7 +70,8 @@
         } else {
             if (!([oldGeofence isEqualToNumber:item.geofence] &&
                   [oldBuynow isEqualToNumber:item.buyNow]     &&
-                  [oldElapsed isEqualToNumber:item.elapsed])  ) {
+                  [oldElapsed isEqualToNumber:item.elapsed]   &&
+                  [oldLocation isEqualToString:item.location] )  ) {
                 // geofence region changed.
                 [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
                                                                     object:self

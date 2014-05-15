@@ -29,7 +29,6 @@
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"whichItemCategory.name"
                                                               ascending:YES
                                                                selector:@selector(localizedStandardCompare:)]];
-    request.fetchLimit = 300;
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]
