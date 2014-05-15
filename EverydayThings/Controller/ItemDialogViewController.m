@@ -15,7 +15,7 @@
 #import "FAKFontAwesome.h"
 #import "AmazonItem.h"
 
-@interface ItemDialogViewController ()
+@interface ItemDialogViewController () <QuickDialogEntryElementDelegate>
 
 // top
 @property (nonatomic, copy)   NSString *name;
@@ -113,7 +113,8 @@
     [super viewWillDisappear:animated];
     self.tabBarController.tabBar.hidden = NO;
 }
-    
+
+
 #pragma mark - create dialog elements
 
 - (void)createQuickDialogElementsWithItem:(Item *)item
@@ -161,6 +162,14 @@
     if (self.item && [self.item.geofence boolValue]) {
         [sectionGeofence addElement:[self createLocationButtonWithLabelElement]];
     }
+    
+    //
+    // Memo
+    //
+    QSection *sectionMemo = [[QSection alloc] initWithTitle:@"Memo"];
+    [self.root addSection:sectionMemo];
+    [sectionMemo addElement:[self createMemoMultilineElement]];
+    
 }
 
 #pragma mark - Create QuickDialog Element
@@ -303,6 +312,16 @@
     return location;
 }
 
+- (QMultilineElement *)createMemoMultilineElement
+{
+    QMultilineElement *memo = [[QMultilineElement alloc] initWithTitle:@"" value:@""];
+    memo.placeholder = @"favorite, where to stock...";
+    memo.delegate    = self;    // for sync. QuickDialogEntryElementDelegate
+    memo.textValue   = self.item ? self.item.memo : @"";
+    memo.key = @"memo";
+    return memo;
+}
+
 - (void)reloadSectionTop
 {
     QSection* sectionTop = [self.root getSectionForIndex:0];
@@ -344,6 +363,15 @@
     }
     
     [self.quickDialogTableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma mark - QuickDialogEntryElementDelegate
+
+// this is for multiline text
+
+- (void)QEntryEditingChangedForElement:(QEntryElement *)element andCell:(QEntryTableViewCell *)cell {
+    cell.textField.text = element.textValue;
+    [cell setNeedsLayout];
 }
 
 #pragma mark - quick dialog element property getter & setter

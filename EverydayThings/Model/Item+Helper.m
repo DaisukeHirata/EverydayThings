@@ -60,7 +60,8 @@
         item.geofence            = values[@"geofence"];
         item.latitude            = values[@"latitude"];
         item.longitude           = values[@"longitude"];
-        
+        item.memo                = values[@"memo"];
+
         NSError *error = nil;
         [context save:&error];
         if(error) {

@@ -12,6 +12,8 @@
 #import "UpdateApplicationBadgeNumberNotification.h"
 #import "EditItemCategoryTableViewController.h"
 
+#define APP_ID 385862462 //id from iTunesConnect
+
 @interface SettingDialogViewController ()
 
 @end
@@ -94,7 +96,15 @@
     //
     // Feedback
     //
-    
+    QSection *feedbackSection = [[QSection alloc] initWithTitle:@"Feedback"];
+    QButtonElement *rateThisAppButton = [[QButtonElement alloc] initWithTitle:@"Rate & Write a Review"];
+    rateThisAppButton.onSelected = ^{
+        NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d", APP_ID];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+    };
+    NSString *version = [NSString stringWithFormat:@"%@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    QLabelElement *versionElement  = [[QLabelElement alloc] initWithTitle:@"Version" Value:version];
+
     
     [self.root addSection:categorySection];
     [categorySection addElement:categoryButton];
@@ -104,6 +114,10 @@
     
     [self.root addSection:homeScreenSection];
     [homeScreenSection addElement:badge];
+    
+    [self.root addSection:feedbackSection];
+    [feedbackSection addElement:rateThisAppButton];
+    [feedbackSection addElement:versionElement];
     
 }
 

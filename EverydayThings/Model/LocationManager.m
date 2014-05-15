@@ -194,6 +194,9 @@ static LocationManager *_sharedLocationManager = nil;
     NSLog(@"Entered Region -> %@", region.identifier);
     [self checkStateForAllMonitoredRegions];
     
+    // delete all local notification
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
     // register notification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.alertBody = [NSString stringWithFormat:@"Entered Region - %@", region.identifier];
