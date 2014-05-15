@@ -70,8 +70,8 @@
                                                            inManagedObjectContext:context];
             category.categoryId = [[NSUUID UUID] UUIDString];
             category.name       = name;
-            category.color      = @"F7F7F7";
-            category.icon       = @"circle";
+            category.color      = @"Default";
+            category.icon       = @"circleO";
             NSError *error = nil;
             [context save:&error];
             if(error){
@@ -171,12 +171,18 @@
 
 + (NSDictionary *)colorChoices
 {
-    return @{@"Red"    : @"FF0000",
+    return @{@"Red"    : @"DB1100",
              @"Yellow" : @"FFD119",
              @"Blue"   : @"3775CB",
              @"Brown"  : @"987D45",
-             @"Green"  : @"38AD26",
-             @"Default": @"F7F7F7"};
+             @"Green"  : @"45A76F",
+             @"Pink"   : @"F50087",
+             @"Orange" : @"F56B47",
+             @"Purple" : @"49003E",
+             @"Gray"   : @"736D66",
+             @"Default": @"00008F",
+             @"Moss"   : @"4B7401",
+             @"None"   : @"F7F7F7"};
 }
 
 + (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a

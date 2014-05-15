@@ -63,6 +63,7 @@
 - (QSection *)initWithTitle:(NSString *)string;
 
 - (void)addElement:(QElement *)element;
+- (void)removeElement:(QElement *)element;
 - (void)insertElement:(QElement *)element atIndex:(NSUInteger)index;
 - (NSUInteger)indexOfElement:(QElement *)element;
 

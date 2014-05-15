@@ -119,6 +119,14 @@
     [self.elements addObject:element];
 }
 
+- (void)removeElement:(QElement *)element
+{
+    if (self.elements) {
+        element.parentSection = self;
+        [self.elements removeObject:element];
+    }
+}
+
 - (void)insertElement:(QElement *)element atIndex:(NSUInteger)index
 {
     if (self.elements == nil) {

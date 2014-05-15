@@ -4,6 +4,22 @@
 <array>
 	<dict>
 		<key>name</key>
+		<string>Gift</string>
+		<key>color</key>
+		<string>Brown</string>
+		<key>icon</key>
+		<string>gift</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Kids</string>
+		<key>color</key>
+		<string>Moss</string>
+		<key>icon</key>
+		<string>puzzlePiece</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Grocery</string>
 		<key>color</key>
 		<string>Green</string>
@@ -22,7 +38,7 @@
 		<key>name</key>
 		<string>Emergency Goods</string>
 		<key>color</key>
-		<string>Brown</string>
+		<string>Red</string>
 		<key>icon</key>
 		<string>suitcase</string>
 	</dict>
@@ -36,9 +52,41 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Kitchen</string>
+		<key>color</key>
+		<string>Purple</string>
+		<key>icon</key>
+		<string>coffee</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Hobbies</string>
+		<key>color</key>
+		<string>Orange</string>
+		<key>icon</key>
+		<string>smileO</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Book</string>
+		<key>color</key>
+		<string>Gray</string>
+		<key>icon</key>
+		<string>book</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Software</string>
+		<key>color</key>
+		<string>Brown</string>
+		<key>icon</key>
+		<string>laptop</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>None</string>
 		<key>color</key>
-		<string>Default</string>
+		<string>None</string>
 		<key>icon</key>
 		<string>circle</string>
 	</dict>

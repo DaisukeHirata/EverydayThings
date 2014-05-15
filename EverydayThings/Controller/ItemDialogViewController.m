@@ -99,8 +99,12 @@
     self.tabBarController.tabBar.hidden = YES;
     
     if (self.amazonItem) {
-        self.name     = self.amazonItem.title;
-        self.category = self.amazonItem.category;
+        if ([[ItemCategory categories] indexOfObject:self.amazonItem.category] == NSNotFound) {
+            [ItemCategory itemCategoryWithName:self.amazonItem.category];
+            [self reloadSectionTop];
+        }
+        self.name          = self.amazonItem.title;
+        self.category      = self.amazonItem.category;
     }
 }
 
@@ -131,11 +135,13 @@
     sectionCycleToResuplly.footer = @"CYCLE TO SUPPLY helps you recognize an approximate time to supply this item based on a consumption cycle, avoid stockout items.";
     [self.root addSection:sectionCycleToResuplly];
     [sectionCycleToResuplly addElement:[self createStockBooleanElement]];
-    [sectionCycleToResuplly addElement:[self createCycleEntryElement]];
-    [sectionCycleToResuplly addElement:[self createtimeSpanRadioElement]];
-    [sectionCycleToResuplly addElement:[self createlastPurchaseDateTimeInlineElement]];
+    if (self.item && [self.item.stock boolValue]) {
+        [sectionCycleToResuplly addElement:[self createCycleEntryElement]];
+        [sectionCycleToResuplly addElement:[self createtimeSpanRadioElement]];
+        [sectionCycleToResuplly addElement:[self createlastPurchaseDateTimeInlineElement]];
+    }
     
-
+    
     //
     // Due date section
     //
@@ -152,7 +158,9 @@
     sectionGeofence.footer = @"Set a location you buy this item. Geofence reminds you only when BuyNow items you have is at the nearby location.";
     [self.root addSection:sectionGeofence];
     [sectionGeofence addElement:[self createGeofenceBooleanElement]];
-    [sectionGeofence addElement:[self createLocationButtonWithLabelElement]];
+    if (self.item && [self.item.geofence boolValue]) {
+        [sectionGeofence addElement:[self createLocationButtonWithLabelElement]];
+    }
 }
 
 #pragma mark - Create QuickDialog Element
@@ -202,20 +210,20 @@
     return photo;
 }
 
-
 - (QBooleanElement *)createStockBooleanElement
 {
     QBooleanElement * stock;
     stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
-                                         BoolValue:self.item ? [self.item.stock boolValue ] : NO];
+                                         BoolValue:self.item ? [self.item.stock boolValue] : NO];
     stock.key = @"stock";
     WeakSelf weakSelf = self;
     stock.onSelected = ^{
-        [weakSelf setCycleToSupplyEnabled:weakSelf.stock];
+        [weakSelf reloadSectionCycleToResuplly:weakSelf.stock];
         if (weakSelf.stock && !weakSelf.lastPurchaseDate) {
             weakSelf.lastPurchaseDate = [NSDate date];
         }
     };
+    
     return stock;
 }
 
@@ -226,7 +234,6 @@
                                            Value:self.item ? [self.item.cycle stringValue] : @""
                                      Placeholder:@""];
     cycle.key = @"cycle";
-    cycle.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     cycle.appearance.entryAlignment = NSTextAlignmentRight;
     cycle.keyboardType = UIKeyboardTypeNumberPad;
     return cycle;
@@ -239,7 +246,6 @@
                                            selected:self.item ? [[Item timeSpans] indexOfObject:self.item.timeSpan] : 0
                                               title:@"Time Span"];
     timeSpan.key = @"timeSpan";
-    timeSpan.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     return timeSpan;
 }
 
@@ -250,27 +256,7 @@
                                                                 date:self.item ? self.item.lastPurchaseDate : nil
                                                              andMode:UIDatePickerModeDate];
     lastPurchaseDate.key = @"lastPurchaseDate";
-    lastPurchaseDate.enabled = self.item ? [self.item.stock boolValue] ? YES : NO : NO;
     return lastPurchaseDate;
-}
-
-
-- (void)setCycleToSupplyEnabled:(BOOL)enabled
-{
-    // cycle
-    QEntryElement *cycle = (QEntryElement *)[self.root elementWithKey:@"cycle"];
-    cycle.enabled = enabled;
-    [self.quickDialogTableView reloadCellForElements:cycle, nil];
-    
-    // timeSpan
-    QRadioElement *timeSpan = (QRadioElement *)[self.root elementWithKey:@"timeSpan"];
-    timeSpan.enabled = enabled;
-    [self.quickDialogTableView reloadCellForElements:timeSpan, nil];
-    
-    // lastPurchaseDate
-    QDateTimeInlineElement *lastPurchaseDate = (QDateTimeInlineElement *)[self.root elementWithKey:@"lastPurchaseDate"];
-    lastPurchaseDate.enabled = enabled;
-    [self.quickDialogTableView reloadCellForElements:lastPurchaseDate, nil];
 }
 
 - (QDateTimeInlineElement *)createDueDateDateTimeInlineElement
@@ -291,7 +277,13 @@
     geofence.key = @"geofence";
     WeakSelf weakSelf = self;
     geofence.onSelected = ^{
-        [weakSelf setLocationEnabled:weakSelf.geofence];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL globalGeofence = [defaults boolForKey:@"geofence"];
+        if (weakSelf.geofence && !globalGeofence) {
+            [weakSelf showAlert:@"Please enable Geofence in a Setting tab first."];
+            weakSelf.geofence = NO;
+        }
+        [weakSelf reloadSectionGeofence:weakSelf.geofence];
     };
     return geofence;
 }
@@ -301,7 +293,6 @@
     QButtonWithLabelElement *location;
     location         = [[QButtonWithLabelElement alloc] initWithTitle:@"Location"];
     location.key     = @"location";
-    location.enabled = self.item ? [self.item.geofence boolValue] ? YES : NO : NO;
     location.value   = self.item ? self.item.location : @"";
     WeakSelf weakSelf = self;
     location.onSelected =  ^{
@@ -312,18 +303,54 @@
     return location;
 }
 
-- (void)setLocationEnabled:(BOOL)enabled
+- (void)reloadSectionTop
 {
-    QButtonWithLabelElement *location = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
-    location.value = self.location;
-    location.enabled = enabled;
-    [self.quickDialogTableView reloadCellForElements:location, nil];
+    QSection* sectionTop = [self.root getSectionForIndex:0];
+    QRadioElement *categoryElement = (QRadioElement *)[self.root elementWithKey:@"category"];
+    [sectionTop removeElement:categoryElement];
+    [sectionTop insertElement:[self createCategoryRadioElement] atIndex:1];
+    [self.quickDialogTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)reloadSectionCycleToResuplly:(BOOL)enabled
+{
+    QSection* sectionCycleToResuplly = [self.root getSectionForIndex:1];
+
+    if (enabled) {
+        [sectionCycleToResuplly insertElement:[self createCycleEntryElement] atIndex:1];
+        [sectionCycleToResuplly insertElement:[self createtimeSpanRadioElement] atIndex:2];
+        [sectionCycleToResuplly insertElement:[self createlastPurchaseDateTimeInlineElement] atIndex:3];
+    } else {
+        QEntryElement *cycle = (QEntryElement *)[self.root elementWithKey:@"cycle"];
+        QRadioElement *timeSpan = (QRadioElement *)[self.root elementWithKey:@"timeSpan"];
+        QDateTimeInlineElement *lastPurchaseDate = (QDateTimeInlineElement *)[self.root elementWithKey:@"lastPurchaseDate"];
+        [sectionCycleToResuplly removeElement:cycle];
+        [sectionCycleToResuplly removeElement:timeSpan];
+        [sectionCycleToResuplly removeElement:lastPurchaseDate];
+    }
+    
+    [self.quickDialogTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)reloadSectionGeofence:(BOOL)enabled
+{
+    QSection* sectionGeofence = [self.root getSectionForIndex:3];
+    
+    if (enabled) {
+        [sectionGeofence insertElement:[self createLocationButtonWithLabelElement] atIndex:1];
+    } else {
+        QButtonWithLabelElement *location = (QButtonWithLabelElement *)[self.root elementWithKey:@"location"];
+        [sectionGeofence removeElement:location];
+    }
+    
+    [self.quickDialogTableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - quick dialog element property getter & setter
 
 @synthesize name = _name;
 @synthesize location = _location;
+@synthesize geofence = _geofence;
 
 - (NSString *)name
 {
@@ -388,6 +415,13 @@
     return geofenceElement.boolValue;
 }
 
+- (void)setGeofence:(BOOL)geofence
+{
+    QBooleanElement *geofenceElement = (QBooleanElement *)[self.root elementWithKey:@"geofence"];
+    geofenceElement.boolValue = geofence;
+    [self.quickDialogTableView reloadCellForElements:geofenceElement, nil];
+}
+
 #pragma mark - normal property getter & setter
 
 - (NSString *)itemId
@@ -428,12 +462,12 @@
 {
     // validation
     if (self.stock && [self.cycle length] == 0) {
-        [self showAlert:@"Please enter cycle if you enable stock."];
+        [self showAlert:@"Please enter cycle if you use stock."];
         return;
     }
     
     if (self.geofence && [self.location length] == 0) {
-        [self showAlert:@"Please enter a location if you enable geofence."];
+        [self showAlert:@"Please enter a location if you use geofence."];
         return;
     }
     

@@ -11,8 +11,6 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "TDBadgedCell.h"
-#import "UpdateApplicationBadgeNumberNotification.h"
-#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @interface BuyNowTableViewController ()
 
@@ -34,17 +32,6 @@
                                                                                    cacheName:nil];
 
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // update buy now tab badge number.
-    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
-                                                        object:self
-                                                      userInfo:nil];
-}
-
 
 #pragma mark - Table view data source delegate
 
@@ -100,16 +87,6 @@
             [header.textLabel setTextColor:[UIColor whiteColor]];
         }
     }
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [super tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
-    
-    // update application badge
-    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
-                                                        object:self
-                                                      userInfo:nil];
 }
 
 @end

@@ -155,6 +155,8 @@
 		E3B92F5A19063E89000346CA /* ItemCategory+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5919063E89000346CA /* ItemCategory+Helper.m */; };
 		E3B92F5D1906422D000346CA /* AppDelegate+MOC.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */; };
 		E3B92F601906448D000346CA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3B92F5F1906448D000346CA /* CoreData.framework */; };
+		E3D9E4891924872A00078B75 /* QColorRadioElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D9E4881924872A00078B75 /* QColorRadioElement.m */; };
+		E3D9E48C192488A900078B75 /* QColorRadioItemElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D9E48B192488A900078B75 /* QColorRadioItemElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -448,6 +450,11 @@
 		E3B92F5C1906422D000346CA /* AppDelegate+MOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MOC.m"; sourceTree = "<group>"; };
 		E3B92F5F1906448D000346CA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E3D9E4851922FAD400078B75 /* UpdateCategoryToNoneNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UpdateCategoryToNoneNotification.h; path = EverydayThings/UpdateCategoryToNoneNotification.h; sourceTree = SOURCE_ROOT; };
+		E3D9E4861924648C00078B75 /* UpdateDueDateTabBadgeNumberNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UpdateDueDateTabBadgeNumberNotification.h; path = EverydayThings/UpdateDueDateTabBadgeNumberNotification.h; sourceTree = SOURCE_ROOT; };
+		E3D9E4871924872A00078B75 /* QColorRadioElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QColorRadioElement.h; sourceTree = "<group>"; };
+		E3D9E4881924872A00078B75 /* QColorRadioElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QColorRadioElement.m; sourceTree = "<group>"; };
+		E3D9E48A192488A900078B75 /* QColorRadioItemElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QColorRadioItemElement.h; sourceTree = "<group>"; };
+		E3D9E48B192488A900078B75 /* QColorRadioItemElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QColorRadioItemElement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -676,6 +683,10 @@
 				E39508A7190A1F96002EAEB8 /* QMultilineTextViewController.m */,
 				E39508A8190A1F96002EAEB8 /* QProgressElement.h */,
 				E39508A9190A1F96002EAEB8 /* QProgressElement.m */,
+				E3D9E4871924872A00078B75 /* QColorRadioElement.h */,
+				E3D9E4881924872A00078B75 /* QColorRadioElement.m */,
+				E3D9E48A192488A900078B75 /* QColorRadioItemElement.h */,
+				E3D9E48B192488A900078B75 /* QColorRadioItemElement.m */,
 				E39508AA190A1F96002EAEB8 /* QRadioElement.h */,
 				E39508AB190A1F96002EAEB8 /* QRadioElement.m */,
 				E39508AC190A1F96002EAEB8 /* QRadioItemElement.h */,
@@ -781,6 +792,7 @@
 				E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */,
 				E35FD01B1918823E00CB76DA /* UpdateApplicationBadgeNumberNotification.h */,
 				E32E38FF191A5D2800DD02B3 /* UpdateBuyNowTabBadgeNumberNotification.h */,
+				E3D9E4861924648C00078B75 /* UpdateDueDateTabBadgeNumberNotification.h */,
 				E3D9E4851922FAD400078B75 /* UpdateCategoryToNoneNotification.h */,
 				E3B92EFC1905F373000346CA /* Controller */,
 				E3B92F351905FE0E000346CA /* Model */,
@@ -1051,6 +1063,7 @@
 				E37EC26D1908A3FD005DB65F /* FAKFoundationIcons.m in Sources */,
 				E35FD032191882F800CB76DA /* AFHTTPRequestOperation.m in Sources */,
 				E3B92F5A19063E89000346CA /* ItemCategory+Helper.m in Sources */,
+				E3D9E4891924872A00078B75 /* QColorRadioElement.m in Sources */,
 				E3950905190A1F96002EAEB8 /* QSegmentedElement.m in Sources */,
 				E3950900190A1F96002EAEB8 /* QRadioSection.m in Sources */,
 				E395090B190A1F96002EAEB8 /* QTextField.m in Sources */,
@@ -1127,6 +1140,7 @@
 				E39508F9190A1F96002EAEB8 /* QLabelElement.m in Sources */,
 				E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */,
 				E39508F0190A1F96002EAEB8 /* QElement.m in Sources */,
+				E3D9E48C192488A900078B75 /* QColorRadioItemElement.m in Sources */,
 				E3950911190A1F96002EAEB8 /* QuickDialogDataSource.m in Sources */,
 				E359DCEB1921A23B00D7003B /* EditItemCategoryTableViewController.m in Sources */,
 				E35FD0091918820200CB76DA /* SDImageCache.m in Sources */,

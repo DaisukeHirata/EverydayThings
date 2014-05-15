@@ -15,8 +15,10 @@
 - (NSInteger)elapsedDaysAfterLastPurchaseDate;
 + (NSArray *)timeSpans;
 + (NSFetchRequest *)createRequestForBuyNowItems;
++ (NSFetchRequest *)createRequestForDueDateItems;
 + (NSArray *)itemsForGeofence;
 + (NSArray *)itemsForBuyNow;
++ (NSArray *)itemsForPastDueDate;
 + (void)updateElapsed;
 + (void)updateCategoryToNone:(NSString *)name;
 

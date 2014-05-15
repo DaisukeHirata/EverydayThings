@@ -23,17 +23,7 @@
 {
     [super viewDidLoad];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
-
-    // 1 month later
-    NSDate *today = [NSDate date];
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setMonth:1];
-    NSDate *nearFutureDate = [cal dateByAddingComponents:comps toDate:today options:0];
-    request.predicate = [NSPredicate predicateWithFormat:@"dueDate < %@", nearFutureDate];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"dueDate"
-                                                              ascending:YES]];
+    NSFetchRequest *request = [Item createRequestForDueDateItems];
     
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                         managedObjectContext:[AppDelegate sharedContext]

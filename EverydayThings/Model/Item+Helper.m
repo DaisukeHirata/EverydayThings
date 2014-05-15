@@ -10,8 +10,6 @@
 #import "Item+Helper.h"
 #import "ItemCategory+Helper.h"
 #import "GeoFenceMonitoringLocationReloadNotification.h"
-#import "UpdateApplicationBadgeNumberNotification.h"
-#import "UpdateBuyNowTabBadgeNumberNotification.h"
 
 @implementation Item (Helper)
 
@@ -71,23 +69,13 @@
             if (!([oldGeofence isEqualToNumber:item.geofence] &&
                   [oldBuynow isEqualToNumber:item.buyNow]     &&
                   [oldElapsed isEqualToNumber:item.elapsed]   &&
-                  [oldLocation isEqualToString:item.location] )  ) {
+                  (oldLocation == item.location || [oldLocation isEqualToString:item.location]) )  ) {
+                
                 // geofence region changed.
                 [[NSNotificationCenter defaultCenter] postNotificationName:GeofenceMonitoringLocationReloadNotification
                                                                     object:self
                                                                   userInfo:nil];
             }
-            
-            // update application badge number.
-            [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
-                                                                object:self
-                                                              userInfo:nil];
-            
-            // update buy now tab badge number.
-            [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
-                                                                object:self
-                                                              userInfo:nil];
-
         }
     }
     
@@ -142,6 +130,39 @@
     if (error) {
         // error
         NSLog(@"can not read geofence location data from item managed object");
+    }
+    
+    return matches;
+}
+
+
++ (NSFetchRequest *)createRequestForDueDateItems
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    
+    // 1 month later
+    NSDate *today = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setMonth:1];
+    NSDate *nearFutureDate = [cal dateByAddingComponents:comps toDate:today options:0];
+    request.predicate = [NSPredicate predicateWithFormat:@"dueDate < %@", nearFutureDate];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"dueDate"
+                                                              ascending:YES]];
+    
+    return request;
+}
+
++ (NSArray *)itemsForPastDueDate
+{
+    NSFetchRequest *request = [self createRequestForDueDateItems];
+        
+    NSError *error;
+    NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
+    
+    if (error) {
+        // error
+        NSLog(@"can not read due date items from item managed object");
     }
     
     return matches;

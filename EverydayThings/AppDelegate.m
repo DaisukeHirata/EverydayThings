@@ -14,6 +14,7 @@
 #import "GeofenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
 #import "UpdateBuyNowTabBadgeNumberNotification.h"
+#import "UpdateDueDateTabBadgeNumberNotification.h"
 #import "UpdateCategoryToNoneNotification.h"
 
 @interface AppDelegate()
@@ -43,6 +44,9 @@
     
     // tune in updating buy now tab badge number notification
     [self tuneInUpdatingBuyNowBadgeNotification];
+    
+    // tune in updating due date tab badge number notification
+    [self tuneInUpdatingDueDateBadgeNotification];
     
     // tune in updating category of items to none if a category used by those items.
     [self tuneInUpdateCategoryToNoneNotification];
@@ -162,7 +166,7 @@ static NSManagedObjectContext *_sharedContext = nil;
     tab4.image = cog;
 }
 
-- (void)setBuyNowTabBadgeNumber
+- (void)updateBuyNowTabBadgeNumber
 {
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     NSArray *tabItems = tabController.tabBar.items;
@@ -176,6 +180,22 @@ static NSManagedObjectContext *_sharedContext = nil;
         tbi.badgeValue = nil;
     }
 }
+
+- (void)updateDueDateTabBadgeNumber
+{
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    NSArray *tabItems = tabController.tabBar.items;
+    
+    UITabBarItem *tbi = (UITabBarItem*)tabItems[1];
+    NSUInteger count = [[Item itemsForPastDueDate] count];
+    
+    if (count != 0) {
+        tbi.badgeValue = [NSString stringWithFormat:@"%d", count];
+    } else {
+        tbi.badgeValue = nil;
+    }
+}
+
 
 - (void)updateApplicationBadgeNumber
 {
@@ -193,11 +213,6 @@ static NSManagedObjectContext *_sharedContext = nil;
     } else {
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
-}
-
-- (void)updateBuyNowTabBadgeNumber
-{
-    [self setBuyNowTabBadgeNumber];
 }
 
 #pragma mark - Tuning in notification
@@ -235,6 +250,17 @@ static NSManagedObjectContext *_sharedContext = nil;
                                                       [self updateBuyNowTabBadgeNumber];
                                                   }];
 }
+
+- (void) tuneInUpdatingDueDateBadgeNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:UpdateDueDateTabBadgeNumberNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+                                                      [self updateDueDateTabBadgeNumber];
+                                                  }];
+}
+
 
 - (void) tuneInUpdateCategoryToNoneNotification
 {

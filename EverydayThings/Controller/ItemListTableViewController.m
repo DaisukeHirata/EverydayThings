@@ -11,7 +11,9 @@
 #import "AppDelegate.h"
 #import "FAKFontAwesome.h"
 #import "GeofenceRegionStateChangedNotification.h"
+#import "UpdateApplicationBadgeNumberNotification.h"
 #import "UpdateBuyNowTabBadgeNumberNotification.h"
+#import "UpdateDueDateTabBadgeNumberNotification.h"
 
 @interface ItemListTableViewController ()
 
@@ -46,8 +48,7 @@
 {
     [super viewWillAppear:animated];
 
-    // needs to upload section header color
-    [self.tableView reloadData];
+    [self updateBadgeNumberNotification];
 }
 
 #pragma mark - tableview controller delegate
@@ -81,10 +82,8 @@
         NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[AppDelegate sharedContext] deleteObject:managedObject];
         [[AppDelegate sharedContext] save:nil];
-        // update buy now tab badge number.
-        [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
-                                                            object:self
-                                                          userInfo:nil];
+        
+        [self updateBadgeNumberNotification];
     }
 }
 
@@ -146,6 +145,26 @@
     
     return [[UIImageView alloc] initWithImage:image];
 }
+
+- (void)updateBadgeNumberNotification
+{
+    // update application badge number.
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateApplicationBadgeNumberNotification
+                                                        object:self
+                                                      userInfo:nil];
+    
+    // update buy now tab badge number.
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateBuyNowTabBadgeNumberNotification
+                                                        object:self
+                                                      userInfo:nil];
+    
+    // update due date tab badge number.
+    [[NSNotificationCenter defaultCenter] postNotificationName:UpdateDueDateTabBadgeNumberNotification
+                                                        object:self
+                                                      userInfo:nil];
+
+}
+
 
 #pragma mark - Location manager things
 

@@ -100,13 +100,15 @@
     return icon;
 }
 
-- (QRadioElement *)createColorRadioElement
+- (QColorRadioElement *)createColorRadioElement
 {
-    QRadioElement *color;
-    color = [[QRadioElement alloc] initWithItems:[self colorsArray]
-                                        selected:self.category ? [self colorIndex:self.category.color] : 0
-                                           title:@"Color"];
+    QColorRadioElement *color;
+    NSArray *colors = [self colorsArray];
+    color = [[QColorRadioElement alloc] initWithItems:colors
+                                             selected:self.category ? [self colorIndex:self.category.color] : 0
+                                                title:@"Color"];
     color.key = @"color";
+    color.itemsImageNames = colors;
     return color;
 }
 
