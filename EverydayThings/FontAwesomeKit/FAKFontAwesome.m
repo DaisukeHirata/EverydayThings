@@ -796,4 +796,14 @@
     return images;
 }
 
+
++ (UIImage *)imageWithIconName:(NSString *)name
+{
+    UIImage *image;
+    NSDictionary *allFonts = [self allIconFonts];
+    image = [UIImage imageWithStackedIcons:@[allFonts[name]]
+                                 imageSize:CGSizeMake(20, 20)];
+    return image;
+}
+
 @end

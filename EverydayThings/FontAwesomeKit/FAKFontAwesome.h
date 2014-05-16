@@ -376,5 +376,6 @@
 + (NSDictionary *)allIcons;
 + (NSDictionary *)allIconFonts;
 + (NSDictionary *)allIconImages;
++ (UIImage *)imageWithIconName:(NSString *)name;
 
 @end

@@ -12,7 +12,6 @@
 @interface ItemListTableViewController : CoreDataTableViewController
 @property (nonatomic, strong) LocationManager *locationManager;
 
-- (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a;
 - (UIImageView *)geofenceImageViewMonitored:(BOOL)monitored insideRegion:(BOOL)inside;
 
 @end

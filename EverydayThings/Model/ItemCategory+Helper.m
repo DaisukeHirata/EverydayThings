@@ -148,7 +148,7 @@
     
     for (ItemCategory *category in matches) {
         NSString *colorCode = [self colorChoices][category.color];
-        colors[category.name] = [self hexToUIColor:colorCode alpha:1.0];
+        colors[category.name] = [UIColor hexToUIColor:colorCode alpha:1.0];
     }
     
     return colors;
@@ -183,17 +183,6 @@
              @"Default": @"00008F",
              @"Moss"   : @"4B7401",
              @"None"   : @"F7F7F7"};
-}
-
-+ (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
-{
-	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
-	unsigned int color;
-	[colorScanner scanHexInt:&color];
-	CGFloat r = ((color & 0xFF0000) >> 16)/255.0f;
-	CGFloat g = ((color & 0x00FF00) >> 8) /255.0f;
-	CGFloat b =  (color & 0x0000FF) /255.0f;
-	return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 + (UIImage *)iconWithCategoryName:(NSString *)name

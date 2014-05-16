@@ -15,6 +15,9 @@
 		E359DCF61921CCCA00D7003B /* CategoryDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */; };
 		E359DD2A19221CC400D7003B /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DD2919221CC400D7003B /* ItemCategory.m */; };
 		E35D1C681925ACFF0014805F /* UIColor+HexStringToUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E35D1C671925ACFF0014805F /* UIColor+HexStringToUIColor.m */; };
+		E35D1C781925B3C00014805F /* AAMFeedbackTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35D1C721925B3C00014805F /* AAMFeedbackTopicsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E35D1C791925B3C00014805F /* AAMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E35D1C741925B3C00014805F /* AAMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E35D1C7A1925B3C00014805F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E35D1C751925B3C00014805F /* Localizable.strings */; };
 		E35FCFD31918818100CB76DA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD01918818100CB76DA /* NSData+Base64.m */; };
 		E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD21918818100CB76DA /* NSString+URLEncode.m */; };
 		E35FCFDC191881B600CB76DA /* Daizawa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E35FCFD6191881B600CB76DA /* Daizawa.gpx */; };
@@ -189,6 +192,12 @@
 		E359DD2919221CC400D7003B /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCategory.m; sourceTree = "<group>"; };
 		E35D1C661925ACFF0014805F /* UIColor+HexStringToUIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexStringToUIColor.h"; sourceTree = "<group>"; };
 		E35D1C671925ACFF0014805F /* UIColor+HexStringToUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexStringToUIColor.m"; sourceTree = "<group>"; };
+		E35D1C711925B3C00014805F /* AAMFeedbackTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackTopicsViewController.h; sourceTree = "<group>"; };
+		E35D1C721925B3C00014805F /* AAMFeedbackTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackTopicsViewController.m; sourceTree = "<group>"; };
+		E35D1C731925B3C00014805F /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
+		E35D1C741925B3C00014805F /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
+		E35D1C761925B3C00014805F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E35D1C771925B3C00014805F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E35FCFD01918818100CB76DA /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E35FCFD11918818100CB76DA /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
@@ -497,6 +506,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E35D1C701925B3C00014805F /* AAMFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				E35D1C711925B3C00014805F /* AAMFeedbackTopicsViewController.h */,
+				E35D1C721925B3C00014805F /* AAMFeedbackTopicsViewController.m */,
+				E35D1C731925B3C00014805F /* AAMFeedbackViewController.h */,
+				E35D1C741925B3C00014805F /* AAMFeedbackViewController.m */,
+				E35D1C751925B3C00014805F /* Localizable.strings */,
+			);
+			path = AAMFeedback;
+			sourceTree = "<group>";
+		};
 		E35FCFCE1918818100CB76DA /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +841,7 @@
 		E3B92ECA1905F13B000346CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E35D1C701925B3C00014805F /* AAMFeedback */,
 				E35FD01E191882F800CB76DA /* AFNetworking */,
 				E35FD0151918820B00CB76DA /* XmlReader */,
 				E35FCFE91918820200CB76DA /* SDWebImage */,
@@ -989,6 +1011,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = E3B92EB71905F13B000346CA;
 			productRefGroup = E3B92EC11905F13B000346CA /* Products */;
@@ -1006,6 +1029,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E35D1C7A1925B3C00014805F /* Localizable.strings in Resources */,
 				E37EC2731908A3FD005DB65F /* ionicons.ttf in Resources */,
 				E3B92F0D1905F663000346CA /* Main.storyboard in Resources */,
 				E3B92EDC1905F13B000346CA /* Images.xcassets in Resources */,
@@ -1065,6 +1089,7 @@
 				E35FD05A191885E000CB76DA /* AllItemsViewController.m in Sources */,
 				E39508FB190A1F96002EAEB8 /* QMultilineElement.m in Sources */,
 				E3950909190A1F96002EAEB8 /* QTableViewCell.m in Sources */,
+				E35D1C791925B3C00014805F /* AAMFeedbackViewController.m in Sources */,
 				E39508DB190A1F96002EAEB8 /* DOAutocompleteTextField.m in Sources */,
 				E395090A190A1F96002EAEB8 /* QTextElement.m in Sources */,
 				E395090F190A1F96002EAEB8 /* QuickDialogController+Navigation.m in Sources */,
@@ -1156,6 +1181,7 @@
 				E39508F1190A1F96002EAEB8 /* QEmptyListElement.m in Sources */,
 				E35FD065191885E000CB76DA /* SettingDialogViewController.m in Sources */,
 				E39508F9190A1F96002EAEB8 /* QLabelElement.m in Sources */,
+				E35D1C781925B3C00014805F /* AAMFeedbackTopicsViewController.m in Sources */,
 				E318CAE6191B113D00CCFA07 /* LocationManager.m in Sources */,
 				E39508F0190A1F96002EAEB8 /* QElement.m in Sources */,
 				E3D9E48C192488A900078B75 /* QColorRadioItemElement.m in Sources */,
@@ -1184,6 +1210,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E35D1C751925B3C00014805F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E35D1C761925B3C00014805F /* en */,
+				E35D1C771925B3C00014805F /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		E3B92ECC1905F13B000346CA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

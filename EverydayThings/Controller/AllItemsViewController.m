@@ -66,7 +66,7 @@
                             (long)[item cycleInDays]];
         if ([item.elapsed isEqualToNumber:@1]) {
             // elpased
-            cell.badgeColor = [self hexToUIColor:@"dc143c" alpha:1.0];
+            cell.badgeColor = [UIColor hexToUIColor:@"dc143c" alpha:1.0];
         } else {
             cell.badgeColor = [UIColor lightGrayColor];
         }

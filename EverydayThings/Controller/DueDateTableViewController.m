@@ -50,7 +50,7 @@
     cell.textLabel.text = item.name;
     cell.detailTextLabel.text = [formatter stringFromDate:item.dueDate];
     cell.detailTextLabel.textColor = ([[NSDate date] compare:item.dueDate] == NSOrderedDescending) ?
-                                            [self hexToUIColor:@"ff6347" alpha:1.0] : [UIColor grayColor];
+                                            [UIColor hexToUIColor:@"ff6347" alpha:1.0] : [UIColor grayColor];
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     if ([item.geofence boolValue]) {
         cell.accessoryView = [self geofenceImageViewMonitored:[self.locationManager monitoredRegion:item.location]

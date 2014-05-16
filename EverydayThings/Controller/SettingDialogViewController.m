@@ -11,6 +11,8 @@
 #import "GeoFenceMonitoringLocationReloadNotification.h"
 #import "UpdateApplicationBadgeNumberNotification.h"
 #import "EditItemCategoryTableViewController.h"
+#import "AAMFeedbackViewController.h"
+#import "FAKFontAwesome.h"
 
 #define APP_ID 385862462 //id from iTunesConnect
 
@@ -71,6 +73,7 @@
                                                             object:self
                                                           userInfo:nil];
     };
+    geofence.image = [FAKFontAwesome imageWithIconName:@"locationArrow"];
     geofence.key = @"geofence";
 
     
@@ -79,7 +82,7 @@
     //
     BOOL baddeValue = [defaults boolForKey:@"badge"];
     QSection *homeScreenSection = [[QSection alloc] initWithTitle:@"Home Screen"];
-    QBooleanElement *badge = [[QBooleanElement alloc] initWithTitle:@"Show BuyNow Badge"
+    QBooleanElement *badge = [[QBooleanElement alloc] initWithTitle:@"Show App Badge"
                                                           BoolValue:baddeValue ? baddeValue : NO];
     badge.onSelected = ^{
         QBooleanElement *badge = (QBooleanElement *)[[self root] elementWithKey:@"badge"];
@@ -102,6 +105,14 @@
         NSString *reviewURL = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d", APP_ID];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
     };
+    rateThisAppButton.image = [FAKFontAwesome imageWithIconName:@"apple"];
+    QButtonElement *emailButton = [[QButtonElement alloc] initWithTitle:@"Mail to a developer"];
+    emailButton.onSelected = ^{
+        AAMFeedbackViewController *aamFeedbackViewController = [[AAMFeedbackViewController alloc] init];
+        aamFeedbackViewController.toRecipients = [NSArray arrayWithObject:@"daisukihirata@gmail.com"];
+        [weakSelf.navigationController pushViewController:aamFeedbackViewController animated:YES];
+    };
+    emailButton.image = [FAKFontAwesome imageWithIconName:@"envelopeO"];
     NSString *version = [NSString stringWithFormat:@"%@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     QLabelElement *versionElement  = [[QLabelElement alloc] initWithTitle:@"Version" Value:version];
 
@@ -117,6 +128,7 @@
     
     [self.root addSection:feedbackSection];
     [feedbackSection addElement:rateThisAppButton];
+    [feedbackSection addElement:emailButton];
     [feedbackSection addElement:versionElement];
     
 }

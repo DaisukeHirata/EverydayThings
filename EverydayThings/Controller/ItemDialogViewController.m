@@ -198,6 +198,7 @@
     buyNow = [[QBooleanElement alloc] initWithTitle:@"Buy Now"
                                           BoolValue:self.item ? [self.item.buyNow boolValue] : NO];
     buyNow.key = @"buyNow";
+    buyNow.image = [FAKFontAwesome imageWithIconName:@"shoppingCart"];
     return buyNow;
 }
 
@@ -220,6 +221,7 @@
     stock = [[QBooleanElement alloc] initWithTitle:@"Stock"
                                          BoolValue:self.item ? [self.item.stock boolValue] : NO];
     stock.key = @"stock";
+    stock.image = [FAKFontAwesome imageWithIconName:@"repeat"];
     WeakSelf weakSelf = self;
     stock.onSelected = ^{
         [weakSelf reloadSectionCycleToResuplly:weakSelf.stock];
@@ -270,6 +272,7 @@
                                                        date:self.item ? self.item.dueDate : nil
                                                     andMode:UIDatePickerModeDate];
     dueDate.key = @"dueDate";
+    dueDate.image = [FAKFontAwesome imageWithIconName:@"calendar"];
     return dueDate;
 }
 
@@ -279,6 +282,7 @@
     geofence = [[QBooleanElement alloc] initWithTitle:@"Geofence"
                                             BoolValue:self.item ? [self.item.geofence boolValue] : NO];
     geofence.key = @"geofence";
+    geofence.image = [FAKFontAwesome imageWithIconName:@"locationArrow"];
     WeakSelf weakSelf = self;
     geofence.onSelected = ^{
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -314,6 +318,7 @@
     memo.delegate    = self;    // for sync. QuickDialogEntryElementDelegate
     memo.textValue   = self.item ? self.item.memo : @"";
     memo.key = @"memo";
+    memo.image = [FAKFontAwesome imageWithIconName:@"pencil"];
     return memo;
 }
 
