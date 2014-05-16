@@ -205,6 +205,16 @@
     return image;
 }
 
++ (NSArray *)iconNameWithCategoryName:(NSArray *)names
+{
+    NSMutableArray *iconNames = [[NSMutableArray alloc] init];
+    for (NSString *name in names) {
+        ItemCategory *category = [self itemCategoryWithName:name];
+        [iconNames addObject:category.icon];
+    }
+    return iconNames;
+}
+
 + (void)insertInitialData
 {
     NSLog(@"this is initial insertion.");

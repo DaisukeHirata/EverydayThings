@@ -20,6 +20,7 @@
 
 + (NSDictionary *)colorChoices;
 + (UIImage *)iconWithCategoryName:(NSString *)name;
++ (NSArray *)iconNameWithCategoryName:(NSArray *)names;
 + (NSFetchRequest *)fetchAllRequest;
 + (NSFetchRequest *)fetchAllRequestExceptNone;
 + (void)insertInitialData;

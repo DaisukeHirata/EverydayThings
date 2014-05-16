@@ -51,6 +51,8 @@
     [self updateBadgeNumberNotification];
     
     [self.tableView reloadData];
+    
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 #pragma mark - tableview controller delegate

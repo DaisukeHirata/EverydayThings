@@ -108,13 +108,6 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.tabBarController.tabBar.hidden = NO;
-}
-
-
 #pragma mark - create dialog elements
 
 - (void)createQuickDialogElementsWithItem:(Item *)item
@@ -187,13 +180,15 @@
     return name;
 }
 
-- (QRadioElement *)createCategoryRadioElement
+- (QFontAwesomeRadioElement *)createCategoryRadioElement
 {
-    QRadioElement *category;
-    category = [[QRadioElement alloc] initWithItems:[ItemCategory categories]
-                                           selected:self.item ? [[ItemCategory categories] indexOfObject:self.item.whichItemCategory.name] : 0
-                                              title:@"Category"];
+    QFontAwesomeRadioElement *category;
+    NSArray *categories = [ItemCategory categories];
+    category = [[QFontAwesomeRadioElement alloc] initWithItems:categories
+                                                      selected:self.item ? [categories indexOfObject:self.item.whichItemCategory.name] : 0
+                                                         title:@"Category"];
     category.key = @"category";
+    category.itemsImageNames = [ItemCategory iconNameWithCategoryName:categories];
     return category;
 }
 
@@ -325,7 +320,7 @@
 - (void)reloadSectionTop
 {
     QSection* sectionTop = [self.root getSectionForIndex:0];
-    QRadioElement *categoryElement = (QRadioElement *)[self.root elementWithKey:@"category"];
+    QFontAwesomeRadioElement *categoryElement = (QFontAwesomeRadioElement *)[self.root elementWithKey:@"category"];
     [sectionTop removeElement:categoryElement];
     [sectionTop insertElement:[self createCategoryRadioElement] atIndex:1];
     [self.quickDialogTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -400,7 +395,7 @@
     NSArray *categories = [ItemCategory categories];
     NSUInteger index = [categories indexOfObject:category];
     
-    QRadioElement *categoryElement = (QRadioElement *)[self.root elementWithKey:@"category"];
+    QFontAwesomeRadioElement *categoryElement = (QFontAwesomeRadioElement *)[self.root elementWithKey:@"category"];
     categoryElement.selected = index;
     [self.quickDialogTableView reloadCellForElements:categoryElement, nil];
 }
