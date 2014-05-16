@@ -48,8 +48,11 @@
     // adjust font size by text length
     cell.textLabel.minimumScaleFactor = 0.5f;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    
     cell.textLabel.text = item.name;
+    
+    cell.detailTextLabel.textColor = [UIColor hexToUIColor:@"FF6100" alpha:1.0];
+    cell.detailTextLabel.text      = [item.geofence boolValue] ? item.location : nil;
+    
     cell.imageView.image = [ItemCategory iconWithCategoryName:item.whichItemCategory.name];
     if ([item.geofence boolValue]) {
         cell.accessoryView = [self geofenceImageViewMonitored:[self.locationManager monitoredRegion:item.location]

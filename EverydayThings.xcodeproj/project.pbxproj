@@ -14,6 +14,7 @@
 		E359DCF31921AE0900D7003B /* InitialData.plist in Resources */ = {isa = PBXBuildFile; fileRef = E359DCF21921AE0900D7003B /* InitialData.plist */; };
 		E359DCF61921CCCA00D7003B /* CategoryDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */; };
 		E359DD2A19221CC400D7003B /* ItemCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E359DD2919221CC400D7003B /* ItemCategory.m */; };
+		E35D1C681925ACFF0014805F /* UIColor+HexStringToUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E35D1C671925ACFF0014805F /* UIColor+HexStringToUIColor.m */; };
 		E35FCFD31918818100CB76DA /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD01918818100CB76DA /* NSData+Base64.m */; };
 		E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = E35FCFD21918818100CB76DA /* NSString+URLEncode.m */; };
 		E35FCFDC191881B600CB76DA /* Daizawa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E35FCFD6191881B600CB76DA /* Daizawa.gpx */; };
@@ -186,6 +187,8 @@
 		E359DCF51921CCCA00D7003B /* CategoryDialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryDialogViewController.m; sourceTree = "<group>"; };
 		E359DD2819221CC400D7003B /* ItemCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCategory.h; sourceTree = "<group>"; };
 		E359DD2919221CC400D7003B /* ItemCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCategory.m; sourceTree = "<group>"; };
+		E35D1C661925ACFF0014805F /* UIColor+HexStringToUIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexStringToUIColor.h"; sourceTree = "<group>"; };
+		E35D1C671925ACFF0014805F /* UIColor+HexStringToUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexStringToUIColor.m"; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E35FCFD01918818100CB76DA /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E35FCFD11918818100CB76DA /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
@@ -501,6 +504,8 @@
 				E35FCFD01918818100CB76DA /* NSData+Base64.m */,
 				E35FCFD11918818100CB76DA /* NSString+URLEncode.h */,
 				E35FCFD21918818100CB76DA /* NSString+URLEncode.m */,
+				E35D1C661925ACFF0014805F /* UIColor+HexStringToUIColor.h */,
+				E35D1C671925ACFF0014805F /* UIColor+HexStringToUIColor.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1124,6 +1129,7 @@
 				E35FD00F1918820200CB76DA /* SDWebImagePrefetcher.m in Sources */,
 				E359DCF61921CCCA00D7003B /* CategoryDialogViewController.m in Sources */,
 				E35FCFD41918818100CB76DA /* NSString+URLEncode.m in Sources */,
+				E35D1C681925ACFF0014805F /* UIColor+HexStringToUIColor.m in Sources */,
 				E35FD0081918820200CB76DA /* NSData+ImageContentType.m in Sources */,
 				E35FD0141918820200CB76DA /* UIImageView+WebCache.m in Sources */,
 				E35FD05F191885E000CB76DA /* ItemDialogViewController.m in Sources */,
