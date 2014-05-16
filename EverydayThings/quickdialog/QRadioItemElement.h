@@ -26,4 +26,5 @@
 - (QRadioItemElement *)initWithIndex:(NSUInteger)i1 RadioElement:(QRadioElement *)element;
 
 - (QRadioItemElement *)initWithIndex:(NSUInteger)integer RadioSection:(QRadioSection *)section;
+
 @end

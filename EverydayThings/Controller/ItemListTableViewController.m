@@ -49,6 +49,8 @@
     [super viewWillAppear:animated];
 
     [self updateBadgeNumberNotification];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - tableview controller delegate

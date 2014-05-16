@@ -25,7 +25,10 @@
 
 #pragma mark - Application Delegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
+    // Navigation bar appearance
+    [self setupNavigagtionBarAppearance];
+    
     // setup tabbar
     [self setupTabBar];
 
@@ -55,6 +58,23 @@
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     return YES;
+}
+
+- (void)setupNavigagtionBarAppearance
+{
+    UIColor *textColor  = [self hexToUIColor:@"FF6100" alpha:1.0];
+    self.window.tintColor = textColor;
+}
+
+- (UIColor*) hexToUIColor:(NSString *)hex alpha:(CGFloat)a
+{
+	NSScanner *colorScanner = [NSScanner scannerWithString:hex];
+	unsigned int color;
+	[colorScanner scanHexInt:&color];
+	CGFloat r = ((color & 0xFF0000) >> 16)/255.0f;
+	CGFloat g = ((color & 0x00FF00) >> 8) /255.0f;
+	CGFloat b =  (color & 0x0000FF) /255.0f;
+	return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
