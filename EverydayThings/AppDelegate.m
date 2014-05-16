@@ -63,19 +63,6 @@
     return YES;
 }
 
-- (void)setupFont
-{
-    NSString *fontName = @"Chalkboard SE";
-    NSDictionary *textTitleOptions = @{NSFontAttributeName:[UIFont fontWithName:fontName size:18.0]};
-    NSDictionary *textTitleOptions2 = @{NSFontAttributeName:[UIFont fontWithName:fontName size:10.0]};
-    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
-    [[UITabBarItem appearance] setTitleTextAttributes:textTitleOptions2 forState:UIControlStateNormal];
-    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setFont:[UIFont fontWithName:fontName size:14.0]];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:fontName size:17.5]}
-     forState:UIControlStateNormal];
-}
-
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
@@ -150,6 +137,23 @@ static NSManagedObjectContext *_sharedContext = nil;
 
 
 #pragma mark - UI
+
+- (void)setupFont
+{
+    NSString *fontName = @"Chalkboard SE";
+    
+    NSDictionary *navi = @{NSFontAttributeName:[UIFont fontWithName:fontName size:18.0]};
+    NSDictionary *naviButton = @{NSFontAttributeName:[UIFont fontWithName:fontName size:17.5]};
+    NSDictionary *tab  = @{NSFontAttributeName:[UIFont fontWithName:fontName size:10.0]};
+    UIFont *headerfooter = [UIFont fontWithName:fontName size:16.0];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:navi];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:naviButton
+                                                                                            forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:tab forState:UIControlStateNormal];
+    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setFont:headerfooter];
+
+}
 
 - (void)setupNavigagtionBarAppearance
 {

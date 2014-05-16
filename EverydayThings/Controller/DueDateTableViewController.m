@@ -65,6 +65,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSInteger sectionWeek = [[[[self.fetchedResultsController sections] objectAtIndex:section] name] intValue];
+    
     return [self weekName:sectionWeek];
 }
 

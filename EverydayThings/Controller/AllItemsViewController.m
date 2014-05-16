@@ -82,11 +82,13 @@
     // Section name
     NSString *sectionName = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
     
+    // color
     if ([[ItemCategory colors] objectForKey:sectionName]) {
-        // Background color
+        
+        // Background
         view.tintColor = [ItemCategory colors][sectionName];
         
-        // Text Color
+        // Text
         if (![sectionName isEqualToString:@"None"]) {
             UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
             [header.textLabel setTextColor:[UIColor whiteColor]];

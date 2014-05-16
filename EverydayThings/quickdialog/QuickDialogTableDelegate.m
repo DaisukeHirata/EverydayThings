@@ -44,7 +44,6 @@
     return self;
 }
 
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     QSection *section = [_tableView.root getVisibleSectionForIndex:indexPath.section];
     return section.canDeleteRows ? UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
@@ -84,6 +83,12 @@
     if ([_tableView.quickDialogDelegate respondsToSelector:@selector(cell:willAppearForElement:atIndexPath:)]){
         [_tableView.quickDialogDelegate cell:cell willAppearForElement:element atIndexPath:indexPath];
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont fontWithName:@"Chalkboard SE" size:14.0];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)index {
