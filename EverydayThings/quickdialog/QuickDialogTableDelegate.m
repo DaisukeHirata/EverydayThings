@@ -85,12 +85,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
-{
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    header.textLabel.font = [UIFont fontWithName:@"Chalkboard SE" size:14.0];
-}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)index {
     QSection *section = [_tableView.root getVisibleSectionForIndex:index];
     if (section.headerView!=nil)

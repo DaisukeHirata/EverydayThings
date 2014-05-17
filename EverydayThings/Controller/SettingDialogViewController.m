@@ -17,7 +17,7 @@
 #define APP_ID 385862462 //id from iTunesConnect
 
 @interface SettingDialogViewController ()
-
+@property (nonatomic, strong) UIImageView *ribbonView;
 @end
 
 @implementation SettingDialogViewController
@@ -62,7 +62,8 @@
     //
     BOOL geofenceValue = [defaults boolForKey:@"geofence"];
     QSection *locationServiceSection = [[QSection alloc] initWithTitle:@"Location Service"];
-    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use GeoFence"
+    locationServiceSection.footer = @"Turn Location Services on when using Geofence functionality. Turn Wifi on for more accurate location service.";
+    QBooleanElement *geofence = [[QBooleanElement alloc] initWithTitle:@"Use Geofence"
                                                              BoolValue:geofenceValue ? geofenceValue : NO];
     geofence.onSelected = ^{
         QBooleanElement *geofence = (QBooleanElement *)[[self root] elementWithKey:@"geofence"];
@@ -136,7 +137,49 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self.ribbonView];
     [super viewWillAppear:animated];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.ribbonView removeFromSuperview];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.ribbonView removeFromSuperview];
+    self.ribbonView = nil;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self.ribbonView];
+}
+
+- (UIImageView *)ribbonView
+{
+    if (!_ribbonView) {
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        
+        UIImage *image = [UIImage imageNamed:@"orange_ribbon"];
+        CGFloat imgLen = 100.0f;
+        
+        CGRect rect;
+        if (UIInterfaceOrientationLandscapeLeft == orientation) {
+            CGRect mainRect = [[UIScreen mainScreen] bounds];
+            rect = CGRectMake(0.0f, mainRect.size.height-imgLen, imgLen, imgLen);
+            image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationLeft];
+        } else if (UIInterfaceOrientationLandscapeRight == orientation) {
+            CGRect mainRect = [[UIScreen mainScreen] bounds];
+            rect = CGRectMake(mainRect.size.width-imgLen, 0.0f, imgLen, imgLen);
+            image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationRight];
+        } else {
+            // normal portrait
+            rect = CGRectMake(0.0f, 0.0f, imgLen, imgLen);
+        }
+        _ribbonView = [[UIImageView alloc] initWithImage:image];
+        _ribbonView.frame = rect;
+    }
+    return _ribbonView;
 }
 
 @end

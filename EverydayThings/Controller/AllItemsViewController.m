@@ -79,6 +79,8 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
+    [super tableView:tableView willDisplayHeaderView:view forSection:section];
+    
     // Section name
     NSString *sectionName = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
     

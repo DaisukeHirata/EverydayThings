@@ -133,11 +133,14 @@
     [cell setSelected:NO animated:YES];
 }
 
-/*
 - (NSArray*)_topics
 {
     return (NSArray*)[delegate performSelector:@selector(topics)];
 }
- */
+
+- (void)topics
+{
+    // none
+}
 
 @end

@@ -145,7 +145,7 @@ static NSManagedObjectContext *_sharedContext = nil;
     NSDictionary *navi = @{NSFontAttributeName:[UIFont fontWithName:fontName size:18.0]};
     NSDictionary *naviButton = @{NSFontAttributeName:[UIFont fontWithName:fontName size:17.5]};
     NSDictionary *tab  = @{NSFontAttributeName:[UIFont fontWithName:fontName size:10.0]};
-    UIFont *headerfooter = [UIFont fontWithName:fontName size:16.0];
+    UIFont *headerfooter = [UIFont fontWithName:fontName size:14.0];
     
     [[UINavigationBar appearance] setTitleTextAttributes:navi];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:naviButton

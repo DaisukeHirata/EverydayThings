@@ -16,7 +16,7 @@
 #import "UpdateDueDateTabBadgeNumberNotification.h"
 
 @interface ItemListTableViewController ()
-
+@property (nonatomic, strong) UIImageView *ribbonView;
 @end
 
 @implementation ItemListTableViewController
@@ -42,6 +42,18 @@
 
     // when region changed, then reload data to sync geofence icon color
     [self tuneInGeofenceRegionStateChangedNotification];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    static BOOL firstTime = YES;
+    if (firstTime) {
+        [[[UIApplication sharedApplication] keyWindow] addSubview:self.ribbonView];
+        firstTime = NO;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,6 +65,22 @@
     [self.tableView reloadData];
     
     self.tabBarController.tabBar.hidden = NO;
+
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self.ribbonView];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.ribbonView removeFromSuperview];
+}
+
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.ribbonView removeFromSuperview];
+    self.ribbonView = nil;
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self.ribbonView];
 }
 
 #pragma mark - tableview controller delegate
@@ -89,6 +117,13 @@
         
         [self updateBadgeNumberNotification];
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // font override global setting in Appdelegate
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.textLabel.font = [UIFont fontWithName:@"Chalkboard SE" size:16.5];
 }
 
 #pragma mark - navigation
@@ -168,6 +203,35 @@
     return _locationManager;
 }
 
+#pragma mark - ribbon view
+
+- (UIImageView *)ribbonView
+{
+    if (!_ribbonView) {
+        
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        
+        UIImage *image = [UIImage imageNamed:@"orange_ribbon"];
+        CGFloat imgLen = 100.0f;
+        
+        CGRect rect;
+        if (UIInterfaceOrientationLandscapeLeft == orientation) {
+            CGRect mainRect = [[UIScreen mainScreen] bounds];
+            rect = CGRectMake(0.0f, mainRect.size.height-imgLen, imgLen, imgLen);
+            image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationLeft];
+        } else if (UIInterfaceOrientationLandscapeRight == orientation) {
+            CGRect mainRect = [[UIScreen mainScreen] bounds];
+            rect = CGRectMake(mainRect.size.width-imgLen, 0.0f, imgLen, imgLen);
+            image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationRight];
+        } else {
+            // normal portrait
+            rect = CGRectMake(0.0f, 0.0f, imgLen, imgLen);
+        }
+        _ribbonView = [[UIImageView alloc] initWithImage:image];
+        _ribbonView.frame = rect;
+    }
+    return _ribbonView;
+}
 
 
 @end
