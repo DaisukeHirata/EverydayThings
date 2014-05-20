@@ -216,7 +216,7 @@ static NSManagedObjectContext *_sharedContext = nil;
     NSArray *tabItems = tabController.tabBar.items;
     
     UITabBarItem *tbi = (UITabBarItem*)tabItems[1];
-    NSUInteger count = [[Item itemsForPastDueDate] count];
+    NSUInteger count = [[Item itemsForDueDateTab] count];
     
     if (count != 0) {
         tbi.badgeValue = [NSString stringWithFormat:@"%d", count];

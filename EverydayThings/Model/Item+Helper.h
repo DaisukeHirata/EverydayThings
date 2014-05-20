@@ -18,7 +18,7 @@
 + (NSFetchRequest *)createRequestForDueDateItems;
 + (NSArray *)itemsForGeofence;
 + (NSArray *)itemsForBuyNow;
-+ (NSArray *)itemsForPastDueDate;
++ (NSArray *)itemsForDueDateTab;
 + (void)updateElapsed;
 + (void)updateCategoryToNone:(NSString *)name;
 

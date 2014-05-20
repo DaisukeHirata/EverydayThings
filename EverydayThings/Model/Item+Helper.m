@@ -154,10 +154,20 @@
     return request;
 }
 
-+ (NSArray *)itemsForPastDueDate
++ (NSArray *)itemsForDueDateTab
 {
-    NSFetchRequest *request = [self createRequestForDueDateItems];
-        
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Item"];
+    
+    // 1 week later
+    NSDate *today = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setWeek:1];
+    NSDate *nearFutureDate = [cal dateByAddingComponents:comps toDate:today options:0];
+    request.predicate = [NSPredicate predicateWithFormat:@"dueDate < %@", nearFutureDate];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"dueDate"
+                                                              ascending:YES]];
+    
     NSError *error;
     NSArray *matches = [[AppDelegate sharedContext] executeFetchRequest:request error:&error];
     
