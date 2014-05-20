@@ -73,6 +73,7 @@
 {
     [super viewWillAppear:animated];
     [self.ribbonView removeFromSuperview];
+    self.ribbonView = nil;
 }
 
 

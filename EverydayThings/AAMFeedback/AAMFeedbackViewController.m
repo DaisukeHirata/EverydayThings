@@ -47,16 +47,12 @@
                        @"AAMFeedbackTopicsQuestion",
                        @"AAMFeedbackTopicsRequest",
                        @"AAMFeedbackTopicsBugReport",
-                       @"AAMFeedbackTopicsMedia",
-                       @"AAMFeedbackTopicsBusiness",
                        @"AAMFeedbackTopicsOther", nil]autorelease];
         
         self.topicsToSend = [[[NSArray alloc]initWithObjects:
                              @"Question",
                              @"Request",
                              @"Bug Report",
-                             @"Media",
-                             @"Business",
                              @"Other", nil]autorelease];
     }
     return self;

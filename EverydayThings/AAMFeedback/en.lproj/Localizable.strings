@@ -21,8 +21,6 @@
 "AAMFeedbackTopicsQuestion" = "Question";
 "AAMFeedbackTopicsRequest" = "Request";
 "AAMFeedbackTopicsBugReport" = "Bug Report";
-"AAMFeedbackTopicsMedia" = "Media";
-"AAMFeedbackTopicsBusiness" = "Business";
 "AAMFeedbackTopicsOther" = "Other";
 
 "AAMFeedbackMailDidFinishWithError" = "Failed to send your feedback. Please try later.";

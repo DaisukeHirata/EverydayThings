@@ -148,7 +148,9 @@
 - (NSArray *)colorsArray
 {
     NSDictionary *colors = [ItemCategory colorChoices];
-    NSArray* keys = [colors allKeys];
+    NSMutableArray *allKeys = [[NSMutableArray alloc] initWithArray:[colors allKeys]];
+    [allKeys removeObject:@"None"];
+    NSArray *keys = allKeys;
     // sort
     keys = [keys sortedArrayUsingComparator:^(id o1, id o2) {
         return [o1 compare:o2];

@@ -4,27 +4,11 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>Gift</string>
+		<string>Book</string>
 		<key>color</key>
-		<string>Brown</string>
+		<string>Gray</string>
 		<key>icon</key>
-		<string>gift</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Kids</string>
-		<key>color</key>
-		<string>Moss</string>
-		<key>icon</key>
-		<string>puzzlePiece</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Grocery</string>
-		<key>color</key>
-		<string>Green</string>
-		<key>icon</key>
-		<string>cutlery</string>
+		<string>book</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -36,6 +20,14 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Drug</string>
+		<key>color</key>
+		<string>Blue</string>
+		<key>icon</key>
+		<string>ambulance</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Emergency Goods</string>
 		<key>color</key>
 		<string>Red</string>
@@ -44,11 +36,35 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Drug</string>
+		<string>Gift</string>
 		<key>color</key>
-		<string>Blue</string>
+		<string>Pink</string>
 		<key>icon</key>
-		<string>ambulance</string>
+		<string>gift</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Grocery</string>
+		<key>color</key>
+		<string>Moss</string>
+		<key>icon</key>
+		<string>cutlery</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Hobbies</string>
+		<key>color</key>
+		<string>Orange</string>
+		<key>icon</key>
+		<string>puzzlePiece</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Kids</string>
+		<key>color</key>
+		<string>Green</string>
+		<key>icon</key>
+		<string>smileO</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -60,27 +76,19 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Hobbies</string>
-		<key>color</key>
-		<string>Orange</string>
-		<key>icon</key>
-		<string>smileO</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Book</string>
-		<key>color</key>
-		<string>Gray</string>
-		<key>icon</key>
-		<string>book</string>
-	</dict>
-	<dict>
-		<key>name</key>
 		<string>Software</string>
 		<key>color</key>
 		<string>Brown</string>
 		<key>icon</key>
 		<string>laptop</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tools</string>
+		<key>color</key>
+		<string>Default</string>
+		<key>icon</key>
+		<string>wrench</string>
 	</dict>
 	<dict>
 		<key>name</key>

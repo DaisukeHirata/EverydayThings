@@ -145,6 +145,7 @@
 {
     [super viewWillAppear:animated];
     [self.ribbonView removeFromSuperview];
+    self.ribbonView = nil;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

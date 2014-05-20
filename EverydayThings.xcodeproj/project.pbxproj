@@ -176,6 +176,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E309A9581926E6DA008F7A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E309A95B1926E733008F7A89 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E318CAE4191B113D00CCFA07 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		E318CAE5191B113D00CCFA07 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		E318CAE7191B302800CCFA07 /* GeofenceRegionStateChangedNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeofenceRegionStateChangedNotification.h; sourceTree = "<group>"; };
@@ -197,7 +199,6 @@
 		E35D1C731925B3C00014805F /* AAMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAMFeedbackViewController.h; sourceTree = "<group>"; };
 		E35D1C741925B3C00014805F /* AAMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAMFeedbackViewController.m; sourceTree = "<group>"; };
 		E35D1C761925B3C00014805F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E35D1C771925B3C00014805F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E35FCFCF1918818100CB76DA /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		E35FCFD01918818100CB76DA /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		E35FCFD11918818100CB76DA /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
@@ -443,7 +444,6 @@
 		E3B92EC51905F13B000346CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E3B92EC71905F13B000346CA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E3B92ECB1905F13B000346CA /* EverydayThings-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EverydayThings-Info.plist"; sourceTree = "<group>"; };
-		E3B92ECD1905F13B000346CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E3B92ECF1905F13B000346CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E3B92ED11905F13B000346CA /* EverydayThings-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EverydayThings-Prefix.pch"; sourceTree = "<group>"; };
 		E3B92ED21905F13B000346CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -454,7 +454,6 @@
 		E3B92EEA1905F13B000346CA /* EverydayThingsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EverydayThingsTests-Info.plist"; sourceTree = "<group>"; };
 		E3B92EEC1905F13B000346CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E3B92EEE1905F13B000346CA /* EverydayThingsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EverydayThingsTests.m; sourceTree = "<group>"; };
-		E3B92F0C1905F663000346CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E3B92F371905FE0E000346CA /* EverydayThingsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EverydayThingsModel.xcdatamodel; sourceTree = "<group>"; };
 		E3B92F5519061FC5000346CA /* Item+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Item+Helper.h"; sourceTree = "<group>"; };
 		E3B92F5619061FC5000346CA /* Item+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Item+Helper.m"; sourceTree = "<group>"; };
@@ -1214,7 +1213,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E35D1C761925B3C00014805F /* en */,
-				E35D1C771925B3C00014805F /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1222,7 +1220,7 @@
 		E3B92ECC1905F13B000346CA /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E3B92ECD1905F13B000346CA /* en */,
+				E309A9581926E6DA008F7A89 /* Base */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1238,7 +1236,7 @@
 		E3B92F0B1905F663000346CA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E3B92F0C1905F663000346CA /* Base */,
+				E309A95B1926E733008F7A89 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

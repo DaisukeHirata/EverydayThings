@@ -171,17 +171,17 @@
 
 + (NSDictionary *)colorChoices
 {
-    return @{@"Red"    : @"DB1100",
-             @"Yellow" : @"FFD119",
+    return @{@"Red"    : @"C13143",
+             @"Yellow" : @"F3DB59",
              @"Blue"   : @"3775CB",
              @"Brown"  : @"987D45",
              @"Green"  : @"45A76F",
-             @"Pink"   : @"F50087",
+             @"Pink"   : @"F47093",
              @"Orange" : @"F56B47",
-             @"Purple" : @"49003E",
+             @"Purple" : @"7F4D88",
              @"Gray"   : @"736D66",
-             @"Default": @"00008F",
-             @"Moss"   : @"4B7401",
+             @"Default": @"8BA6A1",
+             @"Moss"   : @"7E8D46",
              @"None"   : @"F7F7F7"};
 }
 
